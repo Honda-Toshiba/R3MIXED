@@ -11,7 +11,7 @@ func die() -> void:
 	drop_weapon()
 
 func drop_weapon() -> Weapon:
-	var weapon = Weapon.create_drop(data.head_pool, data.tail_pool, data.odds)
+	var weapon = Weapon.create_drop(data.head_pool, data.tail_pool, data.odds_head, data.odds_tail)
 	var model = Weapon.build_model(weapon)
 	get_tree().current_scene.add_child(model)
 	

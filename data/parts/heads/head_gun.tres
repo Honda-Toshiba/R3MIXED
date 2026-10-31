@@ -7,6 +7,6 @@
 script = ExtResource("1_cr4v4")
 id = &"head_gun"
 name = "Cleaner"
-rarity = 2
+rarity = 1
 model = ExtResource("1_rcqng")
 metadata/_custom_type_script = "uid://by0ccj0yidt22"

@@ -8,15 +8,23 @@ extends Resource
 
 const BEAM := preload("res://scenes/prefabs/weapon_beam.tscn")
 
-static func create_drop(head_pool: Array[WeaponPart], tail_pool: Array[WeaponPart], odds: Array[int]) -> Weapon:
+static func create_drop(head_pool: Array[WeaponPart], tail_pool: Array[WeaponPart], odds_head: Array[int], odds_tail: Array[int]) -> Weapon:
 	# Validate
-	assert(odds.size() == 5, "Enemy drop odds array is not of length 5.")
+	assert(odds_head.size() == 5, "Enemy head drop odds array is not of length 5.")
+	assert(odds_tail.size() == 5, "Enemy tail drop odds array is not of length 5.")
 	
 	var acc = 0
-	for n in odds:
+	for n in odds_head:
 		acc += n
 	if acc != 100:
-		push_error("Enemy drop odds do not add up to 100.")
+		push_error("Enemy head drop odds do not add up to 100.")
+		return
+		
+	acc = 0
+	for n in odds_tail:
+		acc += n
+	if acc != 100:
+		push_error("Enemy tail drop odds do not add up to 100.")
 		return
 	
 	# Choose parts
@@ -26,16 +34,18 @@ static func create_drop(head_pool: Array[WeaponPart], tail_pool: Array[WeaponPar
 	var rarity_tail = 0
 	
 	var r = 5		# current rarity
-	var low = 100	# percentage lower bound of current rarity
+	var low_head = 100	# percentage lower bound of current rarity
+	var low_tail = 100
 	
 	while r > 0:
 		if rarity_head != 0 and rarity_tail != 0:
 			break
 			
-		low -= odds[r - 1]
-		if luck_head > low and rarity_head == 0:
+		low_head -= odds_head[r - 1]
+		low_tail -= odds_tail[r - 1]
+		if luck_head > low_head and rarity_head == 0:
 			rarity_head = r
-		if luck_tail > low and rarity_tail == 0:
+		if luck_tail > low_tail and rarity_tail == 0:
 			rarity_tail = r
 			
 		r -= 1

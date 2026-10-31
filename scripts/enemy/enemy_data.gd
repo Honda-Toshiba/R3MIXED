@@ -7,4 +7,5 @@ extends Resource
 
 @export var head_pool: Array[WeaponPart]
 @export var tail_pool: Array[WeaponPart]
-@export var odds: Array[int]
+@export var odds_head: Array[int]
+@export var odds_tail: Array[int]
