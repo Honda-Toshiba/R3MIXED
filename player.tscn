@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://c2a033uyre4kh"]
+
+[ext_resource type="Script" uid="uid://cqsbya6cafsxc" path="res://character_body_3d.gd" id="1_4flbx"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_scvwv"]
+height = 2.5
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_jppf3"]
+height = 2.5
+
+[node name="Player" type="CharacterBody3D" unique_id=1686109621]
+script = ExtResource("1_4flbx")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=748429606]
+shape = SubResource("CapsuleShape3D_scvwv")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1471940271]
+mesh = SubResource("CapsuleMesh_jppf3")
+
+[node name="Head" type="Node3D" parent="." unique_id=2115667124]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9825059, -0.21638691)
+
+[node name="PlayerCamera" type="Camera3D" parent="Head" unique_id=376009827]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.055699706)

@@ -11,13 +11,6 @@ config_version=5
 [application]
 
 config/name="R3MIXED"
+run/main_scene="uid://dhshh6y11l6lx"
 config/features=PackedStringArray("4.7")
 config/icon="res://icon.svg"
-
-[autoload]
-
-_mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
-
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/godot-neovim/plugin.cfg", "res://addons/godot_ai/plugin.cfg", "res://addons/godot_git/plugin.cfg")
