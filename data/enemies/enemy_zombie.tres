@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://by0ccj0yidt22" path="res://scripts/weapons/part.gd" id="1_fqbxc"]
 [ext_resource type="Resource" uid="uid://c1rmbmhvinfys" path="res://data/parts/heads/head_fish.tres" id="2_mldjg"]
+[ext_resource type="Resource" uid="uid://bt1d7bpm8cpuc" path="res://data/parts/heads/head_gun.tres" id="3_mldjg"]
 [ext_resource type="Script" uid="uid://dgi7vlr12ucu8" path="res://scripts/enemy/enemy_data.gd" id="3_rpv2n"]
 [ext_resource type="Resource" uid="uid://qdjn7huqvlc0" path="res://data/parts/tails/tail_torch.tres" id="4_2h66q"]
 
@@ -9,7 +10,7 @@
 script = ExtResource("3_rpv2n")
 id = &"enemytype_zombie"
 name = "Zombie"
-head_pool = Array[ExtResource("1_fqbxc")]([ExtResource("2_mldjg")])
+head_pool = Array[ExtResource("1_fqbxc")]([ExtResource("2_mldjg"), ExtResource("3_mldjg")])
 tail_pool = Array[ExtResource("1_fqbxc")]([ExtResource("4_2h66q")])
 odds = Array[int]([100, 0, 0, 0, 0])
 metadata/_custom_type_script = "uid://dgi7vlr12ucu8"
