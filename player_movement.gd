@@ -10,6 +10,7 @@ extends CharacterBody3D
 # ---- Jump / air (floats) ----
 @export var JUMP_VELOCITY: float = 4.5
 @export var Air_Control: float = 0.6
+@export var fall_multiplier: float = 1.8
 
 # ---- Mouse look (floats) ----
 @export var mouse_sens: float = 0.002
@@ -24,9 +25,11 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	var air_control: float = 1.0
-
+	var fall_speed : float = 1.0
 	if not is_on_floor():
-		velocity += get_gravity() * delta
+		if(velocity.y > 0):
+			fall_speed = fall_multiplier
+		velocity += get_gravity() * delta * fall_multiplier
 		air_control = Air_Control
 	else:
 		sprint_bonus = SHIFT if Input.is_action_pressed("sprint") else 0.0
