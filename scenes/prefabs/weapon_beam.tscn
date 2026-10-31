@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://6syvwsmbxhxv"]
+
+[ext_resource type="Texture2D" uid="uid://camc3vgmi1mug" path="res://assets/textures/weapons/texture_weapon_beam.png" id="1_jx7sa"]
+[ext_resource type="Script" uid="uid://bqf4o83vv7kbh" path="res://scripts/weapons/weapon_beam.gd" id="2_pu3sd"]
+[ext_resource type="Gradient" uid="uid://divqioo1cet38" path="res://data/gradients/gradient_weapon_rarity.tres" id="3_2b0cm"]
+
+[node name="weapon_beam" type="Sprite3D" unique_id=1497692532]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+modulate = Color(0.99215686, 1, 1, 1)
+billboard = 2
+texture = ExtResource("1_jx7sa")
+script = ExtResource("2_pu3sd")
+gradient = ExtResource("3_2b0cm")

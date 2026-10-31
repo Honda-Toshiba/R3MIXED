@@ -1,10 +1,6 @@
 extends Sprite3D
 
-const GRADIENT_PATH := "res://data/gradients/gradient_weapon_rarity.tres"
 @export var gradient: Gradient
-
-func _ready() -> void:
-	gradient = load(GRADIENT_PATH) as Gradient
 
 func set_color_by_rarity(w: Weapon) -> void:
 	var r_head = w.head.rarity
