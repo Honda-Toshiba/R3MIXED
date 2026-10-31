@@ -79,39 +79,21 @@ static func build_model(w: Weapon) -> Node3D:
 		return root 
 	
 	tail_node.transform = head_node.transform * link_head.transform * link_tail.transform.affine_inverse()
-	_add_combined_collider(root)
+	_hoist_shapes(root, head_node)
+	_hoist_shapes(root, tail_node)
 	return root
 
 
 # Helpers
 
-static func _add_combined_collider(root: Node3D) -> void:
-	var bounds := _compute_bounds(root, root)
-	if bounds.size == Vector3.ZERO:
-		push_warning("No meshes found for weapon collider")
-		return
-
-	var col := CollisionShape3D.new()
-	var box := BoxShape3D.new()
-	box.size = bounds.size
-	col.shape = box
-	col.position = bounds.get_center()
-	root.add_child(col)
-
-static func _compute_bounds(root: Node3D, node: Node) -> AABB:
-	var result := AABB()
-	var first := true
-	for mi in node.find_children("*", "MeshInstance3D", true, false):
-		var mesh_instance := mi as MeshInstance3D
+static func _hoist_shapes(root: Node3D, part: Node) -> void:
+	for shape in part.find_children("*", "CollisionShape3D", true, false):
+		# accumulate the transform from the shape up to the root
 		var xf := Transform3D.IDENTITY
-		var n: Node = mesh_instance
+		var n: Node = shape
 		while n != root:
 			xf = (n as Node3D).transform * xf
 			n = n.get_parent()
-		var aabb := xf * mesh_instance.get_aabb()
-		if first:
-			result = aabb
-			first = false
-		else:
-			result = result.merge(aabb)
-	return result
+		shape.get_parent().remove_child(shape)
+		root.add_child(shape)
+		shape.transform = xf

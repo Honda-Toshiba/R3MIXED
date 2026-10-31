@@ -16,7 +16,7 @@ tonemap_mode = 2
 [sub_resource type="PlaneMesh" id="PlaneMesh_1jdho"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_1jdho"]
-size = Vector3(16.533203, 0.67529297, 9.893005)
+size = Vector3(16.533203, 0.5623169, 9.893005)
 
 [node name="SceneHub" type="Node3D" unique_id=1475223917]
 
@@ -40,5 +40,5 @@ transform = Transform3D(8.186697, 0, 0, 0, 1, 0, 0, 0, 4.9483647, 0, 0.054924846
 mesh = SubResource("PlaneMesh_1jdho")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ground" unique_id=897169769]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.123046875, -0.16235352, 0.029937744)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.123046875, -0.21884155, 0.029937744)
 shape = SubResource("BoxShape3D_1jdho")
