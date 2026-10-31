@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://pppphhp7dj7a"]
+
+[ext_resource type="PackedScene" uid="uid://m67ny7txecr6" path="res://models/parts/heads/model_head_fish.glb" id="1_udoif"]
+
+[node name="model_head_fish" unique_id=1608841659 instance=ExtResource("1_udoif")]
+
+[node name="link_head" type="Marker3D" parent="." index="1" unique_id=449271774]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.0883417, 0)

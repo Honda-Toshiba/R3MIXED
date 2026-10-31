@@ -53,8 +53,31 @@ static func create_drop(head_pool: Array[WeaponPart], tail_pool: Array[WeaponPar
 	var crypto := Crypto.new()
 	var bytes := crypto.generate_random_bytes(4)
 	var token := bytes.hex_encode()
-	weapon.id = "weapon_inst_" + token
+	weapon.id = token
 	
 	weapon.name = weapon.head.name + " " + weapon.tail.name
 	
 	return weapon
+
+static func build_model(w: Weapon) -> Node3D:
+	if w.head == null or w.tail == null:
+		push_warning("Cannot build weapon with a null part.")
+		return null
+	
+	var root := Node3D.new()
+	root.name = "weapon_inst_" + w.id 
+	
+	var head := w.head.model.instantiate() as Node3D
+	var tail := w.tail.model.instantiate() as Node3D
+	root.add_child(head)
+	root.add_child(tail)
+	
+	var link_head := head.get_node_or_null("link_head") as Node3D
+	var link_tail := tail.get_node_or_null("link_tail") as Node3D
+	if link_head == null or link_tail == null:
+		push_warning("Weapon built but one or more of its parts does not define a link point.")
+		return root 
+	
+	tail.transform = head.transform * link_head.transform * link_tail.transform.affine_inverse()
+	return root
+	

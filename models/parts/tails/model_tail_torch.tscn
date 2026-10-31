@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://djcuo2udoh5we"]
+
+[ext_resource type="PackedScene" uid="uid://bh2kcyq367w6q" path="res://models/parts/tails/model_tail_torch.glb" id="1_i8nb4"]
+
+[node name="Root Scene" unique_id=1742387105 instance=ExtResource("1_i8nb4")]
+
+[node name="link_tail" type="Marker3D" parent="." index="1" unique_id=1514834406]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9060836, 0)

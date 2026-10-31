@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="WeaponPart" format=3 uid="uid://c1rmbmhvinfys"]
+
+[ext_resource type="PackedScene" uid="uid://pppphhp7dj7a" path="res://models/parts/heads/model_head_fish.tscn" id="1_7pgit"]
+[ext_resource type="Script" uid="uid://by0ccj0yidt22" path="res://scripts/weapons/part.gd" id="2_oj55b"]
+
+[resource]
+script = ExtResource("2_oj55b")
+id = &"head_fish"
+name = "Fish"
+rarity = 1
+model = ExtResource("1_7pgit")
+metadata/_custom_type_script = "uid://by0ccj0yidt22"
