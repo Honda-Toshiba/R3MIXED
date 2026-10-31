@@ -1,13 +1,13 @@
 extends CharacterBody3D
 
 # ---- Sliding ----
-@export var slide_speed: float = 8.0
-@export var slide_friction: float = 10.0
+@export var slide_speed: float = 4.0         # burst added at slide start
+@export var slide_friction: float = 12.0
 @export var slide_end_speed: float = 2.0
-@export var slide_start_speed: float = 2.0
+@export var slide_start_speed: float = 5.0   # higher than end speed so it can't flicker
+
 # ---- Movement ----
-@export var SPEED: float = 9.0
-@export var SHIFT: float = 15.0
+@export var SPEED: float = 8.0
 @export var accelration: float = 60.0
 @export var turn_accelration: float = 100.0
 @export var friction: float = 60.0
@@ -21,7 +21,6 @@ extends CharacterBody3D
 @export var mouse_sens: float = 0.002
 @export var max_pitch_degrees: float = 70.0
 
-var sprint_bonus: float = 0.0
 var is_sliding: bool = false
 
 @onready var head: Node3D = $Head
@@ -32,6 +31,7 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	var air_control: float = 1.0
 	var gravity_mult: float = 1.0
+	var jumped_this_frame: bool = false
 
 	var input_dir: Vector2 = Input.get_vector("move_left", "move_right", "move_forwards", "move_backwards")
 	var direction: Vector3 = (transform.basis * Vector3(input_dir.x, 0.0, input_dir.y)).normalized()
@@ -43,20 +43,19 @@ func _physics_process(delta: float) -> void:
 		velocity += get_gravity() * gravity_mult * delta
 		air_control = Air_Control
 		is_sliding = false                      # slides only happen on the ground
-	else:
-		sprint_bonus = SHIFT if Input.is_action_pressed("sprint") else 0.0
 
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
+		jumped_this_frame = true
 		is_sliding = false                      # jumping out of a slide
 
 	# One key, one job per press: cancel if sliding, otherwise try to start
 	if Input.is_action_just_pressed("crouch"):
 		if is_sliding:
 			is_sliding = false
-		elif is_on_floor() and sprint_bonus > 0.0 and horizontal.length() > slide_start_speed:
+		elif is_on_floor() and horizontal.length() > slide_start_speed:
 			is_sliding = true
-			horizontal = horizontal + (horizontal.normalized() * slide_speed)   # the burst, once
+			horizontal += horizontal.normalized() * slide_speed   # the burst, once
 
 	# Stand back up when slow enough
 	if is_sliding and horizontal.length() < slide_end_speed:
@@ -69,13 +68,17 @@ func _physics_process(delta: float) -> void:
 			var rate: float = accelration
 			if horizontal.dot(direction) < 0.0:
 				rate = turn_accelration
-			var target: Vector3 = direction * (SPEED + sprint_bonus)
+			var target: Vector3 = direction * SPEED
 			horizontal = horizontal.move_toward(target, rate * air_control * delta)
 		else:
 			horizontal = horizontal.move_toward(Vector3.ZERO, friction * air_control * delta)
 
-	velocity.x = horizontal.x
-	velocity.z = horizontal.z
+	# On the floor, follow the slope. Otherwise just write the flat velocity.
+	if is_on_floor() and not jumped_this_frame:
+		velocity = horizontal.slide(get_floor_normal())
+	else:
+		velocity.x = horizontal.x
+		velocity.z = horizontal.z
 
 	move_and_slide()
 
