@@ -1,10 +1,9 @@
 extends CharacterBody3D
 
 # ---- Sliding ----
-@export var slide_speed: float = 4.0         # burst added at slide start
-@export var slide_friction: float = 12.0
-@export var slide_end_speed: float = 2.0
-@export var slide_start_speed: float = 5.0   # higher than end speed so it can't flicker
+@export var slide_speed: float = 12.0       # constant speed while sliding
+@export var slide_friction: float = 10.0    # only bleeds speed ABOVE slide_speed
+@export var slide_steer: float = 8.0        # how much you can curve mid-slide
 
 # ---- Movement ----
 @export var SPEED: float = 8.0
@@ -42,38 +41,49 @@ func _physics_process(delta: float) -> void:
 			gravity_mult = fall_multiplier
 		velocity += get_gravity() * gravity_mult * delta
 		air_control = Air_Control
-		is_sliding = false                      # slides only happen on the ground
+		is_sliding = false
 
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 		jumped_this_frame = true
-		is_sliding = false                      # jumping out of a slide
+		is_sliding = false
 
-	# One key, one job per press: cancel if sliding, otherwise try to start
-	if Input.is_action_just_pressed("crouch"):
-		if is_sliding:
-			is_sliding = false
-		elif is_on_floor() and horizontal.length() > slide_start_speed:
+	# Slide is HELD: starts when crouch is down on the floor, ends when released
+	if is_on_floor() and not jumped_this_frame and Input.is_action_pressed("crouch"):
+		if not is_sliding:
 			is_sliding = true
-			horizontal += horizontal.normalized() * slide_speed   # the burst, once
-
-	# Stand back up when slow enough
-	if is_sliding and horizontal.length() < slide_end_speed:
+			# Slide direction: input, else current motion, else where you're facing
+			var slide_dir: Vector3 = -transform.basis.z
+			if direction != Vector3.ZERO:
+				slide_dir = direction
+			elif horizontal.length() > 0.1:
+				slide_dir = horizontal.normalized()
+			# Never slower than slide_speed, but keep any extra speed you came in with
+			horizontal = slide_dir * max(horizontal.length(), slide_speed)
+	else:
 		is_sliding = false
 
 	if is_sliding:
-		horizontal = horizontal.move_toward(Vector3.ZERO, slide_friction * delta)
+		var speed: float = horizontal.length()
+		# Steering: curve the direction without changing the speed
+		var side: Vector3 = transform.basis.x * input_dir.x * slide_steer
+		horizontal = (horizontal + side * delta).normalized() * speed
+		# Too fast? Bleed down to slide_speed, never below it
+		if speed > slide_speed:
+			horizontal = horizontal.move_toward(horizontal.normalized() * slide_speed, slide_friction * delta)
 	else:
 		if direction != Vector3.ZERO:
 			var rate: float = accelration
 			if horizontal.dot(direction) < 0.0:
 				rate = turn_accelration
-			var target: Vector3 = direction * SPEED
+			var top_speed: float = SPEED
+			if not is_on_floor():
+				top_speed = max(SPEED, horizontal.length())   # air: steer, don't brake
+			var target: Vector3 = direction * top_speed
 			horizontal = horizontal.move_toward(target, rate * air_control * delta)
-		else:
-			horizontal = horizontal.move_toward(Vector3.ZERO, friction * air_control * delta)
+		elif is_on_floor():
+			horizontal = horizontal.move_toward(Vector3.ZERO, friction * delta)
 
-	# On the floor, follow the slope. Otherwise just write the flat velocity.
 	if is_on_floor() and not jumped_this_frame:
 		velocity = horizontal.slide(get_floor_normal())
 	else:
