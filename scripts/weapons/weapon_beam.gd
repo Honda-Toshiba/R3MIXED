@@ -1,3 +1,4 @@
+class_name WeaponBeam
 extends Sprite3D
 
 @export var gradient: Gradient

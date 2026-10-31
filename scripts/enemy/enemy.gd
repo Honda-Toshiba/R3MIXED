@@ -8,17 +8,22 @@ func _ready() -> void:
 	health = data.max_health
 
 func die() -> void:
-	var drop_weapon = Weapon.create_drop(data.head_pool, data.tail_pool, data.odds)
-	var drop_model = Weapon.build_model(drop_weapon)
+	drop_weapon()
+
+func drop_weapon() -> Weapon:
+	var weapon = Weapon.create_drop(data.head_pool, data.tail_pool, data.odds)
+	var model = Weapon.build_model(weapon)
+	get_tree().current_scene.add_child(model)
 	
-	get_tree().current_scene.add_child(drop_model)
-	drop_model.global_position = global_position
-	drop_model.rotation = Vector3(
+	model.global_position = global_position
+	model.rotation = Vector3(
 		randf_range(0.0, TAU),
 		randf_range(0.0, TAU),
 		randf_range(0.0, TAU)
 	)
-	launch_random(drop_model)
+	launch_random(model)
+	
+	return weapon
 
 # For testing
 func _unhandled_input(event: InputEvent) -> void:
