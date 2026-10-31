@@ -23,6 +23,7 @@ radius = 3.5
 [node name="Main" type="Node3D" unique_id=644388398]
 
 [node name="Floor" parent="." unique_id=1559177563 instance=ExtResource("1_0xm2m")]
+transform = Transform3D(5.845, 0, 0, 0, 5.845, 0, 0, 0, 5.845, 0, 0, 0)
 
 [node name="Player" parent="." unique_id=1686109621 groups=["player"] instance=ExtResource("2_h2yge")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5545757, 0)
