@@ -12,5 +12,5 @@ id = &"enemytype_zombie"
 name = "Zombie"
 head_pool = Array[ExtResource("1_fqbxc")]([ExtResource("2_mldjg"), ExtResource("3_mldjg")])
 tail_pool = Array[ExtResource("1_fqbxc")]([ExtResource("4_2h66q")])
-odds = Array[int]([100, 0, 0, 0, 0])
+odds = Array[int]([0, 100, 0, 0, 0])
 metadata/_custom_type_script = "uid://dgi7vlr12ucu8"

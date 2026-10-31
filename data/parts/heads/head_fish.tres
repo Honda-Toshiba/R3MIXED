@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("2_oj55b")
 id = &"head_fish"
-name = "Fish"
-rarity = 1
+name = "Mr. Fush's"
+rarity = 2
 model = ExtResource("1_7pgit")
 metadata/_custom_type_script = "uid://by0ccj0yidt22"
