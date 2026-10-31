@@ -9,4 +9,7 @@ func _ready() -> void:
 
 func die() -> void:
 	var weapon_drop = Weapon.create_drop(data.head_pool, data.tail_pool, data.odds)
-	# instantiate weapon at enemy position
+	var weapon_node = Weapon.build_model(weapon_drop)
+	
+	get_tree().current_scene.add_child(weapon_node)
+	weapon_node.global_position = global_position
