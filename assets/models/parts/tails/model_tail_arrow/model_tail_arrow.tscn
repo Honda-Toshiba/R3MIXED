@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://gkvhgncnm82"]
+
+[ext_resource type="PackedScene" uid="uid://tp4gwjeiayeq" path="res://assets/models/parts/tails/model_tail_arrow/model_tail_arrow.glb" id="1_4411j"]
+[ext_resource type="Material" uid="uid://o0ngwaqdu7ju" path="res://assets/materials/mat_tail_arrow.tres" id="2_q2i87"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dsodg"]
+size = Vector3(0.072265625, 0.6333008, 0.3122425)
+
+[node name="ModelTailTorch" type="Node3D" unique_id=54589515]
+
+[node name="link_tail" type="Marker3D" parent="." unique_id=166265757]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.41099858, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1122092433]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0041503906, 0.13061523, -0.010983467)
+shape = SubResource("BoxShape3D_dsodg")
+
+[node name="model_tail_arrow" parent="." unique_id=1609449132 instance=ExtResource("1_4411j")]
+transform = Transform3D(0.23779704, -3.2838604, 0.12939751, 1.1824262, -0.035556395, -3.0753262, 3.0663254, 0.26837826, 1.1758623, 0.016341463, -0.041870423, 0.03612238)
+
+[node name="group851010568" parent="model_tail_arrow" index="0" unique_id=1148780967]
+material_override = ExtResource("2_q2i87")
+
+[editable path="model_tail_arrow"]

@@ -5,13 +5,14 @@
 [ext_resource type="Resource" uid="uid://bt1d7bpm8cpuc" path="res://data/parts/heads/head_gun.tres" id="3_mldjg"]
 [ext_resource type="Script" uid="uid://dgi7vlr12ucu8" path="res://scripts/enemy/enemy_data.gd" id="3_rpv2n"]
 [ext_resource type="Resource" uid="uid://qdjn7huqvlc0" path="res://data/parts/tails/tail_torch.tres" id="4_2h66q"]
+[ext_resource type="Resource" uid="uid://db0i3ah03a622" path="res://data/parts/tails/tail_arrow.tres" id="6_rpv2n"]
 
 [resource]
 script = ExtResource("3_rpv2n")
 id = &"enemytype_zombie"
 name = "Zombie"
 head_pool = Array[ExtResource("1_fqbxc")]([ExtResource("2_mldjg"), ExtResource("3_mldjg")])
-tail_pool = Array[ExtResource("1_fqbxc")]([ExtResource("4_2h66q")])
-odds_head = Array[int]([50, 50, 0, 0, 0])
-odds_tail = Array[int]([0, 100, 0, 0, 0])
+tail_pool = Array[ExtResource("1_fqbxc")]([ExtResource("4_2h66q"), ExtResource("6_rpv2n")])
+odds_head = Array[int]([50, 0, 50, 0, 0])
+odds_tail = Array[int]([0, 50, 50, 0, 0])
 metadata/_custom_type_script = "uid://dgi7vlr12ucu8"
