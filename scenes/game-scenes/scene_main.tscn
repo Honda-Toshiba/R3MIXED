@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://dhshh6y11l6lx"]
 
-[ext_resource type="PackedScene" uid="uid://bblikrbnys58i" path="res://floor.tscn" id="1_0xm2m"]
-[ext_resource type="PackedScene" uid="uid://c2a033uyre4kh" path="res://player.tscn" id="2_h2yge"]
-[ext_resource type="PackedScene" uid="uid://bqi63ebjesgvq" path="res://jump_test.tscn" id="3_h2yge"]
-[ext_resource type="Script" uid="uid://0utlhttphdw8" path="res://jump_pad.gd" id="4_1bvp3"]
+[ext_resource type="PackedScene" uid="uid://bblikrbnys58i" path="res://scenes/prefabs/floor.tscn" id="1_vm14q"]
+[ext_resource type="PackedScene" uid="uid://c2a033uyre4kh" path="res://scenes/prefabs/player.tscn" id="2_4hgg4"]
+[ext_resource type="PackedScene" uid="uid://bqi63ebjesgvq" path="res://scenes/prefabs/jump_test.tscn" id="3_n5r24"]
+[ext_resource type="Script" uid="uid://0utlhttphdw8" path="res://scripts/environment/jump_pad.gd" id="4_72r0e"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_scvwv"]
 albedo_color = Color(1, 1, 0, 1)
@@ -22,16 +22,16 @@ radius = 3.5
 
 [node name="Main" type="Node3D" unique_id=644388398]
 
-[node name="Floor" parent="." unique_id=1559177563 instance=ExtResource("1_0xm2m")]
+[node name="Floor" parent="." unique_id=1559177563 instance=ExtResource("1_vm14q")]
 transform = Transform3D(5.845, 0, 0, 0, 5.845, 0, 0, 0, 5.845, 0, 0, 0)
 
-[node name="Player" parent="." unique_id=1686109621 groups=["player"] instance=ExtResource("2_h2yge")]
+[node name="Player" parent="." unique_id=1686109621 groups=["player"] instance=ExtResource("2_4hgg4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5545757, 0)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1685229913]
 transform = Transform3D(1, 0, 0, 0, 0.11731247, 0.99309504, 0, -0.99309504, 0.11731247, 0, 16.638702, 0)
 
-[node name="Jumptest" parent="." unique_id=268558779 instance=ExtResource("3_h2yge")]
+[node name="Jumptest" parent="." unique_id=268558779 instance=ExtResource("3_n5r24")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.179878, -0.3826189, 18.609911)
 
 [node name="yellow_line" type="MeshInstance3D" parent="." unique_id=1626545173]
@@ -41,7 +41,7 @@ mesh = SubResource("BoxMesh_ueota")
 
 [node name="Area3D" type="Area3D" parent="." unique_id=1636883271 groups=["jump_pad"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -13.1)
-script = ExtResource("4_1bvp3")
+script = ExtResource("4_72r0e")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="Area3D" unique_id=44145763]
 material_override = SubResource("StandardMaterial3D_1bvp3")

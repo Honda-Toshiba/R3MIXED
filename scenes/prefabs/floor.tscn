@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bblikrbnys58i"]
 
-[ext_resource type="Shader" uid="uid://7adqp7ssoxev" path="res://floor.gdshader" id="1_oj3tl"]
+[ext_resource type="Shader" uid="uid://7adqp7ssoxev" path="res://assets/shaders/environment/floor.gdshader" id="1_oj3tl"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ueota"]
 size = Vector3(20, 0.1, 20)
