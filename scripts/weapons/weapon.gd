@@ -23,21 +23,25 @@ static func create_drop(head_pool: Array[WeaponPart], tail_pool: Array[WeaponPar
 	var rarity_head = 0
 	var rarity_tail = 0
 	
-	var r = 5
-	var min = 100
+	var r = 5		# current rarity
+	var low = 100	# percentage lower bound of current rarity
 	
 	while r > 0:
 		if rarity_head != 0 and rarity_tail != 0:
 			break
 			
-		min -= odds[r - 1]
-		if luck_head > min and rarity_head == 0:
+		low -= odds[r - 1]
+		if luck_head > low and rarity_head == 0:
 			rarity_head = r
-		if luck_tail > min and rarity_tail == 0:
+		if luck_tail > low and rarity_tail == 0:
 			rarity_tail = r
 			
 		r -= 1
 	
+	print(luck_head)
+	print(luck_tail)
+	print(rarity_head)
+	print(rarity_tail)
 	var heads = head_pool.filter(func(p): return p.rarity == rarity_head)
 	var tails = tail_pool.filter(func(p): return p.rarity == rarity_tail)
 	
@@ -67,17 +71,17 @@ static func build_model(w: Weapon) -> Node3D:
 	var root := Node3D.new()
 	root.name = "weapon_inst_" + w.id 
 	
-	var head := w.head.model.instantiate() as Node3D
-	var tail := w.tail.model.instantiate() as Node3D
-	root.add_child(head)
-	root.add_child(tail)
+	var head_node := w.head.model.instantiate() as Node3D
+	var tail_node := w.tail.model.instantiate() as Node3D
+	root.add_child(head_node)
+	root.add_child(tail_node)
 	
-	var link_head := head.get_node_or_null("link_head") as Node3D
-	var link_tail := tail.get_node_or_null("link_tail") as Node3D
+	var link_head := head_node.get_node_or_null("link_head") as Node3D
+	var link_tail := tail_node.get_node_or_null("link_tail") as Node3D
 	if link_head == null or link_tail == null:
 		push_warning("Weapon built but one or more of its parts does not define a link point.")
 		return root 
 	
-	tail.transform = head.transform * link_head.transform * link_tail.transform.affine_inverse()
+	tail_node.transform = head_node.transform * link_head.transform * link_tail.transform.affine_inverse()
 	return root
 	

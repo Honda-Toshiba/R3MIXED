@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://dx5tnxa2p7drb"]
+
+[ext_resource type="Script" uid="uid://cgy1njvrtxj7i" path="res://scripts/enemy/enemy.gd" id="1_yfjof"]
+[ext_resource type="Resource" uid="uid://mngj12mvy2ke" path="res://data/enemies/enemy_zombie.tres" id="2_cypye"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1jdho"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_pqjwt"]
+
+[node name="Enemy" type="CharacterBody3D" unique_id=1890585613]
+script = ExtResource("1_yfjof")
+data = ExtResource("2_cypye")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=74333025]
+shape = SubResource("CapsuleShape3D_1jdho")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=146245341]
+mesh = SubResource("CapsuleMesh_pqjwt")

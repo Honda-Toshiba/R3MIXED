@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://c80pdju18quhg"]
+
+[ext_resource type="PackedScene" uid="uid://dx5tnxa2p7drb" path="res://prefabs/enemy.tscn" id="1_k6p12"]
+
+[node name="SceneHub" type="Node3D" unique_id=1475223917]
+
+[node name="Enemy" parent="." unique_id=1890585613 instance=ExtResource("1_k6p12")]
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1259736153]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.2960515)

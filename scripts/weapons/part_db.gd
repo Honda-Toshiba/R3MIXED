@@ -1,7 +1,7 @@
 extends Node
 
-const HEAD_DIR := "res://data/heads/"
-const TAIL_DIR := "res://data/tails/"
+const HEAD_DIR := "res://data/parts/heads/"
+const TAIL_DIR := "res://data/parts/tails/"
 
 var _heads: Dictionary = {}
 var _tails: Dictionary = {}
