@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://c17y35apkrwg4"]
+
+[ext_resource type="PackedScene" uid="uid://m67ny7txecr6" path="res://models/parts/heads/model_head_fish/model_head_fish.glb" id="1_g3fuu"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_t4i1k"]
+size = Vector3(0.13467407, 0.2076416, 1)
+
+[node name="ModelHeadFish" type="Node3D" unique_id=1386308882]
+
+[node name="model_head_fish" parent="." unique_id=419157450 instance=ExtResource("1_g3fuu")]
+transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 0, 0, 0)
+
+[node name="link_head" type="Marker3D" parent="." unique_id=1999763956]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0038398653, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=341304179]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00440979, 0.055358887, 0)
+shape = SubResource("BoxShape3D_t4i1k")
