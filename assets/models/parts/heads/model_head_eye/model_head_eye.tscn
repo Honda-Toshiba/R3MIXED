@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://cxkrwj3hl0wt0"]
+
+[ext_resource type="PackedScene" uid="uid://2dk3s0b3doup" path="res://assets/models/parts/heads/model_head_eye/model_head_eye.fbx" id="1_ahol3"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_t4i1k"]
+size = Vector3(0.34763336, 0.4694519, 0.48876953)
+
+[node name="ModelHeadFish" type="Node3D" unique_id=1386308882]
+
+[node name="link_head" type="Marker3D" parent="." unique_id=1999763956]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0038398653, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=341304179]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00049209595, 0.16736794, 0.0061035156)
+shape = SubResource("BoxShape3D_t4i1k")
+
+[node name="model_head_eye" parent="." unique_id=1046204367 instance=ExtResource("1_ahol3")]
+transform = Transform3D(-2.0107239e-08, 0, -0.46, 0, 0.46, 0, 0.46, 0, -2.0107239e-08, 0, -0.09725937, 0)
