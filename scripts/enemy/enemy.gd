@@ -14,6 +14,7 @@ func die() -> void:
 	get_tree().current_scene.add_child(weapon_node)
 	weapon_node.global_position = global_position
 
+# For testing
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed:
 		if event.keycode == KEY_E:

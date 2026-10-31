@@ -13,15 +13,32 @@ sky = SubResource("Sky_pqjwt")
 ambient_light_source = 3
 tonemap_mode = 2
 
+[sub_resource type="PlaneMesh" id="PlaneMesh_1jdho"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1jdho"]
+size = Vector3(16.533203, 0.51953125, 9.893005)
+
 [node name="SceneHub" type="Node3D" unique_id=1475223917]
-
-[node name="Enemy" parent="." unique_id=1890585613 instance=ExtResource("1_k6p12")]
-
-[node name="Camera3D" type="Camera3D" parent="." unique_id=1259736153]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.2960515)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=430974182]
 environment = SubResource("Environment_1jdho")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=979889555]
 transform = Transform3D(1, 0, 0, 0, 0.6242871, 0.781195, 0, -0.781195, 0.6242871, 0, 4.714821, 3.696893)
+shadow_enabled = true
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1259736153]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1243701, 3.2960515)
+
+[node name="Enemy" parent="." unique_id=1890585613 instance=ExtResource("1_k6p12")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2015514, 0)
+
+[node name="Ground" type="StaticBody3D" parent="." unique_id=1142902638]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground" unique_id=3368752]
+transform = Transform3D(8.186697, 0, 0, 0, 1, 0, 0, 0, 4.9483647, 0, 0.054924846, 0)
+mesh = SubResource("PlaneMesh_1jdho")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground" unique_id=897169769]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.123046875, -0.24023438, 0.029937744)
+shape = SubResource("BoxShape3D_1jdho")

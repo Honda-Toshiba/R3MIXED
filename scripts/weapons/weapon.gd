@@ -38,10 +38,6 @@ static func create_drop(head_pool: Array[WeaponPart], tail_pool: Array[WeaponPar
 			
 		r -= 1
 	
-	print(luck_head)
-	print(luck_tail)
-	print(rarity_head)
-	print(rarity_tail)
 	var heads = head_pool.filter(func(p): return p.rarity == rarity_head)
 	var tails = tail_pool.filter(func(p): return p.rarity == rarity_tail)
 	
@@ -68,7 +64,7 @@ static func build_model(w: Weapon) -> Node3D:
 		push_warning("Cannot build weapon with a null part.")
 		return null
 	
-	var root := Node3D.new()
+	var root := RigidBody3D.new()
 	root.name = "weapon_inst_" + w.id 
 	
 	var head_node := w.head.model.instantiate() as Node3D
@@ -83,5 +79,39 @@ static func build_model(w: Weapon) -> Node3D:
 		return root 
 	
 	tail_node.transform = head_node.transform * link_head.transform * link_tail.transform.affine_inverse()
+	_add_combined_collider(root)
 	return root
-	
+
+
+# Helpers
+
+static func _add_combined_collider(root: Node3D) -> void:
+	var bounds := _compute_bounds(root, root)
+	if bounds.size == Vector3.ZERO:
+		push_warning("No meshes found for weapon collider")
+		return
+
+	var col := CollisionShape3D.new()
+	var box := BoxShape3D.new()
+	box.size = bounds.size
+	col.shape = box
+	col.position = bounds.get_center()
+	root.add_child(col)
+
+static func _compute_bounds(root: Node3D, node: Node) -> AABB:
+	var result := AABB()
+	var first := true
+	for mi in node.find_children("*", "MeshInstance3D", true, false):
+		var mesh_instance := mi as MeshInstance3D
+		var xf := Transform3D.IDENTITY
+		var n: Node = mesh_instance
+		while n != root:
+			xf = (n as Node3D).transform * xf
+			n = n.get_parent()
+		var aabb := xf * mesh_instance.get_aabb()
+		if first:
+			result = aabb
+			first = false
+		else:
+			result = result.merge(aabb)
+	return result
