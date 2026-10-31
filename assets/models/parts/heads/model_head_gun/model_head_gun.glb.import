@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://m67ny7txecr6"
-path="res://.godot/imported/model_head_fish.glb-b049c10b51f185dbe6b24c21a23268ba.scn"
+uid="uid://6lthx6l6k5ya"
+path="res://.godot/imported/model_head_gun.glb-2b5fdfdd6eaa3b00b3124a80cf1fff58.scn"
 
 [deps]
 
-source_file="res://models/parts/heads/model_head_fish/model_head_fish.glb"
-dest_files=["res://.godot/imported/model_head_fish.glb-b049c10b51f185dbe6b24c21a23268ba.scn"]
+source_file="res://assets/models/parts/heads/model_head_gun/model_head_gun.glb"
+dest_files=["res://.godot/imported/model_head_gun.glb-2b5fdfdd6eaa3b00b3124a80cf1fff58.scn"]
 
 [params]
 

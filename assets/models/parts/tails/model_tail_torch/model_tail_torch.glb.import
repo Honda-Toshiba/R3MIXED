@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://6lthx6l6k5ya"
-path="res://.godot/imported/model_head_gun.glb-bb3804b0c9a512a508a8a4bdd0c77916.scn"
+uid="uid://bh2kcyq367w6q"
+path="res://.godot/imported/model_tail_torch.glb-2e39e72d739d03dd389cb62ca65d06ab.scn"
 
 [deps]
 
-source_file="res://models/parts/heads/model_head_gun/model_head_gun.glb"
-dest_files=["res://.godot/imported/model_head_gun.glb-bb3804b0c9a512a508a8a4bdd0c77916.scn"]
+source_file="res://assets/models/parts/tails/model_tail_torch/model_tail_torch.glb"
+dest_files=["res://.godot/imported/model_tail_torch.glb-2e39e72d739d03dd389cb62ca65d06ab.scn"]
 
 [params]
 

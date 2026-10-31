@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c80pdju18quhg"]
 
-[ext_resource type="PackedScene" uid="uid://dx5tnxa2p7drb" path="res://prefabs/enemy.tscn" id="1_k6p12"]
+[ext_resource type="PackedScene" uid="uid://dx5tnxa2p7drb" path="res://scenes/prefabs/enemy.tscn" id="1_k6p12"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_kkvai"]
 

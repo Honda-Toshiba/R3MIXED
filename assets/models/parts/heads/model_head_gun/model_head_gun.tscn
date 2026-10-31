@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://7641fnoaviy8"]
 
-[ext_resource type="PackedScene" uid="uid://6lthx6l6k5ya" path="res://models/parts/heads/model_head_gun/model_head_gun.glb" id="1_fgeq5"]
+[ext_resource type="PackedScene" uid="uid://6lthx6l6k5ya" path="res://assets/models/parts/heads/model_head_gun/model_head_gun.glb" id="1_fgeq5"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_t4i1k"]
 size = Vector3(0.06943512, 0.3324585, 0.54589844)

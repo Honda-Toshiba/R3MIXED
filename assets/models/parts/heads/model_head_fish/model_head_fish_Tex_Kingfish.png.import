@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://d3fr6dg2hnure"
-path.s3tc="res://.godot/imported/model_head_fish_Tex_Kingfish.png-4fd825137e84973b71fe31af1d6a4573.s3tc.ctex"
+path.s3tc="res://.godot/imported/model_head_fish_Tex_Kingfish.png-062a89d84b0f5c4adb03945711dfa299.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -14,8 +14,8 @@ generator_parameters={
 
 [deps]
 
-source_file="res://models/parts/heads/model_head_fish/model_head_fish_Tex_Kingfish.png"
-dest_files=["res://.godot/imported/model_head_fish_Tex_Kingfish.png-4fd825137e84973b71fe31af1d6a4573.s3tc.ctex"]
+source_file="res://assets/models/parts/heads/model_head_fish/model_head_fish_Tex_Kingfish.png"
+dest_files=["res://.godot/imported/model_head_fish_Tex_Kingfish.png-062a89d84b0f5c4adb03945711dfa299.s3tc.ctex"]
 
 [params]
 
