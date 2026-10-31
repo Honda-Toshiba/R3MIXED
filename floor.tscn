@@ -1,15 +1,26 @@
 [gd_scene format=3 uid="uid://bblikrbnys58i"]
 
+[ext_resource type="Shader" uid="uid://7adqp7ssoxev" path="res://floor.gdshader" id="1_oj3tl"]
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_ueota"]
 size = Vector3(20, 0.1, 20)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lv0j5"]
+render_priority = 0
+shader = ExtResource("1_oj3tl")
+shader_parameter/color_a = Color(0.9, 0.9, 0.9, 1)
+shader_parameter/color_b = Color(0.25, 0.25, 0.25, 1)
+shader_parameter/tile_size = 1.0
 
 [sub_resource type="BoxMesh" id="BoxMesh_scvwv"]
 size = Vector3(20, 0.08, 20)
 
 [node name="Floor" type="StaticBody3D" unique_id=1559177563]
+transform = Transform3D(2.535, 0, 0, 0, 2.535, 0, 0, 0, 2.535, 0, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2080459315]
 shape = SubResource("BoxShape3D_ueota")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1267279015]
+material_override = SubResource("ShaderMaterial_lv0j5")
 mesh = SubResource("BoxMesh_scvwv")

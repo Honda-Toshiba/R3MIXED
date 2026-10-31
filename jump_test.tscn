@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://bqi63ebjesgvq"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4flbx"]
+albedo_color = Color(0, 1, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ueota"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lv0j5"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_onrkg"]
+albedo_color = Color(1, 0, 1, 1)
+
+[node name="Jumptest" type="Node3D" unique_id=268558779]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1579588063]
+transform = Transform3D(4.055, 0, 0, 0, 4.055, 0, 0, 0, 4.055, -7.005, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D" unique_id=384361823]
+material_override = SubResource("StandardMaterial3D_4flbx")
+mesh = SubResource("BoxMesh_ueota")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=654499080]
+shape = SubResource("BoxShape3D_lv0j5")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="." unique_id=1793598918]
+transform = Transform3D(4.055, 0, 0, 0, 4.055, 0, 0, 0, 4.055, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D2" unique_id=1893137215]
+material_override = SubResource("StandardMaterial3D_onrkg")
+mesh = SubResource("BoxMesh_ueota")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2" unique_id=466600533]
+shape = SubResource("BoxShape3D_lv0j5")
