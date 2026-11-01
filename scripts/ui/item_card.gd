@@ -26,13 +26,13 @@ func display_weapon(w: Weapon) -> void:
 	const BUFF_COLOR = "[color=#3aff26]"
 	const DEBUFF_COLOR = "[color=#ff5252]"
 	
-	stats_head.text = "[font=res://assets/fonts/font_cute.ttf][font_size=90]"
+	stats_head.text = "[center][font=res://assets/fonts/font_cute.ttf][font_size=90]"
 	for buff in w.head.info_buffs:
 		stats_head.text += BUFF_COLOR + buff + "\n"
 	for debuff in w.head.info_debuffs:
 		stats_head.text += DEBUFF_COLOR + debuff + "\n"
 	
-	stats_tail.text = "[font=res://assets/fonts/font_cute.ttf][font_size=90]"
+	stats_tail.text = "[center][font=res://assets/fonts/font_cute.ttf][font_size=90]"
 	for buff in w.tail.info_buffs:
 		stats_tail.text += BUFF_COLOR + buff + "\n"
 	for debuff in w.tail.info_debuffs:

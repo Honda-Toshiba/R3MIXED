@@ -9,6 +9,6 @@ id = &"head_gun"
 name = "Cleaner"
 rarity = 1
 model = ExtResource("1_rcqng")
-info_buffs = Array[String](["+10% Kill Fellers"])
+info_buffs = Array[String](["+10% Maximum Health"])
 info_debuffs = Array[String](["-10% Kill Fellers"])
 metadata/_custom_type_script = "uid://by0ccj0yidt22"
