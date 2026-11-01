@@ -6,6 +6,7 @@ extends Resource
 @export var head: WeaponPart
 @export var tail: WeaponPart
 
+const GRADIENT := preload("res://data/gradients/gradient_weapon_rarity.tres")
 const BEAM := preload("res://scenes/prefabs/weapon_beam.tscn")
 
 static func create_drop(head_pool: Array[WeaponPart], tail_pool: Array[WeaponPart], odds_head: Array[int], odds_tail: Array[int]) -> Weapon:
@@ -105,6 +106,12 @@ static func attach_drop_beam(w:Weapon, root: RigidBody3D, link: Node3D) -> Rigid
 	beam_node.position = link.position
 	beam_node.set_color_by_rarity(w)
 	return root
+
+func get_color() -> Color:
+	var r = max(head.rarity, tail.rarity)
+	var t := inverse_lerp(1.0, 5.0, r) # Normalizes 1-5 range into 0-1
+	var color := GRADIENT.sample(t)
+	return color
 
 # Helpers
 

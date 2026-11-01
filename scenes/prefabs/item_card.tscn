@@ -1,30 +1,39 @@
 [gd_scene format=3 uid="uid://d25og6caxv652"]
 
-[ext_resource type="Texture2D" uid="uid://bywxyi47qd4mk" path="res://assets/textures/ui/tex_ui_item_card.png" id="1_mpuac"]
 [ext_resource type="Script" uid="uid://bsus3racgfhrv" path="res://scripts/ui/item_card.gd" id="1_yg7uv"]
+[ext_resource type="Texture2D" uid="uid://bogpfiwqeacb7" path="res://assets/textures/ui/tex_ui_item_card_bg.png" id="2_yg7uv"]
+[ext_resource type="Texture2D" uid="uid://ddjwfaievpqyp" path="res://assets/textures/ui/tex_ui_item_card_fg.png" id="3_hhgn6"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_kkvai"]
 viewport_path = NodePath("SubViewport")
 
-[node name="item_card" type="Sprite3D" unique_id=1497692532 node_paths=PackedStringArray("weapon_name", "stats_head", "stats_tail")]
+[node name="item_card" type="Sprite3D" unique_id=1497692532 node_paths=PackedStringArray("background", "weapon_name", "stats_head", "stats_tail")]
 transform = Transform3D(0.07, 0, 0, 0, 0.07, 0, 0, 0, 0.07, 0, 0, 0)
 modulate = Color(0.99215686, 1, 1, 1)
 billboard = 1
 render_priority = 1
 texture = SubResource("ViewportTexture_kkvai")
 script = ExtResource("1_yg7uv")
+background = NodePath("SubViewport/background")
 weapon_name = NodePath("SubViewport/name")
 stats_head = NodePath("SubViewport/stats_head")
 stats_tail = NodePath("SubViewport/stats_tail")
 
 [node name="SubViewport" type="SubViewport" parent="." unique_id=190379413]
 transparent_bg = true
-size = Vector2i(2766, 1062)
+size = Vector2i(2783, 1167)
 
 [node name="background" type="TextureRect" parent="SubViewport" unique_id=26159602]
 offset_right = 40.0
 offset_bottom = 40.0
-texture = ExtResource("1_mpuac")
+offset_transform_enabled = true
+texture = ExtResource("2_yg7uv")
+
+[node name="foreground" type="TextureRect" parent="SubViewport" unique_id=1531081749]
+offset_right = 40.0
+offset_bottom = 40.0
+offset_transform_enabled = true
+texture = ExtResource("3_hhgn6")
 
 [node name="name" type="RichTextLabel" parent="SubViewport" unique_id=1384497889]
 clip_contents = false
@@ -35,11 +44,11 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 4
 offset_transform_enabled = true
-offset_transform_position = Vector2(0, 35)
+offset_transform_position = Vector2(0, 78)
 focus_mode = 0
 mouse_filter = 2
 bbcode_enabled = true
-text = "[font=res://assets/fonts/font_cute.ttf][font_size=220]Full Attention Torch"
+text = "[font=res://assets/fonts/font_cute.ttf][font_size=150]Full Attention Torch"
 scroll_active = false
 horizontal_alignment = 1
 
@@ -56,7 +65,7 @@ offset_transform_position = Vector2(683.955, 300)
 focus_mode = 0
 mouse_filter = 2
 bbcode_enabled = true
-text = "[font=res://assets/fonts/font_cute.ttf][font_size=120][color=#8eff83]+ Stat Value"
+text = "[font=res://assets/fonts/font_cute.ttf][font_size=120][color=#3aff26]+ Stat Value"
 scroll_active = false
 
 [node name="stats_tail" type="RichTextLabel" parent="SubViewport" unique_id=358592428]
@@ -72,5 +81,5 @@ offset_transform_position = Vector2(1600, 300)
 focus_mode = 0
 mouse_filter = 2
 bbcode_enabled = true
-text = "[font=res://assets/fonts/font_cute.ttf][font_size=120][color=#ff8383]- Stat Value"
+text = "[font=res://assets/fonts/font_cute.ttf][font_size=120][color=#ff3333]- Stat Value"
 scroll_active = false

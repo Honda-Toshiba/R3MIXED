@@ -13,7 +13,7 @@ func _ready() -> void:
 func _physics_process(_delta: float) -> void:
 	var hit := look_raycast()
 	if hit:
-		print("Hit at: ", hit.position)
+		# Display item card
 		item_card.position = hit.position
 		item_card.display_weapon((hit.collider.get_parent() as WeaponBeam).weapon)
 		item_card.show()
