@@ -1,13 +1,22 @@
 class_name Weapon
 extends Resource
 
-@export var id: StringName = &""
-@export var name: String = ""
-@export var head: WeaponPart
-@export var tail: WeaponPart
+var id: StringName = &""
+var name: String = ""
+var head: WeaponPart
+var tail: WeaponPart
+
+var head_quality: float # 0.7 to 1.0, acts as multiplier to all head stats
+var tail_quality: float
+
+var damage: int
 
 const GRADIENT := preload("res://data/gradients/gradient_weapon_rarity.tres")
 const BEAM := preload("res://scenes/prefabs/weapon_beam.tscn")
+
+func _init() -> void:
+	head_quality = randf_range(0.7, 1.0)
+	tail_quality = randf_range(0.7, 1.0)
 
 static func create_drop(head_pool: Array[WeaponPart], tail_pool: Array[WeaponPart], odds_head: Array[int], odds_tail: Array[int]) -> Weapon:
 	# Validate
@@ -69,6 +78,9 @@ static func create_drop(head_pool: Array[WeaponPart], tail_pool: Array[WeaponPar
 	weapon.id = token
 	
 	weapon.name = weapon.head.name + " " + weapon.tail.name
+	
+		# Calculate final damage value
+	weapon.damage = round(weapon.head.damage * weapon.head_quality) + round(weapon.tail.damage * weapon.tail_quality)
 	
 	return weapon
 

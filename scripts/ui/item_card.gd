@@ -7,6 +7,7 @@ extends Node
 @export var weapon_name: RichTextLabel 
 @export var stats_head: RichTextLabel
 @export var stats_tail: RichTextLabel
+@export var base_damage: RichTextLabel
 
 func display_weapon(w: Weapon) -> void:
 	background.modulate = w.get_color()
@@ -37,5 +38,8 @@ func display_weapon(w: Weapon) -> void:
 		stats_tail.text += BUFF_COLOR + buff + "\n"
 	for debuff in w.tail.info_debuffs:
 		stats_tail.text += DEBUFF_COLOR + debuff + "\n"
+	
+	# Damage
+	base_damage.text = "[font=res://assets/fonts/font_cute.ttf][font_size=150]" + str(w.damage)
 	
 	return

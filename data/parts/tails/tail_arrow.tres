@@ -9,5 +9,6 @@ id = &"tail_arrow"
 name = "Clickbait"
 rarity = 3
 model = ExtResource("1_pi10x")
+damage = 10
 info_buffs = Array[String](["+50% Critical Hit Chance"])
 metadata/_custom_type_script = "uid://by0ccj0yidt22"

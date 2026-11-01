@@ -9,5 +9,6 @@ id = &"head_fish"
 name = "Mr. Fush's"
 rarity = 3
 model = ExtResource("1_7pgit")
+damage = 50
 info_buffs = Array[String](["+50% Critical Hit Chance"])
 metadata/_custom_type_script = "uid://by0ccj0yidt22"

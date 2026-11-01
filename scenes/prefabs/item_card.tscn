@@ -9,7 +9,7 @@
 [sub_resource type="ViewportTexture" id="ViewportTexture_kkvai"]
 viewport_path = NodePath("SubViewport")
 
-[node name="item_card" type="Sprite3D" unique_id=1497692532 node_paths=PackedStringArray("background", "head_icon", "tail_icon", "weapon_name", "stats_head", "stats_tail")]
+[node name="item_card" type="Sprite3D" unique_id=1497692532 node_paths=PackedStringArray("background", "head_icon", "tail_icon", "weapon_name", "stats_head", "stats_tail", "base_damage")]
 transform = Transform3D(0.07, 0, 0, 0, 0.07, 0, 0, 0, 0.07, 0, 0, 0)
 modulate = Color(0.99215686, 1, 1, 1)
 billboard = 1
@@ -22,6 +22,7 @@ tail_icon = NodePath("SubViewport/icon_tail")
 weapon_name = NodePath("SubViewport/name")
 stats_head = NodePath("SubViewport/stats_head")
 stats_tail = NodePath("SubViewport/stats_tail")
+base_damage = NodePath("SubViewport/damage")
 
 [node name="SubViewport" type="SubViewport" parent="." unique_id=190379413]
 transparent_bg = true
@@ -73,27 +74,6 @@ text = "[font=res://assets/fonts/font_cute.ttf][font_size=150]Full Attention Tor
 scroll_active = false
 horizontal_alignment = 1
 
-[node name="damage" type="RichTextLabel" parent="SubViewport" unique_id=1753274019]
-clip_contents = false
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_vertical = 4
-offset_transform_enabled = true
-offset_transform_position = Vector2(0, 980)
-focus_mode = 0
-mouse_filter = 2
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_constants/shadow_outline_size = 28
-theme_override_constants/shadow_offset_x = 1
-theme_override_constants/shadow_offset_y = 1
-bbcode_enabled = true
-text = "[font=res://assets/fonts/font_cute.ttf][font_size=150]67"
-scroll_active = false
-horizontal_alignment = 1
-
 [node name="stats_head" type="RichTextLabel" parent="SubViewport" unique_id=1053605862]
 clip_contents = false
 anchors_preset = 15
@@ -135,3 +115,24 @@ bbcode_enabled = true
 text = "[center][font=res://assets/fonts/font_cute.ttf][font_size=90][color=#3aff26]+20% Critical Hit Damage[/color]
 [color=#ff5252]-30% Critical Hit Chance[/color]"
 scroll_active = false
+
+[node name="damage" type="RichTextLabel" parent="SubViewport" unique_id=1753274019]
+clip_contents = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 4
+offset_transform_enabled = true
+offset_transform_position = Vector2(0, 980)
+focus_mode = 0
+mouse_filter = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 28
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+bbcode_enabled = true
+text = "[font=res://assets/fonts/font_cute.ttf][font_size=150]67"
+scroll_active = false
+horizontal_alignment = 1

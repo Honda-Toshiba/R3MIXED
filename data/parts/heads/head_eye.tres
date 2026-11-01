@@ -9,5 +9,6 @@ id = &"head_eye"
 name = "Full Attention"
 rarity = 4
 model = ExtResource("1_c6a5f")
+damage = 80
 info_buffs = Array[String](["+20% Watches", "+10% Enjoying It"])
 metadata/_custom_type_script = "uid://by0ccj0yidt22"
