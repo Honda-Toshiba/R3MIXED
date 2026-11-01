@@ -1,23 +1,21 @@
 [gd_scene format=3 uid="uid://d25og6caxv652"]
 
 [ext_resource type="Texture2D" uid="uid://bywxyi47qd4mk" path="res://assets/textures/ui/tex_ui_item_card.png" id="1_mpuac"]
-[ext_resource type="FontFile" uid="uid://b6n8p7wwcodwo" path="res://assets/fonts/font_cute.ttf" id="2_xr55k"]
+[ext_resource type="Script" uid="uid://bsus3racgfhrv" path="res://scripts/ui/item_card.gd" id="1_yg7uv"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_kkvai"]
 viewport_path = NodePath("SubViewport")
 
-[sub_resource type="LabelSettings" id="LabelSettings_1jdho"]
-font = ExtResource("2_xr55k")
-font_size = 201
-outline_size = 13
-outline_color = Color(0, 0, 0, 1)
-
-[node name="item_card" type="Sprite3D" unique_id=1497692532]
+[node name="item_card" type="Sprite3D" unique_id=1497692532 node_paths=PackedStringArray("weapon_name", "stats_head", "stats_tail")]
 transform = Transform3D(0.07, 0, 0, 0, 0.07, 0, 0, 0, 0.07, 0, 0, 0)
 modulate = Color(0.99215686, 1, 1, 1)
 billboard = 1
 render_priority = 1
 texture = SubResource("ViewportTexture_kkvai")
+script = ExtResource("1_yg7uv")
+weapon_name = NodePath("SubViewport/name")
+stats_head = NodePath("SubViewport/stats_head")
+stats_tail = NodePath("SubViewport/stats_tail")
 
 [node name="SubViewport" type="SubViewport" parent="." unique_id=190379413]
 transparent_bg = true
@@ -28,37 +26,51 @@ offset_right = 40.0
 offset_bottom = 40.0
 texture = ExtResource("1_mpuac")
 
-[node name="name" type="Label" parent="SubViewport" unique_id=270799482]
-offset_right = 40.0
-offset_bottom = 23.0
+[node name="name" type="RichTextLabel" parent="SubViewport" unique_id=1384497889]
+clip_contents = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 4
 offset_transform_enabled = true
-offset_transform_position = Vector2(1228.685, 35)
-text = "Name"
-label_settings = SubResource("LabelSettings_1jdho")
+offset_transform_position = Vector2(0, 35)
+focus_mode = 0
+mouse_filter = 2
+bbcode_enabled = true
+text = "[font=res://assets/fonts/font_cute.ttf][font_size=220]Full Attention Torch"
+scroll_active = false
 horizontal_alignment = 1
 
-[node name="stat_head" type="RichTextLabel" parent="SubViewport" unique_id=1053605862]
+[node name="stats_head" type="RichTextLabel" parent="SubViewport" unique_id=1053605862]
 clip_contents = false
-offset_right = 497.0
-offset_bottom = 119.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_vertical = 4
 offset_transform_enabled = true
-offset_transform_position = Vector2(700, 250)
+offset_transform_position = Vector2(683.955, 300)
 focus_mode = 0
 mouse_filter = 2
 bbcode_enabled = true
-text = "[font=res://assets/fonts/font_cute.ttf][font_size=120]+ Stat Value"
+text = "[font=res://assets/fonts/font_cute.ttf][font_size=120][color=#8eff83]+ Stat Value"
 scroll_active = false
 
-[node name="stat_tail" type="RichTextLabel" parent="SubViewport" unique_id=358592428]
+[node name="stats_tail" type="RichTextLabel" parent="SubViewport" unique_id=358592428]
 clip_contents = false
-offset_right = 497.0
-offset_bottom = 119.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_vertical = 4
 offset_transform_enabled = true
-offset_transform_position = Vector2(1600, 250)
+offset_transform_position = Vector2(1600, 300)
 focus_mode = 0
 mouse_filter = 2
 bbcode_enabled = true
-text = "[font=res://assets/fonts/font_cute.ttf][font_size=120]+ Stat Value"
+text = "[font=res://assets/fonts/font_cute.ttf][font_size=120][color=#ff8383]- Stat Value"
 scroll_active = false

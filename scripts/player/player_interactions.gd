@@ -4,10 +4,10 @@ extends Node
 @export var ray_length := 3.0
 
 const ITEM_CARD = preload("res://scenes/prefabs/item_card.tscn")
-var item_card: Node3D
+var item_card: ItemCard
 
 func _ready() -> void:
-	item_card = ITEM_CARD.instantiate() as Node3D
+	item_card = ITEM_CARD.instantiate() as ItemCard
 	get_tree().current_scene.add_child.call_deferred(item_card)
 
 func _physics_process(_delta: float) -> void:
@@ -15,6 +15,7 @@ func _physics_process(_delta: float) -> void:
 	if hit:
 		print("Hit at: ", hit.position)
 		item_card.position = hit.position
+		item_card.display_weapon((hit.collider.get_parent() as WeaponBeam).weapon)
 		item_card.show()
 	if not hit:
 		item_card.hide()
