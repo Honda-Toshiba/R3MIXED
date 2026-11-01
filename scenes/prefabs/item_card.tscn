@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bsus3racgfhrv" path="res://scripts/ui/item_card.gd" id="1_yg7uv"]
 [ext_resource type="Texture2D" uid="uid://bogpfiwqeacb7" path="res://assets/textures/ui/tex_ui_item_card_bg.png" id="2_yg7uv"]
-[ext_resource type="Texture2D" uid="uid://ddjwfaievpqyp" path="res://assets/textures/ui/tex_ui_item_card_fg.png" id="3_hhgn6"]
+[ext_resource type="Texture2D" uid="uid://b6m5btylpianv" path="res://assets/textures/ui/tex_ui_item_card_fg.png" id="3_hhgn6"]
 [ext_resource type="Texture2D" uid="uid://cbyidyhs33wdq" path="res://assets/textures/ui/tex_ui_item_card_head.png" id="4_45y83"]
 [ext_resource type="Texture2D" uid="uid://cxhpedteukdfi" path="res://assets/textures/ui/tex_ui_item_card_tail.png" id="5_r4ogb"]
 
@@ -64,6 +64,10 @@ offset_transform_enabled = true
 offset_transform_position = Vector2(0, 78)
 focus_mode = 0
 mouse_filter = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 28
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
 bbcode_enabled = true
 text = "[font=res://assets/fonts/font_cute.ttf][font_size=150]Full Attention Torch"
 scroll_active = false
@@ -81,6 +85,10 @@ offset_transform_enabled = true
 offset_transform_position = Vector2(0, 980)
 focus_mode = 0
 mouse_filter = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 28
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
 bbcode_enabled = true
 text = "[font=res://assets/fonts/font_cute.ttf][font_size=150]67"
 scroll_active = false
@@ -98,9 +106,13 @@ offset_transform_enabled = true
 offset_transform_position = Vector2(683.955, 300)
 focus_mode = 0
 mouse_filter = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 28
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
 bbcode_enabled = true
-text = "[font=res://assets/fonts/font_cute.ttf][font_size=120][color=#34ff53]+ Stat Value[/color]
-[color=#ff5252]- Stat Value[/color]"
+text = "[font=res://assets/fonts/font_cute.ttf][font_size=90][color=#3aff26]+20% Critical Hit Damage[/color]
+[color=#ff5252]-30% Critical Hit Chance[/color]"
 scroll_active = false
 
 [node name="stats_tail" type="RichTextLabel" parent="SubViewport" unique_id=358592428]
@@ -115,6 +127,10 @@ offset_transform_enabled = true
 offset_transform_position = Vector2(1600, 300)
 focus_mode = 0
 mouse_filter = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 28
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
 bbcode_enabled = true
-text = "[font=res://assets/fonts/font_cute.ttf][font_size=120][color=#ff5252]- Stat Value"
+text = "[font=res://assets/fonts/font_cute.ttf][font_size=90][color=#ff5252]-5% Run Speed"
 scroll_active = false
