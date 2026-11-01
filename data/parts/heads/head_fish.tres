@@ -9,4 +9,5 @@ id = &"head_fish"
 name = "Mr. Fush's"
 rarity = 3
 model = ExtResource("1_7pgit")
+info_buffs = Array[String](["+50% Swimming", "+1 Health/Second"])
 metadata/_custom_type_script = "uid://by0ccj0yidt22"

@@ -5,3 +5,6 @@ extends Resource
 @export var name: String = ""
 @export var rarity: int
 @export var model: PackedScene
+
+@export var info_buffs: Array[String]
+@export var info_debuffs: Array[String]
