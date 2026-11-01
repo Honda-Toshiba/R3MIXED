@@ -3,6 +3,9 @@ extends Sprite3D
 
 @export var gradient: Gradient
 
+func _process(delta: float) -> void:
+	global_position = get_parent().global_position
+
 func set_color_by_rarity(w: Weapon) -> void:
 	var r_head = w.head.rarity
 	var r_tail = w.tail.rarity

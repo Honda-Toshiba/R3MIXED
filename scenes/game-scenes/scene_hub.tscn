@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://c80pdju18quhg"]
 
 [ext_resource type="PackedScene" uid="uid://dx5tnxa2p7drb" path="res://scenes/prefabs/enemy.tscn" id="1_k6p12"]
+[ext_resource type="PackedScene" uid="uid://c2a033uyre4kh" path="res://scenes/prefabs/player.tscn" id="2_rlv3e"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_kkvai"]
 
@@ -27,13 +28,11 @@ environment = SubResource("Environment_1jdho")
 transform = Transform3D(1, 0, 0, 0, 0.6242871, 0.781195, 0, -0.781195, 0.6242871, 0, 4.714821, 3.696893)
 shadow_enabled = true
 
-[node name="Camera3D" type="Camera3D" parent="." unique_id=1259736153]
-transform = Transform3D(1, 0, 0, 0, 0.9306192, 0.36598894, 0, -0.36598894, 0.9306192, 0, 2.3175995, 5.069835)
-
 [node name="Enemy" parent="." unique_id=1890585613 instance=ExtResource("1_k6p12")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2015514, 0)
 
 [node name="Ground" type="StaticBody3D" parent="." unique_id=1142902638]
+transform = Transform3D(3.1156461, 0, 0, 0, 1, 0, 0, 0, 3.658893, 0, 0, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ground" unique_id=3368752]
 transform = Transform3D(8.186697, 0, 0, 0, 1, 0, 0, 0, 4.9483647, 0, 0.054924846, 0)
@@ -42,3 +41,6 @@ mesh = SubResource("PlaneMesh_1jdho")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ground" unique_id=897169769]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.123046875, -0.21884155, 0.029937744)
 shape = SubResource("BoxShape3D_1jdho")
+
+[node name="Player" parent="." unique_id=1686109621 instance=ExtResource("2_rlv3e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7170551, 6.9788823)

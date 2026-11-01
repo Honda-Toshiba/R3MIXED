@@ -1,0 +1,64 @@
+[gd_scene format=3 uid="uid://d25og6caxv652"]
+
+[ext_resource type="Texture2D" uid="uid://bywxyi47qd4mk" path="res://assets/textures/ui/tex_ui_item_card.png" id="1_mpuac"]
+[ext_resource type="FontFile" uid="uid://b6n8p7wwcodwo" path="res://assets/fonts/font_cute.ttf" id="2_xr55k"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_kkvai"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="LabelSettings" id="LabelSettings_1jdho"]
+font = ExtResource("2_xr55k")
+font_size = 201
+outline_size = 13
+outline_color = Color(0, 0, 0, 1)
+
+[node name="item_card" type="Sprite3D" unique_id=1497692532]
+transform = Transform3D(0.07, 0, 0, 0, 0.07, 0, 0, 0, 0.07, 0, 0, 0)
+modulate = Color(0.99215686, 1, 1, 1)
+billboard = 1
+render_priority = 1
+texture = SubResource("ViewportTexture_kkvai")
+
+[node name="SubViewport" type="SubViewport" parent="." unique_id=190379413]
+transparent_bg = true
+size = Vector2i(2766, 1062)
+
+[node name="background" type="TextureRect" parent="SubViewport" unique_id=26159602]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_mpuac")
+
+[node name="name" type="Label" parent="SubViewport" unique_id=270799482]
+offset_right = 40.0
+offset_bottom = 23.0
+offset_transform_enabled = true
+offset_transform_position = Vector2(1228.685, 35)
+text = "Name"
+label_settings = SubResource("LabelSettings_1jdho")
+horizontal_alignment = 1
+
+[node name="stat_head" type="RichTextLabel" parent="SubViewport" unique_id=1053605862]
+clip_contents = false
+offset_right = 497.0
+offset_bottom = 119.0
+size_flags_vertical = 4
+offset_transform_enabled = true
+offset_transform_position = Vector2(700, 250)
+focus_mode = 0
+mouse_filter = 2
+bbcode_enabled = true
+text = "[font=res://assets/fonts/font_cute.ttf][font_size=120]+ Stat Value"
+scroll_active = false
+
+[node name="stat_tail" type="RichTextLabel" parent="SubViewport" unique_id=358592428]
+clip_contents = false
+offset_right = 497.0
+offset_bottom = 119.0
+size_flags_vertical = 4
+offset_transform_enabled = true
+offset_transform_position = Vector2(1600, 250)
+focus_mode = 0
+mouse_filter = 2
+bbcode_enabled = true
+text = "[font=res://assets/fonts/font_cute.ttf][font_size=120]+ Stat Value"
+scroll_active = false
