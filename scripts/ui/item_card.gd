@@ -8,5 +8,7 @@ extends Node
 
 func display_weapon(w: Weapon) -> void:
 	background.modulate = w.get_color()
-	weapon_name.text = "[font=res://assets/fonts/font_cute.ttf][font_size=150]" + w.name
+	weapon_name.text = "[font=res://assets/fonts/font_cute.ttf][font_size=150][color=#" \
+						+ w.rarity_to_color(w.head.rarity).to_html() + "]" + w.head.name +  " [color=#" \
+						+ w.rarity_to_color(w.tail.rarity).to_html() + "]" + w.tail.name
 	return

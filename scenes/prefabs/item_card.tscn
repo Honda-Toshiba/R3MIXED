@@ -65,7 +65,7 @@ offset_transform_position = Vector2(683.955, 300)
 focus_mode = 0
 mouse_filter = 2
 bbcode_enabled = true
-text = "[font=res://assets/fonts/font_cute.ttf][font_size=120][color=#3aff26]+ Stat Value"
+text = "[font=res://assets/fonts/font_cute.ttf][font_size=120][color=#34ff53]+ Stat Value"
 scroll_active = false
 
 [node name="stats_tail" type="RichTextLabel" parent="SubViewport" unique_id=358592428]
@@ -81,5 +81,5 @@ offset_transform_position = Vector2(1600, 300)
 focus_mode = 0
 mouse_filter = 2
 bbcode_enabled = true
-text = "[font=res://assets/fonts/font_cute.ttf][font_size=120][color=#ff3333]- Stat Value"
+text = "[font=res://assets/fonts/font_cute.ttf][font_size=120][color=#ff5252]- Stat Value"
 scroll_active = false

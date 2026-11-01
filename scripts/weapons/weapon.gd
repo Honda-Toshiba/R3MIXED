@@ -109,9 +109,13 @@ static func attach_drop_beam(w:Weapon, root: RigidBody3D, link: Node3D) -> Rigid
 
 func get_color() -> Color:
 	var r = max(head.rarity, tail.rarity)
-	var t := inverse_lerp(1.0, 5.0, r) # Normalizes 1-5 range into 0-1
+	return rarity_to_color(r)
+
+static func rarity_to_color(r: int) -> Color:
+	var t := inverse_lerp(1.0, 5.0, r) # Normalized 1-5 range into 0-1
 	var color := GRADIENT.sample(t)
 	return color
+	
 
 # Helpers
 
