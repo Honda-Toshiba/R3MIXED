@@ -2,8 +2,13 @@ class_name PlayerInventory
 extends Node
 
 @export var max_capacity: int
-var weapons: Array[Weapon]
+var weapons: Array[Weapon] 
 var models: Dictionary[StringName, Node3D] = {}
+
+func _ready() -> void:
+	# Initialization
+	weapons = []
+	weapons.resize(max_capacity)
 
 func add_weapon(w: Weapon, model: Node3D) -> Weapon:
 	if weapons.size() >= max_capacity:

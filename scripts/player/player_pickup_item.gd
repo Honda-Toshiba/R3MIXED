@@ -1,10 +1,13 @@
 extends Node
 
+@export var player: Player
 @export var camera: Camera3D
 @export var ray_length := 3.0
 
 const ITEM_CARD = preload("res://scenes/prefabs/item_card.tscn")
 var item_card: ItemCard
+
+var target_weapon: Weapon
 
 func _ready() -> void:
 	item_card = ITEM_CARD.instantiate() as ItemCard
@@ -15,12 +18,14 @@ func _physics_process(_delta: float) -> void:
 	var hit := look_raycast()
 	if hit:
 		# Display item card
+		target_weapon = (hit.collider.get_parent() as WeaponBeam).weapon
 		item_card.position = hit.collider.get_parent().position
 		item_card.position.y = hit.position.y + 0.4		# Offset card upwards a bit
-		item_card.display_weapon((hit.collider.get_parent() as WeaponBeam).weapon)
+		item_card.display_weapon(target_weapon)
 		item_card.show()
 	if not hit:
 		item_card.hide()
+		target_weapon = null
 
 # Cast ray to detect if looking at beam
 func look_raycast() -> Dictionary:
@@ -34,3 +39,8 @@ func look_raycast() -> Dictionary:
 
 	var space := camera.get_world_3d().direct_space_state
 	return space.intersect_ray(query)
+
+# Pick up weapon if interact
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("interact") and target_weapon != null:
+		player.pickup_weapon(target_weapon, Weapon.build_model(target_weapon))

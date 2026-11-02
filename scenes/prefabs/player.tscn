@@ -1,8 +1,10 @@
 [gd_scene format=3 uid="uid://c2a033uyre4kh"]
 
 [ext_resource type="Script" uid="uid://frt0na3ywi0t" path="res://scripts/player/player_movement.gd" id="1_4flbx"]
+[ext_resource type="Script" uid="uid://uguo75o32igd" path="res://scripts/player/player_manager.gd" id="2_56dyf"]
 [ext_resource type="Texture2D" uid="uid://7upefvigkeqd" path="res://assets/textures/ui/tex_ui_crosshair.png" id="2_n0leu"]
 [ext_resource type="Script" uid="uid://d1qu1yfba47pk" path="res://scripts/player/player_pickup_item.gd" id="2_tou0u"]
+[ext_resource type="Script" uid="uid://cmr22bo3gbpqw" path="res://scripts/player/player_inventory.gd" id="4_6o77n"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_scvwv"]
 height = 2.0612183
@@ -13,6 +15,20 @@ height = 2.5
 [node name="Player" type="CharacterBody3D" unique_id=1686109621]
 script = ExtResource("1_4flbx")
 JUMP_VELOCITY = 7.0
+
+[node name="player_manager" type="Node" parent="." unique_id=1902357173 node_paths=PackedStringArray("inventory", "player_weapon")]
+script = ExtResource("2_56dyf")
+inventory = NodePath("player_inventory")
+player_weapon = NodePath("../Head/PlayerCamera/player_weapon")
+
+[node name="player_pickup_item" type="Node" parent="player_manager" unique_id=903311057 node_paths=PackedStringArray("player", "camera")]
+script = ExtResource("2_tou0u")
+player = NodePath("..")
+camera = NodePath("../../Head/PlayerCamera")
+
+[node name="player_inventory" type="Node" parent="player_manager" unique_id=1220832506]
+script = ExtResource("4_6o77n")
+max_capacity = 1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=748429606]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
@@ -27,16 +43,16 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9825059, -0.21638691)
 [node name="PlayerCamera" type="Camera3D" parent="Head" unique_id=376009827]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.055699706)
 
-[node name="CanvasLayer" type="CanvasLayer" parent="Head/PlayerCamera" unique_id=822434012]
+[node name="HUDCanvas" type="CanvasLayer" parent="Head/PlayerCamera" unique_id=822434012]
 
-[node name="CenterContainer" type="CenterContainer" parent="Head/PlayerCamera/CanvasLayer" unique_id=1207169525]
+[node name="CenterContainer" type="CenterContainer" parent="Head/PlayerCamera/HUDCanvas" unique_id=1207169525]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TextureRect" type="TextureRect" parent="Head/PlayerCamera/CanvasLayer/CenterContainer" unique_id=779352099]
+[node name="Crosshair" type="TextureRect" parent="Head/PlayerCamera/HUDCanvas/CenterContainer" unique_id=779352099]
 modulate = Color(1, 1, 1, 0.6039216)
 layout_mode = 2
 offset_transform_enabled = true
@@ -44,7 +60,4 @@ offset_transform_scale = Vector2(0.03, 0.03)
 texture = ExtResource("2_n0leu")
 
 [node name="player_weapon" type="Node3D" parent="Head/PlayerCamera" unique_id=816193443]
-
-[node name="player_pickup_item" type="Node" parent="." unique_id=903311057 node_paths=PackedStringArray("camera")]
-script = ExtResource("2_tou0u")
-camera = NodePath("../Head/PlayerCamera")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6249354, 0, -0.8163614)
