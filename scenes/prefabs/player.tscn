@@ -21,14 +21,14 @@ script = ExtResource("2_56dyf")
 inventory = NodePath("player_inventory")
 player_weapon = NodePath("../Head/PlayerCamera/player_weapon")
 
+[node name="player_inventory" type="Node" parent="player_manager" unique_id=1220832506]
+script = ExtResource("4_6o77n")
+max_capacity = 3
+
 [node name="player_pickup_item" type="Node" parent="player_manager" unique_id=903311057 node_paths=PackedStringArray("player", "camera")]
 script = ExtResource("2_tou0u")
 player = NodePath("..")
 camera = NodePath("../../Head/PlayerCamera")
-
-[node name="player_inventory" type="Node" parent="player_manager" unique_id=1220832506]
-script = ExtResource("4_6o77n")
-max_capacity = 1
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=748429606]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
