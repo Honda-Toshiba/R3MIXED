@@ -1,102 +1,136 @@
 extends CharacterBody3D
 
 # ---- Sliding ----
-@export var slide_speed: float = 12.0       # constant speed while sliding
-@export var slide_friction: float = 10.0    # only bleeds speed ABOVE slide_speed
-@export var slide_steer: float = 8.0        # how much you can curve mid-slide
+@export var slide_speed: float = 12.0
+@export var slide_friction: float = 10.0
+# Temporary sideways speed in units/second; does not turn the base slide.
+@export var slide_steer: float = 0.4
 
 # ---- Movement ----
 @export var SPEED: float = 8.0
 @export var accelration: float = 60.0
 @export var turn_accelration: float = 100.0
 @export var friction: float = 60.0
+@export var ground_snap_distance: float = 0.3
 
 # ---- Jump / air ----
 @export var JUMP_VELOCITY: float = 4.5
-@export var Air_Control: float = 0.6
+@export var Air_Control: float = 0.2
 @export var fall_multiplier: float = 1.8
+@export var air_drag: float = 0.4
 
 # ---- Mouse look ----
 @export var mouse_sens: float = 0.002
 @export var max_pitch_degrees: float = 70.0
 
 var is_sliding: bool = false
+# Flat control velocity, separate from the engine's slope-adjusted velocity.
+var _planar_velocity: Vector3 = Vector3.ZERO
+# Base slide momentum. Steering is added separately, never stored into this.
+var _slide_velocity: Vector3 = Vector3.ZERO
 
 @onready var head: Node3D = $Head
 
 func _ready() -> void:
+	motion_mode = CharacterBody3D.MOTION_MODE_GROUNDED # To identify walls, ceilings and floors.
+	up_direction = Vector3.UP # Establish a baseline "up" direction.
+	floor_constant_speed = true # Keep ground speed the same on slopes.
+	floor_stop_on_slope = true # Stay still when standing on a slope.
+	floor_snap_length = maxf(ground_snap_distance, 0.0) # Stay attached to nearby descending ground; jumping disables automatic snap.
+	_planar_velocity = Vector3(velocity.x, 0.0, velocity.z) # Velocity of the XZ plane.
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 func _physics_process(delta: float) -> void:
-	var air_control: float = 1.0
-	var gravity_mult: float = 1.0
-	var jumped_this_frame: bool = false
+	var grounded: bool = is_on_floor()
+	var input_dir: Vector2 = Input.get_vector(
+		"move_left", "move_right", "move_forwards", "move_backwards"
+	)
+	var direction: Vector3 = global_transform.basis * Vector3(input_dir.x, 0.0, input_dir.y)
+	direction.y = 0.0
+	direction = direction.normalized()
 
-	var input_dir: Vector2 = Input.get_vector("move_left", "move_right", "move_forwards", "move_backwards")
-	var direction: Vector3 = (transform.basis * Vector3(input_dir.x, 0.0, input_dir.y)).normalized()
-	var horizontal: Vector3 = Vector3(velocity.x, 0.0, velocity.z)
+	var jumped: bool = grounded and Input.is_action_just_pressed("ui_accept")
+	var wants_slide: bool = grounded and not jumped and Input.is_action_pressed("crouch")
 
-	if not is_on_floor():
-		if velocity.y < 0.0:
-			gravity_mult = fall_multiplier
-		velocity += get_gravity() * gravity_mult * delta
-		air_control = Air_Control
-		is_sliding = false
-
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
-		jumped_this_frame = true
-		is_sliding = false
-
-	# Slide is HELD: starts when crouch is down on the floor, ends when released
-	if is_on_floor() and not jumped_this_frame and Input.is_action_pressed("crouch"):
-		if not is_sliding:
-			is_sliding = true
-			# Slide direction: input, else current motion, else where you're facing
-			var slide_dir: Vector3 = -transform.basis.z
-			if direction != Vector3.ZERO:
-				slide_dir = direction
-			elif horizontal.length() > 0.1:
-				slide_dir = horizontal.normalized()
-			# Never slower than slide_speed, but keep any extra speed you came in with
-			horizontal = slide_dir * max(horizontal.length(), slide_speed)
-	else:
-		is_sliding = false
+	if wants_slide and not is_sliding:
+		var slide_dir: Vector3 = direction
+		if slide_dir.is_zero_approx(): # If no movement inputs.
+			# With no input, use existing movement; if stationary, use facing direction.
+			if not _planar_velocity.is_zero_approx():
+				slide_dir = _planar_velocity.normalized()
+			else:
+				slide_dir = -global_transform.basis.z
+				slide_dir.y = 0.0
+				slide_dir = slide_dir.normalized()
+		# Direction times speed: start at slide_speed, or keep faster momentum.
+		_slide_velocity = slide_dir * maxf(_planar_velocity.length(), slide_speed)
+	is_sliding = wants_slide
 
 	if is_sliding:
-		var speed: float = horizontal.length()
-		# Steering: curve the direction without changing the speed
-		var side: Vector3 = transform.basis.x * input_dir.x * slide_steer
-		horizontal = (horizontal + side * delta).normalized() * speed
-		# Too fast? Bleed down to slide_speed, never below it
+		# Keep the initial slide heading. Only excess base speed decays.
+		var speed: float = _slide_velocity.length()
 		if speed > slide_speed:
-			horizontal = horizontal.move_toward(horizontal.normalized() * slide_speed, slide_friction * delta)
+			speed = move_toward(speed, slide_speed, slide_friction * delta)
+			_slide_velocity = _slide_velocity.normalized() * speed
+
+		# A temporary view-relative offset, not acceleration or rotation.
+		# Releasing A/D removes it; holding a key never accumulates a turn.
+		var view_right: Vector3 = global_transform.basis.x
+		view_right.y = 0.0
+		view_right = view_right.normalized()
+		_planar_velocity = _slide_velocity + view_right * input_dir.x * slide_steer
 	else:
-		if direction != Vector3.ZERO:
+		if not direction.is_zero_approx():
 			var rate: float = accelration
-			if horizontal.dot(direction) < 0.0:
+			# Negative dot: desired movement opposes current momentum.
+			if _planar_velocity.dot(direction) < 0.0:
 				rate = turn_accelration
 			var top_speed: float = SPEED
-			if not is_on_floor():
-				top_speed = max(SPEED, horizontal.length())   # air: steer, don't brake
-			var target: Vector3 = direction * top_speed
-			horizontal = horizontal.move_toward(target, rate * air_control * delta)
-		elif is_on_floor():
-			horizontal = horizontal.move_toward(Vector3.ZERO, friction * delta)
+			if not grounded:
+				top_speed = maxf(SPEED, _planar_velocity.length())
+				rate *= Air_Control
+			# Approach the target velocity by acceleration times elapsed seconds.
+			_planar_velocity = _planar_velocity.move_toward(
+				direction * top_speed, rate * delta
+			)
+		elif grounded:
+			# Approach the target velocity by acceleration times elapsed seconds.
+			_planar_velocity = _planar_velocity.move_toward(Vector3.ZERO, friction * delta)
 
-	if is_on_floor() and not jumped_this_frame:
-		velocity = horizontal.slide(get_floor_normal())
+	if grounded:
+		# Supply flat motion; move_and_slide handles the slope and floor snap.
+		velocity.y = JUMP_VELOCITY if jumped else 0.0
 	else:
-		velocity.x = horizontal.x
-		velocity.z = horizontal.z
+		var gravity_mult: float = fall_multiplier if velocity.y < 0.0 else 1.0
+		velocity += get_gravity() * gravity_mult * delta
+		# Gradually reduce horizontal speed in the air, consistently across frame rates.
+		_planar_velocity *= exp(-air_drag * delta)
 
+	velocity.x = _planar_velocity.x
+	velocity.z = _planar_velocity.z
+	# Move using velocity; Godot may modify it in response to collisions.
 	move_and_slide()
+
+	# Godot identifies walls for us. Remove only motion pushing into the wall.
+	if is_on_wall():
+		var wall_normal: Vector3 = get_wall_normal()
+		wall_normal.y = 0.0
+		wall_normal = wall_normal.normalized()
+		if _planar_velocity.dot(wall_normal) < 0.0:
+			_planar_velocity = _planar_velocity.slide(wall_normal)
+		if is_sliding and _slide_velocity.dot(wall_normal) < 0.0:
+			_slide_velocity = _slide_velocity.slide(wall_normal)
+
+	if not is_on_floor():
+		# Preserve the engine's outgoing horizontal motion when leaving ground.
+		_planar_velocity = Vector3(velocity.x, 0.0, velocity.z)
+		is_sliding = false
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		rotate_y(-event.relative.x * mouse_sens)
 		head.rotate_x(-event.relative.y * mouse_sens)
-		head.rotation.x = clamp(
+		head.rotation.x = clampf(
 			head.rotation.x,
 			deg_to_rad(-max_pitch_degrees),
 			deg_to_rad(max_pitch_degrees)

@@ -27,6 +27,8 @@ transform = Transform3D(5.845, 0, 0, 0, 5.845, 0, 0, 0, 5.845, 0, 0, 0)
 
 [node name="Player" parent="." unique_id=1686109621 groups=["player"] instance=ExtResource("2_4hgg4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5545757, 0)
+slide_speed = 19.0
+SPEED = 12.0
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1685229913]
 transform = Transform3D(1, 0, 0, 0, 0.11731247, 0.99309504, 0, -0.99309504, 0.11731247, 0, 16.638702, 0)
@@ -40,7 +42,7 @@ material_override = SubResource("StandardMaterial3D_scvwv")
 mesh = SubResource("BoxMesh_ueota")
 
 [node name="Area3D" type="Area3D" parent="." unique_id=1636883271 groups=["jump_pad"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -13.1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2025106, -13.1)
 script = ExtResource("4_72r0e")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="Area3D" unique_id=44145763]
@@ -65,5 +67,9 @@ size = Vector3(10, 1, 20)
 transform = Transform3D(-4.371138e-08, 0.49999994, 0.8660253, 0, 0.86602527, -0.49999997, -0.99999994, -2.1855696e-08, -3.7855173e-08, -26.727875, 4.423125, 15.309124)
 use_collision = true
 size = Vector3(10, 1, 20)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="." unique_id=262794925]
+transform = Transform3D(0.5660709, 0.40551552, -4.329633, -0.037676126, 7.2395506, 0, 0.24559085, 0.17593361, 9.979521, 7.818389, 2.40516, 0)
+use_collision = true
 
 [connection signal="body_entered" from="Area3D" to="Area3D" method="_on_body_entered"]
