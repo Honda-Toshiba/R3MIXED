@@ -10,5 +10,6 @@ name = "Torch"
 rarity = 2
 model = ExtResource("1_0fjbv")
 damage = 5
-info_debuffs = Array[String](["-99% Run Speed"])
+info_buffs = Array[String](["+100% Jump Height"])
+info_debuffs = Array[String](["-99% Sprint Speed"])
 metadata/_custom_type_script = "uid://by0ccj0yidt22"

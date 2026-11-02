@@ -10,5 +10,6 @@ name = "Mr. Fush's"
 rarity = 3
 model = ExtResource("1_7pgit")
 damage = 50
-info_buffs = Array[String](["+50% Critical Hit Chance"])
+info_buffs = Array[String](["+50% Critical Hit Chance", "+50% Critical Hit Damage"])
+info_debuffs = Array[String](["-30% Normal Hit Damage"])
 metadata/_custom_type_script = "uid://by0ccj0yidt22"

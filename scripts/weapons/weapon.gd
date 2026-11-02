@@ -9,6 +9,7 @@ var tail: WeaponPart
 var head_quality: float # 0.7 to 1.0, acts as multiplier to all head stats
 var tail_quality: float
 
+# Stats affected by part quality
 var damage: int
 
 const GRADIENT := preload("res://data/gradients/gradient_weapon_rarity.tres")

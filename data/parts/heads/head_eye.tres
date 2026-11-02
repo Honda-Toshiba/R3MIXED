@@ -11,4 +11,5 @@ rarity = 4
 model = ExtResource("1_c6a5f")
 damage = 80
 info_buffs = Array[String](["+20% Watches", "+10% Enjoying It"])
+info_debuffs = Array[String](["-100% Healing Member"])
 metadata/_custom_type_script = "uid://by0ccj0yidt22"

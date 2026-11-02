@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://c2a033uyre4kh"]
 
 [ext_resource type="Script" uid="uid://frt0na3ywi0t" path="res://scripts/player/player_movement.gd" id="1_4flbx"]
+[ext_resource type="Texture2D" uid="uid://7upefvigkeqd" path="res://assets/textures/ui/tex_ui_crosshair.png" id="2_n0leu"]
 [ext_resource type="Script" uid="uid://d1qu1yfba47pk" path="res://scripts/player/player_pickup_item.gd" id="2_tou0u"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_scvwv"]
@@ -25,6 +26,22 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9825059, -0.21638691)
 
 [node name="PlayerCamera" type="Camera3D" parent="Head" unique_id=376009827]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.055699706)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Head/PlayerCamera" unique_id=822434012]
+
+[node name="CenterContainer" type="CenterContainer" parent="Head/PlayerCamera/CanvasLayer" unique_id=1207169525]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="Head/PlayerCamera/CanvasLayer/CenterContainer" unique_id=779352099]
+modulate = Color(1, 1, 1, 0.6039216)
+layout_mode = 2
+offset_transform_enabled = true
+offset_transform_scale = Vector2(0.03, 0.03)
+texture = ExtResource("2_n0leu")
 
 [node name="player_interactions" type="Node" parent="." unique_id=903311057 node_paths=PackedStringArray("camera")]
 script = ExtResource("2_tou0u")
