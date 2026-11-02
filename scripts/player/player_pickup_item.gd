@@ -10,6 +10,7 @@ func _ready() -> void:
 	item_card = ITEM_CARD.instantiate() as ItemCard
 	get_tree().current_scene.add_child.call_deferred(item_card)
 
+# Display item card if looking at weaopn
 func _physics_process(_delta: float) -> void:
 	var hit := look_raycast()
 	if hit:
@@ -21,6 +22,7 @@ func _physics_process(_delta: float) -> void:
 	if not hit:
 		item_card.hide()
 
+# Cast ray to detect if looking at beam
 func look_raycast() -> Dictionary:
 	var from := camera.global_position
 	var to := from + (-camera.global_transform.basis.z) * ray_length

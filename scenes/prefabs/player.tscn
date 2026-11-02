@@ -43,6 +43,8 @@ offset_transform_enabled = true
 offset_transform_scale = Vector2(0.03, 0.03)
 texture = ExtResource("2_n0leu")
 
-[node name="player_interactions" type="Node" parent="." unique_id=903311057 node_paths=PackedStringArray("camera")]
+[node name="player_weapon" type="Node3D" parent="Head/PlayerCamera" unique_id=816193443]
+
+[node name="player_pickup_item" type="Node" parent="." unique_id=903311057 node_paths=PackedStringArray("camera")]
 script = ExtResource("2_tou0u")
 camera = NodePath("../Head/PlayerCamera")
