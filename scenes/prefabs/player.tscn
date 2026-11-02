@@ -13,13 +13,15 @@ height = 2.0612183
 height = 2.5
 
 [node name="Player" type="CharacterBody3D" unique_id=1686109621]
+collision_layer = 2
 script = ExtResource("1_4flbx")
 JUMP_VELOCITY = 7.0
 
-[node name="player_manager" type="Node" parent="." unique_id=1902357173 node_paths=PackedStringArray("inventory", "player_weapon")]
+[node name="player_manager" type="Node3D" parent="." unique_id=656213622 node_paths=PackedStringArray("inventory", "player_weapon", "player_camera")]
 script = ExtResource("2_56dyf")
 inventory = NodePath("player_inventory")
 player_weapon = NodePath("../Head/PlayerCamera/player_weapon")
+player_camera = NodePath("../Head/PlayerCamera")
 
 [node name="player_inventory" type="Node" parent="player_manager" unique_id=1220832506]
 script = ExtResource("4_6o77n")

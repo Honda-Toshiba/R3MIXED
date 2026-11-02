@@ -19,6 +19,6 @@ func add_weapon(w: Weapon, model: Node3D) -> Weapon:
 	return w
 
 func remove_weapon(w: Weapon) -> void:
-	weapons.remove_at(weapons.find(w))
+	weapons[weapons.find(w)] = null
 	models.erase(w.id)
 	return
