@@ -60,4 +60,4 @@ offset_transform_scale = Vector2(0.03, 0.03)
 texture = ExtResource("2_n0leu")
 
 [node name="player_weapon" type="Node3D" parent="Head/PlayerCamera" unique_id=816193443]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6249354, 0, -0.8163614)
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0.6249354, 0, -0.8163614)

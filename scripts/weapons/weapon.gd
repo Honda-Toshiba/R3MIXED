@@ -112,6 +112,30 @@ static func build_model(w: Weapon) -> Node3D:
 	_hoist_shapes(root, tail_node)
 	return root
 
+static func build_viewmodel(w: Weapon) -> Node3D:
+	if w.head == null or w.tail == null:
+		push_warning("Cannot build weapon with a null part.")
+		return null
+	
+	var root := Node3D.new()
+	root.name = "weapon_vm_" + w.id 
+	
+	var head_node := w.head.model.instantiate() as Node3D
+	var tail_node := w.tail.model.instantiate() as Node3D
+	root.add_child(head_node)
+	root.add_child(tail_node)
+	
+	var link_head := head_node.get_node_or_null("link_head") as Node3D
+	var link_tail := tail_node.get_node_or_null("link_tail") as Node3D
+	if link_head == null or link_tail == null:
+		push_warning("Weapon built but one or more of its parts does not define a link point.")
+		return root 
+	
+	tail_node.transform = head_node.transform * link_head.transform * link_tail.transform.affine_inverse()
+	
+	return root
+	
+
 static func attach_drop_beam(w:Weapon, root: RigidBody3D, link: Node3D) -> RigidBody3D:
 	var beam_node := BEAM.instantiate() as WeaponBeam
 	root.add_child(beam_node)

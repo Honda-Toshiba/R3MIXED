@@ -43,4 +43,4 @@ func look_raycast() -> Dictionary:
 # Pick up weapon if interact
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact") and target_weapon != null:
-		player.pickup_weapon(target_weapon, Weapon.build_model(target_weapon))
+		player.pickup_weapon(target_weapon, Weapon.build_viewmodel(target_weapon))
