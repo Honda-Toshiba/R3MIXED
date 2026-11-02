@@ -7,6 +7,7 @@ extends Node
 const ITEM_CARD = preload("res://scenes/prefabs/item_card.tscn")
 var item_card: ItemCard
 
+var target_node: Node
 var target_weapon: Weapon
 
 func _ready() -> void:
@@ -18,13 +19,15 @@ func _physics_process(_delta: float) -> void:
 	var hit := look_raycast()
 	if hit:
 		# Display item card
-		target_weapon = (hit.collider.get_parent() as WeaponBeam).weapon
+		target_node = hit.collider.get_parent() # Reference to weapon_beam node
+		target_weapon = (target_node as WeaponBeam).weapon
 		item_card.position = hit.collider.get_parent().position
 		item_card.position.y = hit.position.y + 0.4		# Offset card upwards a bit
 		item_card.display_weapon(target_weapon)
 		item_card.show()
 	if not hit:
 		item_card.hide()
+		target_node = null
 		target_weapon = null
 
 # Cast ray to detect if looking at beam
@@ -44,3 +47,4 @@ func look_raycast() -> Dictionary:
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact") and target_weapon != null:
 		player.pickup_weapon(target_weapon, Weapon.build_viewmodel(target_weapon))
+		target_node.get_parent().queue_free() # Delete weapon drop
