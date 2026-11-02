@@ -14,7 +14,8 @@ func _physics_process(_delta: float) -> void:
 	var hit := look_raycast()
 	if hit:
 		# Display item card
-		item_card.position = hit.position
+		item_card.position = hit.collider.get_parent().position
+		item_card.position.y = hit.position.y + 0.4		# Offset card upwards a bit
 		item_card.display_weapon((hit.collider.get_parent() as WeaponBeam).weapon)
 		item_card.show()
 	if not hit:
