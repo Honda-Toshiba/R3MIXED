@@ -23,6 +23,12 @@ extends CharacterBody3D
 @export var mouse_sens: float = 0.002
 @export var max_pitch_degrees: float = 70.0
 
+# ---- Wall Related -----
+@export var wall_braking : float = 1.8 
+@export var on_wall_friction : float = 1.8
+@export var wall_fall_speed: float = 2.0
+
+
 var is_sliding: bool = false
 # Flat control velocity, separate from the engine's slope-adjusted velocity.
 var _planar_velocity: Vector3 = Vector3.ZERO
@@ -42,6 +48,9 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	var grounded: bool = is_on_floor()
+	var is_on_wall: bool = is_on_wall() and not is_on_floor()
+	print(is_on_wall)
+	print("wall: ", is_on_wall(), " floor: ", is_on_floor())
 	var input_dir: Vector2 = Input.get_vector(
 		"move_left", "move_right", "move_forwards", "move_backwards"
 	)
@@ -102,9 +111,13 @@ func _physics_process(delta: float) -> void:
 		velocity.y = JUMP_VELOCITY if jumped else 0.0
 	else:
 		var gravity_mult: float = fall_multiplier if velocity.y < 0.0 else 1.0
-		velocity += get_gravity() * gravity_mult * delta
+		if(is_on_wall and velocity.y < 0.0):
+			velocity.y = move_toward(velocity.y, -wall_fall_speed, wall_braking * gravity_mult * delta)
+		else:
+			velocity += get_gravity() * gravity_mult * delta
+		var current_wall_friction : float = on_wall_friction if (is_on_wall) else 1.0
 		# Gradually reduce horizontal speed in the air, consistently across frame rates.
-		_planar_velocity *= exp(-air_drag * delta)
+		_planar_velocity *= exp(-air_drag * delta * current_wall_friction)
 
 	velocity.x = _planar_velocity.x
 	velocity.z = _planar_velocity.z
