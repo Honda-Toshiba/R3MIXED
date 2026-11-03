@@ -26,8 +26,13 @@ extends CharacterBody3D
 # ---- Wall Related -----
 @export var wall_braking : float = 1.8 
 @export var on_wall_friction : float = 1.8
-@export var wall_fall_speed: float = 2.0
+@export var wall_fall_speed: float = 1.0
+@export var stick_distance: float = 0.8
 
+
+var stuck_on_wall : bool = false
+var wall_set : bool = false
+var saved_wall_normal: Vector3 = Vector3.ZERO
 
 var is_sliding: bool = false
 # Flat control velocity, separate from the engine's slope-adjusted velocity.
@@ -36,8 +41,16 @@ var _planar_velocity: Vector3 = Vector3.ZERO
 var _slide_velocity: Vector3 = Vector3.ZERO
 
 @onready var head: Node3D = $Head
+var wall_ray: RayCast3D
 
 func _ready() -> void:
+	wall_ray = RayCast3D.new()
+	wall_ray.debug_shape_custom_color = Color.BLUE
+	wall_ray.debug_shape_thickness = 3.0
+	add_child(wall_ray)
+	wall_ray.enabled = true
+	wall_ray.add_exception(self)
+
 	motion_mode = CharacterBody3D.MOTION_MODE_GROUNDED # To identify walls, ceilings and floors.
 	up_direction = Vector3.UP # Establish a baseline "up" direction.
 	floor_constant_speed = true # Keep ground speed the same on slopes.
@@ -48,9 +61,19 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	var grounded: bool = is_on_floor()
-	var is_on_wall: bool = is_on_wall() and not is_on_floor()
-	print(is_on_wall)
-	print("wall: ", is_on_wall(), " floor: ", is_on_floor())
+	if grounded: 
+		stuck_on_wall = false
+		wall_set = false
+	else:
+		if(is_on_wall() and not wall_set): # inital grab
+			point_at_wall(get_wall_normal())
+			wall_set = true
+	if(wall_set):
+		stuck_on_wall = false
+		if wall_ray.is_colliding():
+			var normal = wall_ray.get_collision_normal()
+			stuck_on_wall = absf(normal.dot(Vector3.UP)) < 0.2
+		wall_set = stuck_on_wall
 	var input_dir: Vector2 = Input.get_vector(
 		"move_left", "move_right", "move_forwards", "move_backwards"
 	)
@@ -111,11 +134,11 @@ func _physics_process(delta: float) -> void:
 		velocity.y = JUMP_VELOCITY if jumped else 0.0
 	else:
 		var gravity_mult: float = fall_multiplier if velocity.y < 0.0 else 1.0
-		if(is_on_wall and velocity.y < 0.0):
+		if(stuck_on_wall and velocity.y < 0.0):
 			velocity.y = move_toward(velocity.y, -wall_fall_speed, wall_braking * gravity_mult * delta)
 		else:
 			velocity += get_gravity() * gravity_mult * delta
-		var current_wall_friction : float = on_wall_friction if (is_on_wall) else 1.0
+		var current_wall_friction : float = on_wall_friction if (stuck_on_wall) else 1.0
 		# Gradually reduce horizontal speed in the air, consistently across frame rates.
 		_planar_velocity *= exp(-air_drag * delta * current_wall_friction)
 
@@ -152,3 +175,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	elif event is InputEventMouseButton and event.pressed:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+
+func point_at_wall(normal :Vector3):
+	saved_wall_normal = normal
+	var endpoint = wall_ray.global_position - saved_wall_normal * stick_distance
+	wall_ray.target_position = wall_ray.to_local(endpoint)
+	wall_ray.force_raycast_update()
