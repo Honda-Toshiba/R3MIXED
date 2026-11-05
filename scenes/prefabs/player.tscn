@@ -1485,6 +1485,10 @@ hitbox = NodePath("../../Head/PlayerCamera/player_weapon_htibox")
 camera = NodePath("../../Head/PlayerCamera")
 enemy_card = NodePath("../../Head/PlayerCamera/HUDCanvas/ui_hud_enemy_card")
 
+[node name="enemy_card_timer" type="Timer" parent="player_manager/player_combat" unique_id=1524392955]
+wait_time = 0.5
+one_shot = true
+
 [node name="player_pickup_item" type="Node" parent="player_manager" unique_id=903311057 node_paths=PackedStringArray("player", "camera")]
 script = ExtResource("2_tou0u")
 player = NodePath("..")
@@ -1529,6 +1533,7 @@ offset_transform_scale = Vector2(0.03, 0.03)
 texture = ExtResource("2_n0leu")
 
 [node name="ui_hud_enemy_card" type="Control" parent="Head/PlayerCamera/HUDCanvas" unique_id=207280943 node_paths=PackedStringArray("enemy_name", "enemy_health")]
+modulate = Color(1, 1, 1, 0)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
