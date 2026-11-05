@@ -1,0 +1,83 @@
+[gd_scene format=3 uid="uid://dhshh6y11l6lx"]
+
+[ext_resource type="PackedScene" uid="uid://bblikrbnys58i" path="res://scenes/prefabs/floor.tscn" id="1_vm14q"]
+[ext_resource type="PackedScene" uid="uid://c2a033uyre4kh" path="res://scenes/prefabs/player.tscn" id="2_4hgg4"]
+[ext_resource type="PackedScene" uid="uid://bqi63ebjesgvq" path="res://scenes/prefabs/jump_test.tscn" id="3_n5r24"]
+[ext_resource type="Script" uid="uid://0utlhttphdw8" path="res://scripts/environment/jump_pad.gd" id="4_72r0e"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_scvwv"]
+albedo_color = Color(1, 1, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ueota"]
+size = Vector3(35, 0.675, 0.595)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1bvp3"]
+albedo_color = Color(0, 0.48235294, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_h2yge"]
+radius = 3.0
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ueota"]
+radius = 3.5
+
+[node name="Main" type="Node3D" unique_id=644388398]
+
+[node name="Floor" parent="." unique_id=1559177563 instance=ExtResource("1_vm14q")]
+transform = Transform3D(5.845, 0, 0, 0, 5.845, 0, 0, 0, 5.845, 0, 0, 0)
+
+[node name="Player" parent="." unique_id=1686109621 groups=["player"] instance=ExtResource("2_4hgg4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5545757, 0)
+slide_speed = 19.0
+SPEED = 12.0
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1685229913]
+transform = Transform3D(1, 0, 0, 0, 0.11731247, 0.99309504, 0, -0.99309504, 0.11731247, 0, 16.638702, 0)
+
+[node name="Jumptest" parent="." unique_id=268558779 instance=ExtResource("3_n5r24")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.179878, -0.3826189, 18.609911)
+
+[node name="yellow_line" type="MeshInstance3D" parent="." unique_id=1626545173]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 21.612194, 0, 0)
+material_override = SubResource("StandardMaterial3D_scvwv")
+mesh = SubResource("BoxMesh_ueota")
+
+[node name="Area3D" type="Area3D" parent="." unique_id=1636883271 groups=["jump_pad"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2025106, -13.1)
+script = ExtResource("4_72r0e")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Area3D" unique_id=44145763]
+material_override = SubResource("StandardMaterial3D_1bvp3")
+mesh = SubResource("SphereMesh_h2yge")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=2083852135]
+transform = Transform3D(1, 0, 0, 0, 0.295, 0, 0, 0, 1, 0, -0.16885138, 0)
+shape = SubResource("SphereShape3D_ueota")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=1624762315]
+transform = Transform3D(-4.3711385e-08, 0.258819, 0.9659258, 0, 0.96592575, -0.25881904, -0.99999994, -1.1313339e-08, -4.222196e-08, -26.727875, 2.2205915, 0)
+use_collision = true
+size = Vector3(10, 1, 20)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="." unique_id=2045517962]
+transform = Transform3D(-4.3711385e-08, 0.6427875, 0.7660444, 0, 0.7660443, -0.6427875, -0.99999994, -2.8097134e-08, -3.3484863e-08, -26.727875, 5.609432, -14.505724)
+use_collision = true
+size = Vector3(10, 1, 20)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="." unique_id=1648058529]
+transform = Transform3D(-4.371138e-08, 0.49999994, 0.8660253, 0, 0.86602527, -0.49999997, -0.99999994, -2.1855696e-08, -3.7855173e-08, -26.727875, 4.423125, 15.309124)
+use_collision = true
+size = Vector3(10, 1, 20)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="." unique_id=262794925]
+transform = Transform3D(0.5660709, 0.40551552, -4.329633, -0.037676126, 7.2395506, 0, 0.24559085, 0.17593361, 9.979521, 9.44618, 31.465654, 0.7062204)
+use_collision = true
+collision_layer = 5
+size = Vector3(1, 9.028259, 1)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="." unique_id=1619869133]
+transform = Transform3D(0.5660709, 0.40551552, -4.329633, -0.037676126, 7.2395506, 0, 0.24559085, 0.17593361, 9.979521, 18.425968, 31.465654, 0.7062204)
+use_collision = true
+collision_layer = 5
+size = Vector3(1, 9.028259, 1)
+
+[connection signal="body_entered" from="Area3D" to="Area3D" method="_on_body_entered"]
