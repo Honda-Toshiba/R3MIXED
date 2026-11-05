@@ -9,6 +9,9 @@ extends Node
 func _ready() -> void:
 	enemy_card_timer.timeout.connect(_on_timer_timeout)
 
+
+# Main combat functionality
+
 func attack() -> void:
 	for enemy in hitbox.get_overlapping_bodies():
 		damage_enemy(enemy, player.get_current_weapon().damage)
@@ -43,6 +46,7 @@ func look_raycast() -> Dictionary:
 
 func _on_timer_timeout() -> void:
 	enemy_card.hide_card()
+
 
 # Input handling
 
