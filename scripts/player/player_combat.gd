@@ -5,6 +5,9 @@ extends Node
 @export var camera: Camera3D
 @export var enemy_card: EnemyCard
 @onready var enemy_card_timer: Timer = $enemy_card_timer
+@export var anim_tree: AnimationTree
+@onready var anim_state: AnimationNodeStateMachinePlayback = anim_tree.get("parameters/playback")
+var can_attack: bool = true
 
 func _ready() -> void:
 	enemy_card_timer.timeout.connect(_on_timer_timeout)
@@ -19,6 +22,8 @@ func attack() -> void:
 func damage_enemy(enemy: Enemy, value: int) -> void:
 	enemy.take_damage(value)
 	
+func allow_attack() -> void:
+	can_attack = true
 
 # HUD Elements
 
@@ -52,4 +57,11 @@ func _on_timer_timeout() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("attack"):
+		if not can_attack:
+			return
+		if anim_state.get_current_node() == &"anim_player_arms_attack_1":
+			anim_state.travel(&"anim_player_arms_attack_2")
+		else:
+			anim_state.travel(&"anim_player_arms_attack_1")
+		can_attack = false
 		attack()
