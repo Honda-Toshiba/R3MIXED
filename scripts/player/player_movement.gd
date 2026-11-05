@@ -5,6 +5,8 @@ extends CharacterBody3D
 @export var slide_friction: float = 10.0
 # Temporary sideways speed in units/second; does not turn the base slide.
 @export var slide_steer: float = 0.4
+signal slide_start()
+signal slide_end()
 
 # ---- Movement ----
 @export var SPEED: float = 8.0
@@ -12,6 +14,7 @@ extends CharacterBody3D
 @export var turn_accelration: float = 100.0
 @export var friction: float = 60.0
 @export var ground_snap_distance: float = 0.3
+signal walking()
 
 # ---- Jump / air ----
 @export var JUMP_VELOCITY: float = 4.5
@@ -19,6 +22,8 @@ extends CharacterBody3D
 @export var Air_Control: float = 0.2
 @export var fall_multiplier: float = 1.8
 @export var air_drag: float = 0.4
+signal in_the_air()
+signal in_the_air_high_speed()
 
 # ---- Mouse look ----
 @export var mouse_sens: float = 0.002
@@ -31,10 +36,13 @@ extends CharacterBody3D
 @export var stick_distance: float = 0.8
 @export var wall_jump_limit : int = 4
 
+signal wall_bounce()
+
 @export var dash_distance: float = 3.0
 @export var dash_duration: float = 0.09
 @onready var dash_cooldown: Timer = $dash_cooldown
 
+signal dash_start()
 
 
 #------
@@ -68,7 +76,6 @@ var current_buffered_jump_left : float = 0.0
 #----------
 var cayote_time : float = 0.8
 var cayote_time_left: float = 0.0
-var start_cayote_time : bool = false
 
 
 
@@ -91,7 +98,8 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	var grounded := is_on_floor()
-
+	if wall_set:
+		_check_wall_contact()
 	if grounded:
 		_reset_wall_state_on_ground()
 		cayote_time_left = cayote_time
@@ -128,23 +136,25 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("dash") and dash_time_left <= 0.0 and not dash_stop_pending and dash_cooldown.is_stopped():
 		dash_direction = (-head.global_transform.basis.z).normalized()
 		dash_time_left = dash_duration
+		dash_start.emit()
 		dash_cooldown.start()
 
 	if wants_slide and not is_sliding:
 		_start_slide(direction)
-
+	elif not wants_slide and is_sliding:
+		_end_slide()
 	is_sliding = wants_slide
 	crouch_pov(is_sliding)
 
 	if is_sliding:
 		_update_slide(input_dir.x, delta)
-
 	else:
 		_update_walk(direction, grounded, delta)
 
 	if jumped:
 		velocity.y = JUMP_VELOCITY
 		current_buffered_jump_left = 0.0
+		cayote_time_left = 0.0
 	elif grounded:
 		velocity.y = 0.0
 	else:
@@ -154,6 +164,7 @@ func _physics_process(delta: float) -> void:
 	if wall_jumped and can_wall_jump and not jumped:
 		_apply_wall_jump()
 		current_buffered_jump_left = 0.0
+		cayote_time_left = 0.0
 
 	if dash_time_left > 0.0:
 		_apply_dash(delta)
@@ -176,7 +187,8 @@ func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		# Preserve the engine's outgoing horizontal motion when leaving ground.
 		_planar_velocity = Vector3(velocity.x, 0.0, velocity.z)
-		is_sliding = false
+		if(is_sliding):
+			_end_slide()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
@@ -221,6 +233,7 @@ func _start_slide(direction : Vector3):
 
 	# Set the slide velocity once, when the slide starts.
 	_slide_velocity = slide_dir * maxf(_planar_velocity.length(), slide_speed)
+	slide_start.emit()
 
 func _update_slide(side_input, delta):
 	var speed: float = _slide_velocity.length()
@@ -234,6 +247,11 @@ func _update_slide(side_input, delta):
 	view_right.y = 0.0
 	view_right = view_right.normalized()
 	_planar_velocity = _slide_velocity + view_right * side_input * slide_steer
+
+func _end_slide() -> void:
+	if is_sliding:
+		is_sliding = false
+		slide_end.emit()
 
 func _update_walk(move_direction ,grounded ,delta):
 	if not move_direction.is_zero_approx():
