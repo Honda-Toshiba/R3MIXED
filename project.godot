@@ -17,7 +17,6 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-_mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
 PartDb="*uid://is0kbpp2knew"
 
 [display]
@@ -27,10 +26,6 @@ window/size/viewport_height=1080
 window/size/mode=2
 _mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
 PartDb="*uid://is0kbpp2knew"
-
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/godot-neovim/plugin.cfg", "res://addons/godot_ai/plugin.cfg", "res://addons/godot_git/plugin.cfg")
 
 [input]
 

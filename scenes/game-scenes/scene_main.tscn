@@ -42,7 +42,8 @@ material_override = SubResource("StandardMaterial3D_scvwv")
 mesh = SubResource("BoxMesh_ueota")
 
 [node name="Area3D" type="Area3D" parent="." unique_id=1636883271 groups=["jump_pad"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2025106, -13.1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.350846, -13.1)
+collision_mask = 2
 script = ExtResource("4_72r0e")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="Area3D" unique_id=44145763]
