@@ -45,25 +45,32 @@ extends CharacterBody3D
 @onready var standing_height := capsule.height # 2.06121826171875
 @onready var standing_center_y := collider.position.y
 @onready var standing_camera_height = head.position
-
-
+#----------
 @export var slide_height: float = 1.2
-
-
+#----------
 var dash_stop_pending: bool = false
 var dash_direction: Vector3 = Vector3.ZERO
 var dash_time_left: float = 0.0
-
-
+#----------
 var stuck_on_wall : bool = false
 var wall_set : bool = false
 var saved_wall_normal: Vector3 = Vector3.ZERO
-
-var is_sliding: bool = false
-var _planar_velocity: Vector3 = Vector3.ZERO
-var _slide_velocity: Vector3 = Vector3.ZERO
 var wall_jump_count : int = 0
 var wall_ray: RayCast3D
+#----------
+var is_sliding: bool = false
+var _slide_velocity: Vector3 = Vector3.ZERO
+#----------
+var _planar_velocity: Vector3 = Vector3.ZERO
+#----------
+var buffered_jump_duration :float = 0.1
+var current_buffered_jump_left : float = 0.0
+#----------
+var cayote_time : float = 0.8
+var cayote_time_left: float = 0.0
+var start_cayote_time : bool = false
+
+
 
 func _ready() -> void:
 	wall_ray = RayCast3D.new()
@@ -87,26 +94,31 @@ func _physics_process(delta: float) -> void:
 
 	if grounded:
 		_reset_wall_state_on_ground()
+		cayote_time_left = cayote_time
 	else:
+		cayote_time_left = maxf(cayote_time_left - delta, 0.0)
 		_try_grab_wall()
-
-	if wall_set:
-		_check_wall_contact()
 
 	var input_dir: Vector2 = Input.get_vector(
 		"move_left", "move_right", "move_forwards", "move_backwards"
 	)
-	
 	var direction: Vector3 = global_transform.basis * Vector3(input_dir.x, 0.0, input_dir.y)
 	direction.y = 0.0
 	direction = direction.normalized()
-	
+
 	var jump_pressed := Input.is_action_just_pressed("ui_accept")
-	var jumped := jump_pressed and grounded
-	var wall_jumped := jump_pressed and stuck_on_wall
-	var wants_slide: bool = grounded and not jumped and Input.is_action_pressed("crouch")
 	
-		# About to leave a slide: stay low if the standing capsule wouldn't fit.
+	if jump_pressed:
+		current_buffered_jump_left = buffered_jump_duration
+	else:
+		current_buffered_jump_left = maxf(current_buffered_jump_left - delta, 0.0)
+
+	var jump_requested := current_buffered_jump_left > 0.0
+	var jumped := jump_requested and (grounded or cayote_time_left > 0.0)
+	var wall_jumped := jump_requested and stuck_on_wall
+
+	var wants_slide: bool = grounded and not jumped and Input.is_action_pressed("crouch")
+	# About to leave a slide: stay low if the standing capsule wouldn't fit.
 	if is_sliding and grounded and not wants_slide:
 		var height_to_gain := standing_height - capsule.height
 		if test_move(global_transform, Vector3.UP * height_to_gain):
@@ -130,13 +142,18 @@ func _physics_process(delta: float) -> void:
 	else:
 		_update_walk(direction, grounded, delta)
 
-	if grounded:
-		velocity.y = JUMP_VELOCITY if jumped else 0.0
+	if jumped:
+		velocity.y = JUMP_VELOCITY
+		current_buffered_jump_left = 0.0
+	elif grounded:
+		velocity.y = 0.0
 	else:
 		_apply_air_motion(delta)
 
-	if wall_jumped and wall_jump_count < wall_jump_limit:
+	var can_wall_jump = wall_jump_count < wall_jump_limit and dash_time_left <= 0.0
+	if wall_jumped and can_wall_jump and not jumped:
 		_apply_wall_jump()
+		current_buffered_jump_left = 0.0
 
 	if dash_time_left > 0.0:
 		_apply_dash(delta)
@@ -205,7 +222,7 @@ func _start_slide(direction : Vector3):
 	# Set the slide velocity once, when the slide starts.
 	_slide_velocity = slide_dir * maxf(_planar_velocity.length(), slide_speed)
 
-func _update_slide(horizontal_input, delta):
+func _update_slide(side_input, delta):
 	var speed: float = _slide_velocity.length()
 	if speed > slide_speed:
 		speed = move_toward(speed, slide_speed, slide_friction * delta)
@@ -216,13 +233,13 @@ func _update_slide(horizontal_input, delta):
 	var view_right: Vector3 = global_transform.basis.x
 	view_right.y = 0.0
 	view_right = view_right.normalized()
-	_planar_velocity = _slide_velocity + view_right * horizontal_input * slide_steer
-	
-func _update_walk(horizontal_input ,grounded ,delta):
-	if not horizontal_input.is_zero_approx():
+	_planar_velocity = _slide_velocity + view_right * side_input * slide_steer
+
+func _update_walk(move_direction ,grounded ,delta):
+	if not move_direction.is_zero_approx():
 		var rate: float = accelration
 		# Negative dot: desired movement opposes current momentum.
-		if _planar_velocity.dot(horizontal_input) < 0.0:
+		if _planar_velocity.dot(move_direction) < 0.0:
 			rate = turn_accelration
 		var top_speed: float = SPEED
 		if not grounded:
@@ -230,7 +247,7 @@ func _update_walk(horizontal_input ,grounded ,delta):
 			rate *= Air_Control
 		# Approach the target velocity by acceleration times elapsed seconds.
 		_planar_velocity = _planar_velocity.move_toward(
-			horizontal_input * top_speed, rate * delta
+			move_direction * top_speed, rate * delta
 		)
 	elif grounded:
 		# Approach the target velocity by acceleration times elapsed seconds.

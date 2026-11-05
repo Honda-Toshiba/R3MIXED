@@ -6,6 +6,7 @@ albedo_color = Color(0, 1, 1, 1)
 [sub_resource type="BoxMesh" id="BoxMesh_ueota"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_lv0j5"]
+size = Vector3(2.525, 1, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_onrkg"]
 albedo_color = Color(1, 0, 1, 1)
@@ -13,7 +14,7 @@ albedo_color = Color(1, 0, 1, 1)
 [node name="Jumptest" type="Node3D" unique_id=268558779]
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1579588063]
-transform = Transform3D(4.055, 0, 0, 0, 4.055, 0, 0, 0, 4.055, -7.005, 0, 0)
+transform = Transform3D(4.055, 0, 0, 0, 4.055, 0, 0, 0, 4.055, -16.158825, 0, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D" unique_id=384361823]
 material_override = SubResource("StandardMaterial3D_4flbx")
@@ -23,9 +24,10 @@ mesh = SubResource("BoxMesh_ueota")
 shape = SubResource("BoxShape3D_lv0j5")
 
 [node name="StaticBody3D2" type="StaticBody3D" parent="." unique_id=1793598918]
-transform = Transform3D(4.055, 0, 0, 0, 4.055, 0, 0, 0, 4.055, 0, 0, 0)
+transform = Transform3D(4.055, 0, 0, 0, 4.055, 0, 0, 0, 4.055, 16.57722, 0, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D2" unique_id=1893137215]
+transform = Transform3D(2.4879782, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 material_override = SubResource("StandardMaterial3D_onrkg")
 mesh = SubResource("BoxMesh_ueota")
 
