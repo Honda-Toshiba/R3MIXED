@@ -9,8 +9,6 @@ extends Control
 func show_card(enemy: Enemy) -> void:
 	enemy_name.text = "[font=res://assets/fonts/font_cute.ttf][font_size=28][left]" + enemy.data.name
 	enemy_health.value = ((enemy.health * 1.0) / enemy.data.max_health) * 100.0
-	print(((enemy.health * 1.0) / enemy.data.max_health) * 100.0)
-	print(enemy_health.value)
 	
 	# Fade in
 	var tween = create_tween()
