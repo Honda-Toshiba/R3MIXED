@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c2a033uyre4kh"]
 
-[ext_resource type="Script" uid="uid://frt0na3ywi0t" path="res://scripts/player/player_movement.gd" id="1_4flbx"]
+[ext_resource type="Script" path="res://scripts/player/player_movement.gd" id="1_4flbx"]
 [ext_resource type="Script" uid="uid://uguo75o32igd" path="res://scripts/player/player_manager.gd" id="2_56dyf"]
 [ext_resource type="Texture2D" uid="uid://7upefvigkeqd" path="res://assets/textures/ui/tex_ui_crosshair.png" id="2_n0leu"]
 [ext_resource type="Script" uid="uid://d1qu1yfba47pk" path="res://scripts/player/player_pickup_item.gd" id="2_tou0u"]
@@ -63,3 +63,7 @@ texture = ExtResource("2_n0leu")
 
 [node name="player_weapon" type="Node3D" parent="Head/PlayerCamera" unique_id=816193443]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0.6249354, 0, -0.8163614)
+
+[node name="dash_cooldown" type="Timer" parent="." unique_id=194684537]
+wait_time = 4.0
+one_shot = true
