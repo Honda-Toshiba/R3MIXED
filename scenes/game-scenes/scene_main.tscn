@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://c2a033uyre4kh" path="res://scenes/prefabs/player.tscn" id="2_4hgg4"]
 [ext_resource type="PackedScene" uid="uid://bqi63ebjesgvq" path="res://scenes/prefabs/jump_test.tscn" id="3_n5r24"]
 [ext_resource type="Script" uid="uid://0utlhttphdw8" path="res://scripts/environment/jump_pad.gd" id="4_72r0e"]
+[ext_resource type="PackedScene" uid="uid://dx5tnxa2p7drb" path="res://scenes/prefabs/enemy.tscn" id="5_4hgg4"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_scvwv"]
 albedo_color = Color(1, 1, 0, 1)
@@ -34,7 +35,7 @@ SPEED = 12.0
 transform = Transform3D(1, 0, 0, 0, 0.11731247, 0.99309504, 0, -0.99309504, 0.11731247, 0, 16.638702, 0)
 
 [node name="Jumptest" parent="." unique_id=268558779 instance=ExtResource("3_n5r24")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.179878, -0.3826189, 18.609911)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.3810127, 4.1454606, 7.453911)
 
 [node name="yellow_line" type="MeshInstance3D" parent="." unique_id=1626545173]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 21.612194, 0, 0)
@@ -80,5 +81,8 @@ transform = Transform3D(0.5660709, 0.40551552, -4.329633, -0.037676126, 7.239550
 use_collision = true
 collision_layer = 5
 size = Vector3(1, 9.028259, 1)
+
+[node name="Enemy" parent="." unique_id=1890585613 instance=ExtResource("5_4hgg4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.1284437, 3.3132877, -5.9250913)
 
 [connection signal="body_entered" from="Area3D" to="Area3D" method="_on_body_entered"]

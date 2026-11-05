@@ -6,4 +6,5 @@ var player :CharacterBody3D
 func _on_body_entered(body: Node3D) -> void:
 	if body.is_in_group("player"):
 		player = body
+		player.wall_jump_count = 0
 		player.velocity.y = 30

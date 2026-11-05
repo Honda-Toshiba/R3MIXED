@@ -33,9 +33,24 @@ extends CharacterBody3D
 
 @export var dash_distance: float = 3.0
 @export var dash_duration: float = 0.09
-var dash_stop_pending: bool = false
 @onready var dash_cooldown: Timer = $dash_cooldown
 
+
+
+#------
+@onready var collider: CollisionShape3D = $CollisionShape3D
+@onready var capsule: CapsuleShape3D = collider.shape as CapsuleShape3D
+@onready var head: Node3D = $Head
+#------
+@onready var standing_height := capsule.height # 2.06121826171875
+@onready var standing_center_y := collider.position.y
+@onready var standing_camera_height = head.position
+
+
+@export var slide_height: float = 1.2
+
+
+var dash_stop_pending: bool = false
 var dash_direction: Vector3 = Vector3.ZERO
 var dash_time_left: float = 0.0
 
@@ -45,14 +60,9 @@ var wall_set : bool = false
 var saved_wall_normal: Vector3 = Vector3.ZERO
 
 var is_sliding: bool = false
-# Flat control velocity, separate from the engine's slope-adjusted velocity.
 var _planar_velocity: Vector3 = Vector3.ZERO
-# Base slide momentum. Steering is added separately, never stored into this.
 var _slide_velocity: Vector3 = Vector3.ZERO
-
 var wall_jump_count : int = 0
-
-@onready var head: Node3D = $Head
 var wall_ray: RayCast3D
 
 func _ready() -> void:
@@ -62,6 +72,7 @@ func _ready() -> void:
 	add_child(wall_ray)
 	wall_ray.enabled = true
 	wall_ray.add_exception(self)
+	print(standing_height)
 
 	motion_mode = CharacterBody3D.MOTION_MODE_GROUNDED # To identify walls, ceilings and floors.
 	up_direction = Vector3.UP # Establish a baseline "up" direction.
@@ -72,25 +83,20 @@ func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 func _physics_process(delta: float) -> void:
-	var grounded: bool = is_on_floor()
+	var grounded := is_on_floor()
+
 	if grounded:
-		wall_jump_count = 0
-		stuck_on_wall = false
-		wall_set = false
+		_reset_wall_state_on_ground()
 	else:
-		if(is_on_wall() and not wall_set): # inital grab
-			point_at_wall(get_wall_normal())
-			wall_set = true
-	if(wall_set):
-		stuck_on_wall = false
-		if wall_ray.is_colliding():
-			var normal = wall_ray.get_collision_normal()
-			stuck_on_wall = absf(normal.dot(Vector3.UP)) < 0.2
-		wall_set = stuck_on_wall
+		_try_grab_wall()
+
+	if wall_set:
+		_check_wall_contact()
+
 	var input_dir: Vector2 = Input.get_vector(
 		"move_left", "move_right", "move_forwards", "move_backwards"
 	)
-	#wall_jump_count = 0.0 if not (stuck_on_wall or wall_set) else wall_jump_count
+	
 	var direction: Vector3 = global_transform.basis * Vector3(input_dir.x, 0.0, input_dir.y)
 	direction.y = 0.0
 	direction = direction.normalized()
@@ -100,90 +106,42 @@ func _physics_process(delta: float) -> void:
 	var wall_jumped := jump_pressed and stuck_on_wall
 	var wants_slide: bool = grounded and not jumped and Input.is_action_pressed("crouch")
 	
+		# About to leave a slide: stay low if the standing capsule wouldn't fit.
+	if is_sliding and grounded and not wants_slide:
+		var height_to_gain := standing_height - capsule.height
+		if test_move(global_transform, Vector3.UP * height_to_gain):
+			wants_slide = true
+			jumped = false
+
 	if Input.is_action_just_pressed("dash") and dash_time_left <= 0.0 and not dash_stop_pending and dash_cooldown.is_stopped():
 		dash_direction = (-head.global_transform.basis.z).normalized()
 		dash_time_left = dash_duration
 		dash_cooldown.start()
 
 	if wants_slide and not is_sliding:
-		var slide_dir: Vector3 = direction
-		if slide_dir.is_zero_approx(): # If no movement inputs.
-			# With no input, use existing movement; if stationary, use facing direction.
-			if not _planar_velocity.is_zero_approx():
-				slide_dir = _planar_velocity.normalized()
-			else:
-				slide_dir = -global_transform.basis.z
-				slide_dir.y = 0.0
-				slide_dir = slide_dir.normalized()
-		# Direction times speed: start at slide_speed, or keep faster momentum.
-		_slide_velocity = slide_dir * maxf(_planar_velocity.length(), slide_speed)
+		_start_slide(direction)
+
 	is_sliding = wants_slide
+	crouch_pov(is_sliding)
 
 	if is_sliding:
-		# Keep the initial slide heading. Only excess base speed decays.
-		var speed: float = _slide_velocity.length()
-		if speed > slide_speed:
-			speed = move_toward(speed, slide_speed, slide_friction * delta)
-			_slide_velocity = _slide_velocity.normalized() * speed
+		_update_slide(input_dir.x, delta)
 
-		# A temporary view-relative offset, not acceleration or rotation.
-		# Releasing A/D removes it; holding a key never accumulates a turn.
-		var view_right: Vector3 = global_transform.basis.x
-		view_right.y = 0.0
-		view_right = view_right.normalized()
-		_planar_velocity = _slide_velocity + view_right * input_dir.x * slide_steer
 	else:
-		if not direction.is_zero_approx():
-			var rate: float = accelration
-			# Negative dot: desired movement opposes current momentum.
-			if _planar_velocity.dot(direction) < 0.0:
-				rate = turn_accelration
-			var top_speed: float = SPEED
-			if not grounded:
-				top_speed = maxf(SPEED, _planar_velocity.length())
-				rate *= Air_Control
-			# Approach the target velocity by acceleration times elapsed seconds.
-			_planar_velocity = _planar_velocity.move_toward(
-				direction * top_speed, rate * delta
-			)
-		elif grounded:
-			# Approach the target velocity by acceleration times elapsed seconds.
-			_planar_velocity = _planar_velocity.move_toward(Vector3.ZERO, friction * delta)
+		_update_walk(direction, grounded, delta)
 
 	if grounded:
-		# Supply flat motion; move_and_slide handles the slope and floor snap.
 		velocity.y = JUMP_VELOCITY if jumped else 0.0
 	else:
-		var gravity_mult: float = fall_multiplier if velocity.y < 0.0 else 1.0
-		if(stuck_on_wall and velocity.y < 0.0):
-			velocity.y = move_toward(velocity.y, -wall_fall_speed, wall_braking * gravity_mult * delta)
-		else:
-			velocity += get_gravity() * gravity_mult * delta
-		var current_wall_friction : float = on_wall_friction if (stuck_on_wall) else 1.0
-		# Gradually reduce horizontal speed in the air, consistently across frame rates.
-		_planar_velocity *= exp(-air_drag * delta * current_wall_friction)
-	
-	if wall_jumped and wall_jump_count <= wall_jump_limit:
-		var jump_strength = WALL_JUMP_VELOCITY / (2 ** wall_jump_count)
-		_planar_velocity += saved_wall_normal.normalized() * jump_strength
-		velocity.y = jump_strength
-		stuck_on_wall = false
-		wall_set = false
-		wall_jump_count += 1 
+		_apply_air_motion(delta)
+
+	if wall_jumped and wall_jump_count < wall_jump_limit:
+		_apply_wall_jump()
 
 	if dash_time_left > 0.0:
-		var dash_speed := dash_distance / dash_duration
-		var step_time := minf(delta, dash_time_left)
-		var dash_velocity := dash_direction * dash_speed * (step_time / delta)
-		_planar_velocity = Vector3(dash_velocity.x, 0.0, dash_velocity.z)
-		velocity.y = dash_velocity.y
-		dash_time_left -= step_time
-		dash_stop_pending = dash_time_left <= 0.0
-		
+		_apply_dash(delta)
 
 	elif dash_stop_pending:
-		#_planar_velocity = Vector3.ZERO
-		#velocity.y = 0.0
 		dash_stop_pending = false
 		
 	velocity.x = _planar_velocity.x
@@ -198,9 +156,6 @@ func _physics_process(delta: float) -> void:
 		wall_normal = wall_normal.normalized()
 		if _planar_velocity.dot(wall_normal) < 0.0:
 			_planar_velocity = _planar_velocity.slide(wall_normal)
-		if is_sliding and _slide_velocity.dot(wall_normal) < 0.0:
-			_slide_velocity = _slide_velocity.slide(wall_normal)
-
 	if not is_on_floor():
 		# Preserve the engine's outgoing horizontal motion when leaving ground.
 		_planar_velocity = Vector3(velocity.x, 0.0, velocity.z)
@@ -226,6 +181,105 @@ func point_at_wall(normal :Vector3):
 	wall_ray.target_position = wall_ray.to_local(endpoint)
 	wall_ray.force_raycast_update()
 
+func crouch_pov(sliding: bool) -> void:
+	capsule.height = slide_height if sliding else standing_height
+	var height_lost: float = standing_height - capsule.height
+
+	# Lower the capsule's center by half the change to keep the feet planted.
+	collider.position.y = standing_center_y - height_lost * 0.5
+
+	# Lower the eyes with the top of the capsule.
+	head.position.y = standing_camera_height.y - height_lost
+
+func _start_slide(direction : Vector3):
+	var slide_dir: Vector3 = direction
+	if slide_dir.is_zero_approx():
+		# No input: use current movement, or face forward if standing still.
+		if not _planar_velocity.is_zero_approx():
+			slide_dir = _planar_velocity.normalized()
+		else:
+			slide_dir = -global_transform.basis.z
+			slide_dir.y = 0.0
+			slide_dir = slide_dir.normalized()
+
+	# Set the slide velocity once, when the slide starts.
+	_slide_velocity = slide_dir * maxf(_planar_velocity.length(), slide_speed)
+
+func _update_slide(horizontal_input, delta):
+	var speed: float = _slide_velocity.length()
+	if speed > slide_speed:
+		speed = move_toward(speed, slide_speed, slide_friction * delta)
+		_slide_velocity = _slide_velocity.normalized() * speed
+
+	# A temporary view-relative offset, not acceleration or rotation.
+	# Releasing A/D removes it; holding a key never accumulates a turn.
+	var view_right: Vector3 = global_transform.basis.x
+	view_right.y = 0.0
+	view_right = view_right.normalized()
+	_planar_velocity = _slide_velocity + view_right * horizontal_input * slide_steer
+	
+func _update_walk(horizontal_input ,grounded ,delta):
+	if not horizontal_input.is_zero_approx():
+		var rate: float = accelration
+		# Negative dot: desired movement opposes current momentum.
+		if _planar_velocity.dot(horizontal_input) < 0.0:
+			rate = turn_accelration
+		var top_speed: float = SPEED
+		if not grounded:
+			top_speed = maxf(SPEED, _planar_velocity.length())
+			rate *= Air_Control
+		# Approach the target velocity by acceleration times elapsed seconds.
+		_planar_velocity = _planar_velocity.move_toward(
+			horizontal_input * top_speed, rate * delta
+		)
+	elif grounded:
+		# Approach the target velocity by acceleration times elapsed seconds.
+		_planar_velocity = _planar_velocity.move_toward(Vector3.ZERO, friction * delta)
+
+func _reset_wall_state_on_ground() -> void:
+	wall_jump_count = 0
+	stuck_on_wall = false
+	wall_set = false
+
+func _try_grab_wall() -> void:
+	if is_on_wall() and not wall_set:
+		point_at_wall(get_wall_normal())
+		wall_set = true
+
+func _check_wall_contact() -> void:
+	stuck_on_wall = false
+	if wall_ray.is_colliding():
+		var normal := wall_ray.get_collision_normal()
+		stuck_on_wall = absf(normal.dot(Vector3.UP)) < 0.2
+
+	wall_set = stuck_on_wall
+
+func _apply_air_motion(delta):
+	var gravity_mult: float = fall_multiplier if velocity.y < 0.0 else 1.0
+	if(stuck_on_wall and velocity.y < 0.0):
+		velocity.y = move_toward(velocity.y, -wall_fall_speed, wall_braking * gravity_mult * delta)
+	else:
+		velocity += get_gravity() * gravity_mult * delta
+	var current_wall_friction : float = on_wall_friction if (stuck_on_wall) else 1.0
+	# Gradually reduce horizontal speed in the air, consistently across frame rates.
+	_planar_velocity *= exp(-air_drag * delta * current_wall_friction)
+
+func _apply_wall_jump():
+	var jump_strength = WALL_JUMP_VELOCITY / (2 ** wall_jump_count)
+	_planar_velocity += saved_wall_normal.normalized() * jump_strength
+	velocity.y = jump_strength
+	stuck_on_wall = false
+	wall_set = false
+	wall_jump_count += 1 
+
+func _apply_dash(delta):
+	var dash_speed := dash_distance / dash_duration
+	var step_time := minf(delta, dash_time_left)
+	var dash_velocity :Vector3 = dash_direction * dash_speed * (step_time / delta)
+	_planar_velocity = Vector3(dash_velocity.x, 0.0, dash_velocity.z)
+	velocity.y = dash_velocity.y
+	dash_time_left -= step_time
+	dash_stop_pending = dash_time_left <= 0.0
 
 func _on_dash_cooldown_timeout() -> void:
 	pass # Replace with function body.
