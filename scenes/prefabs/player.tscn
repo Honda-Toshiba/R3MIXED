@@ -24,3 +24,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9825059, -0.21638691)
 
 [node name="PlayerCamera" type="Camera3D" parent="Head" unique_id=376009827]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.055699706)
+
+[node name="dash_cooldown" type="Timer" parent="." unique_id=1039798650]
+wait_time = 4.0
+one_shot = true
+
+[connection signal="timeout" from="dash_cooldown" to="." method="_on_dash_cooldown_timeout"]

@@ -29,6 +29,15 @@ extends CharacterBody3D
 @export var on_wall_friction : float = 1.8
 @export var wall_fall_speed: float = 5.0
 @export var stick_distance: float = 0.8
+@export var wall_jump_limit : int = 4
+
+@export var dash_distance: float = 3.0
+@export var dash_duration: float = 0.09
+var dash_stop_pending: bool = false
+@onready var dash_cooldown: Timer = $dash_cooldown
+
+var dash_direction: Vector3 = Vector3.ZERO
+var dash_time_left: float = 0.0
 
 
 var stuck_on_wall : bool = false
@@ -81,7 +90,7 @@ func _physics_process(delta: float) -> void:
 	var input_dir: Vector2 = Input.get_vector(
 		"move_left", "move_right", "move_forwards", "move_backwards"
 	)
-	wall_jump_count = 0.0 if not (stuck_on_wall or wall_set) else wall_jump_count
+	#wall_jump_count = 0.0 if not (stuck_on_wall or wall_set) else wall_jump_count
 	var direction: Vector3 = global_transform.basis * Vector3(input_dir.x, 0.0, input_dir.y)
 	direction.y = 0.0
 	direction = direction.normalized()
@@ -90,8 +99,11 @@ func _physics_process(delta: float) -> void:
 	var jumped := jump_pressed and grounded
 	var wall_jumped := jump_pressed and stuck_on_wall
 	var wants_slide: bool = grounded and not jumped and Input.is_action_pressed("crouch")
-
-
+	
+	if Input.is_action_just_pressed("dash") and dash_time_left <= 0.0 and not dash_stop_pending and dash_cooldown.is_stopped():
+		dash_direction = (-head.global_transform.basis.z).normalized()
+		dash_time_left = dash_duration
+		dash_cooldown.start()
 
 	if wants_slide and not is_sliding:
 		var slide_dir: Vector3 = direction
@@ -151,7 +163,7 @@ func _physics_process(delta: float) -> void:
 		# Gradually reduce horizontal speed in the air, consistently across frame rates.
 		_planar_velocity *= exp(-air_drag * delta * current_wall_friction)
 	
-	if wall_jumped:
+	if wall_jumped and wall_jump_count <= wall_jump_limit:
 		var jump_strength = WALL_JUMP_VELOCITY / (2 ** wall_jump_count)
 		_planar_velocity += saved_wall_normal.normalized() * jump_strength
 		velocity.y = jump_strength
@@ -159,6 +171,21 @@ func _physics_process(delta: float) -> void:
 		wall_set = false
 		wall_jump_count += 1 
 
+	if dash_time_left > 0.0:
+		var dash_speed := dash_distance / dash_duration
+		var step_time := minf(delta, dash_time_left)
+		var dash_velocity := dash_direction * dash_speed * (step_time / delta)
+		_planar_velocity = Vector3(dash_velocity.x, 0.0, dash_velocity.z)
+		velocity.y = dash_velocity.y
+		dash_time_left -= step_time
+		dash_stop_pending = dash_time_left <= 0.0
+		
+
+	elif dash_stop_pending:
+		#_planar_velocity = Vector3.ZERO
+		#velocity.y = 0.0
+		dash_stop_pending = false
+		
 	velocity.x = _planar_velocity.x
 	velocity.z = _planar_velocity.z
 	# Move using velocity; Godot may modify it in response to collisions.
@@ -198,3 +225,7 @@ func point_at_wall(normal :Vector3):
 	var endpoint = wall_ray.global_position - saved_wall_normal * stick_distance
 	wall_ray.target_position = wall_ray.to_local(endpoint)
 	wall_ray.force_raycast_update()
+
+
+func _on_dash_cooldown_timeout() -> void:
+	pass # Replace with function body.
