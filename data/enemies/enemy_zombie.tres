@@ -12,6 +12,7 @@
 script = ExtResource("3_rpv2n")
 id = &"enemytype_zombie"
 name = "Zombie"
+max_health = 50
 head_pool = Array[ExtResource("1_fqbxc")]([ExtResource("2_mldjg"), ExtResource("3_mldjg"), ExtResource("4_aj1dn")])
 tail_pool = Array[ExtResource("1_fqbxc")]([ExtResource("4_2h66q"), ExtResource("6_rpv2n")])
 odds_head = Array[int]([70, 0, 25, 5, 0])

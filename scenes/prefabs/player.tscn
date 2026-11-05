@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://7upefvigkeqd" path="res://assets/textures/ui/tex_ui_crosshair.png" id="2_n0leu"]
 [ext_resource type="Script" uid="uid://d1qu1yfba47pk" path="res://scripts/player/player_pickup_item.gd" id="2_tou0u"]
 [ext_resource type="Script" uid="uid://cmr22bo3gbpqw" path="res://scripts/player/player_inventory.gd" id="4_6o77n"]
+[ext_resource type="Script" uid="uid://xq0a6ghc0tq" path="res://scripts/player/player_combat.gd" id="4_6v0jn"]
 [ext_resource type="Script" uid="uid://bgyvsxsudatgu" path="res://scripts/player/player_weapon_camera.gd" id="6_6o77n"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_scvwv"]
@@ -13,13 +14,18 @@ height = 2.0612183
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_jppf3"]
 height = 2.5
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_1jdho"]
+size = Vector3(0.9326172, 0.59277344, 0.3918457)
+
 [node name="Player" type="CharacterBody3D" unique_id=1686109621]
 collision_layer = 2
+collision_mask = 17
 script = ExtResource("1_4flbx")
 JUMP_VELOCITY = 7.0
 
 [node name="player_manager" type="Node3D" parent="." unique_id=656213622 node_paths=PackedStringArray("inventory", "player_weapon", "player_camera")]
 script = ExtResource("2_56dyf")
+max_health = 100
 inventory = NodePath("player_inventory")
 player_weapon = NodePath("../Head/PlayerCamera/WeaponCanvas/SubViewportContainer/SubViewport/WeaponCamera/player_weapon")
 player_camera = NodePath("../Head/PlayerCamera")
@@ -27,6 +33,11 @@ player_camera = NodePath("../Head/PlayerCamera")
 [node name="player_inventory" type="Node" parent="player_manager" unique_id=1220832506]
 script = ExtResource("4_6o77n")
 max_capacity = 3
+
+[node name="player_combat" type="Node" parent="player_manager" unique_id=1878228851 node_paths=PackedStringArray("player", "hitbox")]
+script = ExtResource("4_6v0jn")
+player = NodePath("..")
+hitbox = NodePath("../../Head/PlayerCamera/player_weapon_htibox")
 
 [node name="player_pickup_item" type="Node" parent="player_manager" unique_id=903311057 node_paths=PackedStringArray("player", "camera")]
 script = ExtResource("2_tou0u")
@@ -46,6 +57,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9825059, -0.21638691)
 [node name="PlayerCamera" type="Camera3D" parent="Head" unique_id=376009827]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.055699706)
 cull_mask = 1048573
+
+[node name="player_weapon_htibox" type="Area3D" parent="Head/PlayerCamera" unique_id=423375301]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.4213128)
+collision_mask = 16
+
+[node name="player_weapon_hitbox_collider" type="CollisionShape3D" parent="Head/PlayerCamera/player_weapon_htibox" unique_id=307237638]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.012207031, 0.083496094, -1.0844007)
+shape = SubResource("BoxShape3D_1jdho")
 
 [node name="HUDCanvas" type="CanvasLayer" parent="Head/PlayerCamera" unique_id=822434012]
 
