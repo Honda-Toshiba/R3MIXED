@@ -16,6 +16,8 @@ func _ready() -> void:
 # Main combat functionality
 
 func attack() -> void:
+	if player.get_current_weapon() == null:
+		return
 	for enemy in hitbox.get_overlapping_bodies():
 		damage_enemy(enemy, player.get_current_weapon().damage)
 
