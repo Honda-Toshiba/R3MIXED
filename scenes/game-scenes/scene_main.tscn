@@ -2,8 +2,20 @@
 
 [ext_resource type="PackedScene" uid="uid://bblikrbnys58i" path="res://scenes/prefabs/floor.tscn" id="1_vm14q"]
 [ext_resource type="PackedScene" uid="uid://c2a033uyre4kh" path="res://scenes/prefabs/player.tscn" id="2_4hgg4"]
+[ext_resource type="PackedScene" uid="uid://dx5tnxa2p7drb" path="res://scenes/prefabs/enemy.tscn" id="3_4hgg4"]
 [ext_resource type="PackedScene" uid="uid://bqi63ebjesgvq" path="res://scenes/prefabs/jump_test.tscn" id="3_n5r24"]
 [ext_resource type="Script" uid="uid://0utlhttphdw8" path="res://scripts/environment/jump_pad.gd" id="4_72r0e"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4hgg4"]
+
+[sub_resource type="Sky" id="Sky_pqjwt"]
+sky_material = SubResource("ProceduralSkyMaterial_4hgg4")
+
+[sub_resource type="Environment" id="Environment_n5r24"]
+background_mode = 1
+sky = SubResource("Sky_pqjwt")
+ambient_light_source = 3
+tonemap_mode = 2
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_scvwv"]
 albedo_color = Color(1, 1, 0, 1)
@@ -30,8 +42,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5545757, 0)
 slide_speed = 19.0
 SPEED = 12.0
 
+[node name="Enemy" parent="." unique_id=1890585613 instance=ExtResource("3_4hgg4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.323426, 1.3161111, -20.27209)
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1685229913]
 transform = Transform3D(1, 0, 0, 0, 0.11731247, 0.99309504, 0, -0.99309504, 0.11731247, 0, 16.638702, 0)
+layers = 3
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=536692700]
+environment = SubResource("Environment_n5r24")
 
 [node name="Jumptest" parent="." unique_id=268558779 instance=ExtResource("3_n5r24")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.179878, -0.3826189, 18.609911)

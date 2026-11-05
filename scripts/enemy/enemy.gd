@@ -7,8 +7,16 @@ var health: int
 func _ready() -> void:
 	health = data.max_health
 
+# Health and Death
+
+func take_damage(value: int) -> void:
+	health -= value
+	if health <= 0:
+		die()
+
 func die() -> void:
 	drop_weapon()
+	queue_free()
 
 func drop_weapon() -> Weapon:
 	var weapon = Weapon.create_drop(data.head_pool, data.tail_pool, data.odds_head, data.odds_tail)
@@ -29,7 +37,7 @@ func drop_weapon() -> Weapon:
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed:
 		if event.keycode == KEY_E:
-			die()
+			drop_weapon()
 
 # Helpers
 

@@ -1,19 +1,17 @@
 class_name Player
 extends Node3D
 
+@export var max_health: int
+var health: int
+
 @export var inventory: PlayerInventory
 var current_slot: int = 0
 @export var player_weapon: Node3D
 @export var player_camera: Camera3D
 
-# Input handling
-func _unhandled_input(event: InputEvent) -> void:
-	for action in InputMap.get_actions():
-		# Switch slot
-		if action.begins_with("slot_") and event.is_action_pressed(action):
-			var slot = action.trim_prefix("slot_").to_int()
-			switch_slot(slot)
-	
+func _ready() -> void:
+	health = max_health
+
 # Weapons and Inventory
 func pickup_weapon(w: Weapon, model: Node3D) -> void:
 	if inventory.weapons[current_slot] != null:
@@ -50,6 +48,18 @@ func switch_slot(slot: int) -> void:
 		return
 	
 	player_weapon.add_child(inventory.models[inventory.weapons[current_slot].id])
+
+func get_current_weapon() -> Weapon:
+	return inventory.weapons[current_slot]
+
+
+# Input handling
+func _unhandled_input(event: InputEvent) -> void:
+	for action in InputMap.get_actions():
+		# Switch slot
+		if action.begins_with("slot_") and event.is_action_pressed(action):
+			var slot = action.trim_prefix("slot_").to_int()
+			switch_slot(slot)
 
 
 # Helpers
