@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://7upefvigkeqd"
-path="res://.godot/imported/tex_ui_crosshair.png-02917a8c420f9f2b6e3db50fa2e49c78.ctex"
+uid="uid://bgcgwmj03rq25"
+path="res://.godot/imported/tex_ui_hud_health_bg.png-ce2c6486f799980e094a159b0dd594b3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/textures/ui/tex_ui_crosshair.png"
-dest_files=["res://.godot/imported/tex_ui_crosshair.png-02917a8c420f9f2b6e3db50fa2e49c78.ctex"]
+source_file="res://assets/textures/ui/tex_ui_hud_health_bg.png"
+dest_files=["res://.godot/imported/tex_ui_hud_health_bg.png-ce2c6486f799980e094a159b0dd594b3.ctex"]
 
 [params]
 

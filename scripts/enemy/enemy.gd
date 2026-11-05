@@ -11,7 +11,6 @@ func _ready() -> void:
 
 func take_damage(value: int) -> void:
 	health -= value
-	print(health)
 	if health <= 0:
 		die()
 
@@ -38,7 +37,7 @@ func drop_weapon() -> Weapon:
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed:
 		if event.keycode == KEY_E:
-			die()
+			drop_weapon()
 
 # Helpers
 

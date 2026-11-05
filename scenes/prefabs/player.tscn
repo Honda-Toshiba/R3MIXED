@@ -2,11 +2,14 @@
 
 [ext_resource type="Script" uid="uid://cqsbya6cafsxc" path="res://scripts/player/player_movement.gd" id="1_4flbx"]
 [ext_resource type="Script" uid="uid://uguo75o32igd" path="res://scripts/player/player_manager.gd" id="2_56dyf"]
-[ext_resource type="Texture2D" uid="uid://7upefvigkeqd" path="res://assets/textures/ui/tex_ui_crosshair.png" id="2_n0leu"]
+[ext_resource type="Texture2D" uid="uid://7upefvigkeqd" path="res://assets/textures/ui/tex_ui_hud_crosshair.png" id="2_n0leu"]
 [ext_resource type="Script" uid="uid://d1qu1yfba47pk" path="res://scripts/player/player_pickup_item.gd" id="2_tou0u"]
 [ext_resource type="Script" uid="uid://cmr22bo3gbpqw" path="res://scripts/player/player_inventory.gd" id="4_6o77n"]
 [ext_resource type="Script" uid="uid://xq0a6ghc0tq" path="res://scripts/player/player_combat.gd" id="4_6v0jn"]
 [ext_resource type="Script" uid="uid://bgyvsxsudatgu" path="res://scripts/player/player_weapon_camera.gd" id="6_6o77n"]
+[ext_resource type="Script" uid="uid://f5e6bn4651xa" path="res://scripts/ui/enemy_card.gd" id="7_50rl7"]
+[ext_resource type="Texture2D" uid="uid://bgcgwmj03rq25" path="res://assets/textures/ui/tex_ui_hud_health_bg.png" id="7_r053x"]
+[ext_resource type="Texture2D" uid="uid://c2y45fjy7g4mq" path="res://assets/textures/ui/tex_ui_hud_health_fg.png" id="9_50rl7"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_scvwv"]
 height = 2.0612183
@@ -34,10 +37,12 @@ player_camera = NodePath("../Head/PlayerCamera")
 script = ExtResource("4_6o77n")
 max_capacity = 3
 
-[node name="player_combat" type="Node" parent="player_manager" unique_id=1878228851 node_paths=PackedStringArray("player", "hitbox")]
+[node name="player_combat" type="Node" parent="player_manager" unique_id=1878228851 node_paths=PackedStringArray("player", "hitbox", "camera", "enemy_card")]
 script = ExtResource("4_6v0jn")
 player = NodePath("..")
 hitbox = NodePath("../../Head/PlayerCamera/player_weapon_htibox")
+camera = NodePath("../../Head/PlayerCamera")
+enemy_card = NodePath("../../Head/PlayerCamera/HUDCanvas/ui_hud_enemy_card")
 
 [node name="player_pickup_item" type="Node" parent="player_manager" unique_id=903311057 node_paths=PackedStringArray("player", "camera")]
 script = ExtResource("2_tou0u")
@@ -75,12 +80,69 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Crosshair" type="TextureRect" parent="Head/PlayerCamera/HUDCanvas/CenterContainer" unique_id=779352099]
+[node name="ui_hud_crosshair" type="TextureRect" parent="Head/PlayerCamera/HUDCanvas/CenterContainer" unique_id=779352099]
 modulate = Color(1, 1, 1, 0.6039216)
 layout_mode = 2
 offset_transform_enabled = true
 offset_transform_scale = Vector2(0.03, 0.03)
 texture = ExtResource("2_n0leu")
+
+[node name="ui_hud_enemy_card" type="Control" parent="Head/PlayerCamera/HUDCanvas" unique_id=207280943 node_paths=PackedStringArray("enemy_name", "enemy_health")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("7_50rl7")
+enemy_name = NodePath("enemy_name")
+enemy_health = NodePath("ui_hud_enemy_card_bg/ui_hud_enemy_card_fg")
+
+[node name="enemy_name" type="RichTextLabel" parent="Head/PlayerCamera/HUDCanvas/ui_hud_enemy_card" unique_id=1077588737]
+clip_contents = false
+layout_mode = 0
+offset_left = -2.3
+offset_top = 16.585
+offset_right = 1954.7
+offset_bottom = 1094.585
+size_flags_vertical = 4
+offset_transform_enabled = true
+offset_transform_position = Vector2(887, 309)
+focus_mode = 0
+mouse_filter = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 7
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+bbcode_enabled = true
+text = "[font=res://assets/fonts/font_cute.ttf][font_size=28][left]Zombie Goon"
+scroll_active = false
+horizontal_alignment = 1
+
+[node name="ui_hud_enemy_card_bg" type="TextureRect" parent="Head/PlayerCamera/HUDCanvas/ui_hud_enemy_card" unique_id=728448165]
+clip_contents = true
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+offset_transform_enabled = true
+offset_transform_position = Vector2(0, -154)
+offset_transform_scale = Vector2(0.1, 0.07)
+texture = ExtResource("7_r053x")
+
+[node name="ui_hud_enemy_card_fg" type="TextureProgressBar" parent="Head/PlayerCamera/HUDCanvas/ui_hud_enemy_card/ui_hud_enemy_card_bg" unique_id=955485002]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -5.0
+offset_right = -5.0
+grow_horizontal = 2
+grow_vertical = 2
+offset_transform_enabled = true
+offset_transform_position = Vector2(214, 497)
+value = 50.0
+texture_progress = ExtResource("9_50rl7")
 
 [node name="WeaponCanvas" type="CanvasLayer" parent="Head/PlayerCamera" unique_id=873843609]
 
