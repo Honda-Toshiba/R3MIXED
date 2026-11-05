@@ -28,22 +28,7 @@ transform = Transform3D(5.845, 0, 0, 0, 5.845, 0, 0, 0, 5.845, 0, 0, 0)
 [node name="Player" parent="." unique_id=1686109621 groups=["player"] instance=ExtResource("2_4hgg4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5545757, 0)
 slide_speed = 19.0
-slide_friction = null
-slide_steer = null
 SPEED = 12.0
-accelration = null
-turn_accelration = null
-friction = null
-ground_snap_distance = null
-Air_Control = null
-fall_multiplier = null
-air_drag = null
-mouse_sens = null
-max_pitch_degrees = null
-wall_braking = null
-on_wall_friction = null
-wall_fall_speed = null
-stick_distance = null
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1685229913]
 transform = Transform3D(1, 0, 0, 0, 0.11731247, 0.99309504, 0, -0.99309504, 0.11731247, 0, 16.638702, 0)
@@ -85,6 +70,12 @@ size = Vector3(10, 1, 20)
 
 [node name="CSGBox3D4" type="CSGBox3D" parent="." unique_id=262794925]
 transform = Transform3D(0.5660709, 0.40551552, -4.329633, -0.037676126, 7.2395506, 0, 0.24559085, 0.17593361, 9.979521, 9.44618, 31.465654, 0.7062204)
+use_collision = true
+collision_layer = 5
+size = Vector3(1, 9.028259, 1)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="." unique_id=1619869133]
+transform = Transform3D(0.5660709, 0.40551552, -4.329633, -0.037676126, 7.2395506, 0, 0.24559085, 0.17593361, 9.979521, 18.425968, 31.465654, 0.7062204)
 use_collision = true
 collision_layer = 5
 size = Vector3(1, 9.028259, 1)

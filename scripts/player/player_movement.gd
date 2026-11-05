@@ -15,6 +15,7 @@ extends CharacterBody3D
 
 # ---- Jump / air ----
 @export var JUMP_VELOCITY: float = 4.5
+@export var WALL_JUMP_VELOCITY : float = JUMP_VELOCITY * 1.6
 @export var Air_Control: float = 0.2
 @export var fall_multiplier: float = 1.8
 @export var air_drag: float = 0.4
@@ -26,7 +27,7 @@ extends CharacterBody3D
 # ---- Wall Related -----
 @export var wall_braking : float = 1.8 
 @export var on_wall_friction : float = 1.8
-@export var wall_fall_speed: float = 1.0
+@export var wall_fall_speed: float = 5.0
 @export var stick_distance: float = 0.8
 
 
@@ -39,6 +40,8 @@ var is_sliding: bool = false
 var _planar_velocity: Vector3 = Vector3.ZERO
 # Base slide momentum. Steering is added separately, never stored into this.
 var _slide_velocity: Vector3 = Vector3.ZERO
+
+var wall_jump_count : int = 0
 
 @onready var head: Node3D = $Head
 var wall_ray: RayCast3D
@@ -61,7 +64,8 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	var grounded: bool = is_on_floor()
-	if grounded: 
+	if grounded:
+		wall_jump_count = 0
 		stuck_on_wall = false
 		wall_set = false
 	else:
@@ -77,12 +81,17 @@ func _physics_process(delta: float) -> void:
 	var input_dir: Vector2 = Input.get_vector(
 		"move_left", "move_right", "move_forwards", "move_backwards"
 	)
+	wall_jump_count = 0.0 if not (stuck_on_wall or wall_set) else wall_jump_count
 	var direction: Vector3 = global_transform.basis * Vector3(input_dir.x, 0.0, input_dir.y)
 	direction.y = 0.0
 	direction = direction.normalized()
-
-	var jumped: bool = grounded and Input.is_action_just_pressed("ui_accept")
+	
+	var jump_pressed := Input.is_action_just_pressed("ui_accept")
+	var jumped := jump_pressed and grounded
+	var wall_jumped := jump_pressed and stuck_on_wall
 	var wants_slide: bool = grounded and not jumped and Input.is_action_pressed("crouch")
+
+
 
 	if wants_slide and not is_sliding:
 		var slide_dir: Vector3 = direction
@@ -141,6 +150,14 @@ func _physics_process(delta: float) -> void:
 		var current_wall_friction : float = on_wall_friction if (stuck_on_wall) else 1.0
 		# Gradually reduce horizontal speed in the air, consistently across frame rates.
 		_planar_velocity *= exp(-air_drag * delta * current_wall_friction)
+	
+	if wall_jumped:
+		var jump_strength = WALL_JUMP_VELOCITY / (2 ** wall_jump_count)
+		_planar_velocity += saved_wall_normal.normalized() * jump_strength
+		velocity.y = jump_strength
+		stuck_on_wall = false
+		wall_set = false
+		wall_jump_count += 1 
 
 	velocity.x = _planar_velocity.x
 	velocity.z = _planar_velocity.z
