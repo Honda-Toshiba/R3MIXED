@@ -28,7 +28,7 @@ func drop_weapon(slot: int) -> void:
 	var model = Weapon.build_model(inventory.weapons[slot])
 	get_tree().current_scene.add_child(model)
 	
-	model.collision_layer = 1 << (3 - 1)	# Collide with ground only
+	model.collision_layer = 1 << (3 - 1)	# Prevent from colliding with player
 	
 	model.global_position = global_position
 	model.rotation = Vector3(

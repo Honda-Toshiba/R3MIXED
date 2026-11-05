@@ -110,7 +110,7 @@ static func build_model(w: Weapon) -> Node3D:
 	# Bring parts' box colliders up to the root
 	_hoist_shapes(root, head_node)
 	_hoist_shapes(root, tail_node)
-	root.collision_layer = 1 << (3 - 1)		# Collide with ground only
+	root.collision_layer = 1 << (3 - 1)		# Prevent from colliding with player
 	return root
 
 static func build_viewmodel(w: Weapon) -> Node3D:
