@@ -134,6 +134,7 @@ static func build_viewmodel(w: Weapon) -> Node3D:
 	
 	tail_node.transform = head_node.transform * link_head.transform * link_tail.transform.affine_inverse()
 	
+	_set_layer_recursive(root, 2) # Set viewmodel to layer 2, render it over everything
 	return root
 	
 
@@ -168,3 +169,10 @@ static func _hoist_shapes(root: Node3D, part: Node) -> void:
 		shape.get_parent().remove_child(shape)
 		root.add_child(shape)
 		shape.transform = xf
+
+static func _set_layer_recursive(root: Node3D, layer: int) -> void:
+	for child in root.get_children():
+		if child is VisualInstance3D:
+			child.layers = 1 << (layer - 1)
+		_set_layer_recursive(child, layer)
+	

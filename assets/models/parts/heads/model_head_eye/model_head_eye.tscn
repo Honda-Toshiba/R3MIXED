@@ -16,3 +16,5 @@ shape = SubResource("BoxShape3D_t4i1k")
 
 [node name="model_head_eye" parent="." unique_id=1046204367 instance=ExtResource("1_ahol3")]
 transform = Transform3D(-2.0107239e-08, 0, -0.46, 0, 0.46, 0, 0.46, 0, -2.0107239e-08, 0, -0.09725937, 0)
+
+[editable path="model_head_eye"]

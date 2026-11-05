@@ -16,3 +16,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0038398653, 0)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=341304179]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00440979, 0.055358887, 0)
 shape = SubResource("BoxShape3D_t4i1k")
+
+[editable path="model_head_fish"]

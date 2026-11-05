@@ -1,10 +1,11 @@
 [gd_scene format=3 uid="uid://c2a033uyre4kh"]
 
-[ext_resource type="Script" path="res://scripts/player/player_movement.gd" id="1_4flbx"]
+[ext_resource type="Script" uid="uid://cqsbya6cafsxc" path="res://scripts/player/player_movement.gd" id="1_4flbx"]
 [ext_resource type="Script" uid="uid://uguo75o32igd" path="res://scripts/player/player_manager.gd" id="2_56dyf"]
 [ext_resource type="Texture2D" uid="uid://7upefvigkeqd" path="res://assets/textures/ui/tex_ui_crosshair.png" id="2_n0leu"]
 [ext_resource type="Script" uid="uid://d1qu1yfba47pk" path="res://scripts/player/player_pickup_item.gd" id="2_tou0u"]
 [ext_resource type="Script" uid="uid://cmr22bo3gbpqw" path="res://scripts/player/player_inventory.gd" id="4_6o77n"]
+[ext_resource type="Script" uid="uid://bgyvsxsudatgu" path="res://scripts/player/player_weapon_camera.gd" id="6_6o77n"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_scvwv"]
 height = 2.0612183
@@ -20,7 +21,7 @@ JUMP_VELOCITY = 7.0
 [node name="player_manager" type="Node3D" parent="." unique_id=656213622 node_paths=PackedStringArray("inventory", "player_weapon", "player_camera")]
 script = ExtResource("2_56dyf")
 inventory = NodePath("player_inventory")
-player_weapon = NodePath("../Head/PlayerCamera/player_weapon")
+player_weapon = NodePath("../Head/PlayerCamera/WeaponCanvas/SubViewportContainer/SubViewport/WeaponCamera/player_weapon")
 player_camera = NodePath("../Head/PlayerCamera")
 
 [node name="player_inventory" type="Node" parent="player_manager" unique_id=1220832506]
@@ -44,6 +45,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9825059, -0.21638691)
 
 [node name="PlayerCamera" type="Camera3D" parent="Head" unique_id=376009827]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.055699706)
+cull_mask = 1048573
 
 [node name="HUDCanvas" type="CanvasLayer" parent="Head/PlayerCamera" unique_id=822434012]
 
@@ -61,7 +63,30 @@ offset_transform_enabled = true
 offset_transform_scale = Vector2(0.03, 0.03)
 texture = ExtResource("2_n0leu")
 
-[node name="player_weapon" type="Node3D" parent="Head/PlayerCamera" unique_id=816193443]
+[node name="WeaponCanvas" type="CanvasLayer" parent="Head/PlayerCamera" unique_id=873843609]
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Head/PlayerCamera/WeaponCanvas" unique_id=1396903684]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="Head/PlayerCamera/WeaponCanvas/SubViewportContainer" unique_id=1471545310]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(1920, 1080)
+render_target_update_mode = 4
+
+[node name="WeaponCamera" type="Camera3D" parent="Head/PlayerCamera/WeaponCanvas/SubViewportContainer/SubViewport" unique_id=447041674 node_paths=PackedStringArray("player_camera")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9825059, -0.16068721)
+cull_mask = 2
+script = ExtResource("6_6o77n")
+player_camera = NodePath("../../../..")
+
+[node name="player_weapon" type="Node3D" parent="Head/PlayerCamera/WeaponCanvas/SubViewportContainer/SubViewport/WeaponCamera" unique_id=816193443]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0.6249354, 0, -0.8163614)
 
 [node name="dash_cooldown" type="Timer" parent="." unique_id=194684537]
