@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://bjllmynhne7wb"]
+
+[ext_resource type="PackedScene" uid="uid://c8l0ohvijboa" path="res://assets/models/player/model_player_arms.glb" id="1_hkwhl"]
+
+[node name="ModelPlayerArms" type="Node3D" unique_id=1438451104]
+
+[node name="Sketchfab_Scene" parent="." unique_id=2140822189 instance=ExtResource("1_hkwhl")]
+transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 0, 0, 0)
+
+[node name="Skeleton3D" parent="Sketchfab_Scene/Sketchfab_model/MyRiggedArms2_fbx/RootNode/Basiccharacter/Object_4" parent_id_path=PackedInt32Array(2140822189, 1841876057) index="0" unique_id=2102365259]
+bones/2/position = Vector3(5.654787e-05, 1.514821, -4.679441e-06)
+bones/2/rotation = Quaternion(-0.05722729, 0.7394303, -0.3047893, 0.59755445)
+bones/2/scale = Vector3(1.0000001, 1.0000004, 1.0000001)
+bones/3/position = Vector3(-1.0637516e-06, 2.5731351, 1.2961401e-07)
+bones/3/scale = Vector3(1, 1.0000002, 0.99999994)
+bones/25/rotation = Quaternion(-0.47487178, 0.59852743, -0.4828427, -0.42793062)
+bones/25/scale = Vector3(1, 0.9999998, 1.0000001)
+bones/26/position = Vector3(-5.6860663e-05, 1.514821, -4.5531388e-06)
+bones/26/rotation = Quaternion(0.48126194, 0.26071623, 0.4270091, 0.71977586)
+bones/26/scale = Vector3(1.0000001, 1.0000001, 1.0000002)
+
+[editable path="Sketchfab_Scene"]
