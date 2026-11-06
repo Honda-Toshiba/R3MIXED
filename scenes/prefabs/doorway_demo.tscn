@@ -1,0 +1,45 @@
+[gd_scene format=3]
+
+[sub_resource type="StandardMaterial3D" id="DoorwayMaterial"]
+albedo_color = Color(0.2, 0.55, 0.85, 1)
+
+[sub_resource type="BoxMesh" id="PillarMesh"]
+size = Vector3(1.5, 4, 0.6)
+
+[sub_resource type="BoxShape3D" id="PillarShape"]
+size = Vector3(1.5, 4, 0.6)
+
+[sub_resource type="BoxMesh" id="HeaderMesh"]
+size = Vector3(2.5, 1, 0.6)
+
+[sub_resource type="BoxShape3D" id="HeaderShape"]
+size = Vector3(2.5, 1, 0.6)
+
+[node name="DoorwayDemo" type="StaticBody3D"]
+
+[node name="LeftPillarMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2, 0)
+material_override = SubResource("DoorwayMaterial")
+mesh = SubResource("PillarMesh")
+
+[node name="LeftPillarCollision" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2, 0)
+shape = SubResource("PillarShape")
+
+[node name="RightPillarMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2, 0)
+material_override = SubResource("DoorwayMaterial")
+mesh = SubResource("PillarMesh")
+
+[node name="RightPillarCollision" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 2, 0)
+shape = SubResource("PillarShape")
+
+[node name="HeaderMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, 0)
+material_override = SubResource("DoorwayMaterial")
+mesh = SubResource("HeaderMesh")
+
+[node name="HeaderCollision" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, 0)
+shape = SubResource("HeaderShape")
