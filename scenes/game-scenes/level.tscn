@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://c2a033uyre4kh" path="res://scenes/prefabs/player.tscn" id="5_ak4a4"]
 [ext_resource type="PackedScene" uid="uid://hi4cd60nm3ne" path="res://scenes/prefabs/blockout/block.tscn" id="6_ak4a4"]
 [ext_resource type="PackedScene" uid="uid://h2futniikfdx" path="res://scenes/prefabs/jump_pad.tscn" id="7_x44um"]
+[ext_resource type="PackedScene" uid="uid://bfyruxdwxsujs" path="res://scenes/prefabs/blockout/platform.tscn" id="8_i60en"]
 [ext_resource type="PackedScene" uid="uid://dnxotpnrwms5s" path="res://scenes/prefabs/blockout/pillar.tscn" id="9_fa57r"]
 
 [sub_resource type="ProceduralSkyMaterial" id="LevelSkyMaterial"]
@@ -686,15 +687,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32, 24, -11.5)
 [node name="Wall38" parent="WallSection4" unique_id=1346660958 instance=ExtResource("2_ycgc5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 24, -11.5)
 
-[node name="Platform1" parent="." unique_id=528198940 instance=ExtResource("1_afw4m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 22, 31)
-
-[node name="Platform3" parent="." unique_id=1006358675 instance=ExtResource("1_afw4m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48, 19, 5)
-
-[node name="Platform2" parent="." unique_id=536668546 instance=ExtResource("1_afw4m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 25, -8)
-
 [node name="Floor3" parent="." unique_id=524522155 instance=ExtResource("1_afw4m")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 24, 7.9999995)
 
@@ -800,3 +792,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 16)
 
 [node name="Block12" parent="RaisedSection" unique_id=911882733 instance=ExtResource("6_ak4a4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 24)
+
+[node name="PlatformsRoom1" type="Node3D" parent="." unique_id=205939006]
+
+[node name="Platform1" parent="PlatformsRoom1" unique_id=1366434591 instance=ExtResource("8_i60en")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 24, -7)
+
+[node name="Platform2" parent="PlatformsRoom1" unique_id=976987588 instance=ExtResource("8_i60en")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48, 21, 5)
+
+[node name="Platform3" parent="PlatformsRoom1" unique_id=1043937963 instance=ExtResource("8_i60en")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 22, 31)
