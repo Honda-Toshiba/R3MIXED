@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://h2futniikfdx" path="res://scenes/prefabs/jump_pad.tscn" id="7_x44um"]
 [ext_resource type="PackedScene" uid="uid://bfyruxdwxsujs" path="res://scenes/prefabs/blockout/platform.tscn" id="8_i60en"]
 [ext_resource type="PackedScene" uid="uid://dnxotpnrwms5s" path="res://scenes/prefabs/blockout/pillar.tscn" id="9_fa57r"]
+[ext_resource type="PackedScene" uid="uid://cqni1vjfw2jot" path="res://scenes/prefabs/blockout/slope_small.tscn" id="10_emypf"]
 
 [sub_resource type="ProceduralSkyMaterial" id="LevelSkyMaterial"]
 
@@ -337,7 +338,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48, 0, 32)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 2, 14)
 
 [node name="Player" parent="." unique_id=1686109621 instance=ExtResource("5_ak4a4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 2, 12)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 11, 12)
 
 [node name="JumpPad" parent="." unique_id=1021453618 instance=ExtResource("7_x44um")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 12)
@@ -348,6 +349,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27, 0, 12)
 launch_speed = 15.0
 
 [node name="WallSection1" type="Node3D" parent="." unique_id=1127830673]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
 
 [node name="Wall9" parent="WallSection1" unique_id=502763935 instance=ExtResource("2_ycgc5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 35.5)
@@ -446,6 +448,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 24, 35.5)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 24, 35.5)
 
 [node name="WallSection2" type="Node3D" parent="." unique_id=1238466141]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
 
 [node name="Wall" parent="WallSection2" unique_id=273344233 instance=ExtResource("2_ycgc5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, -11.5)
@@ -687,42 +690,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -32, 24, -11.5)
 [node name="Wall38" parent="WallSection4" unique_id=1346660958 instance=ExtResource("2_ycgc5")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 24, -11.5)
 
-[node name="Floor3" parent="." unique_id=524522155 instance=ExtResource("1_afw4m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 24, 7.9999995)
-
-[node name="Floor4" parent="." unique_id=971336118 instance=ExtResource("1_afw4m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.000001, 24, 16)
-
-[node name="Floor5" parent="." unique_id=1735890492 instance=ExtResource("1_afw4m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 24, 7.9999995)
-
-[node name="Floor6" parent="." unique_id=1079609191 instance=ExtResource("1_afw4m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 24, 16)
-
-[node name="Wall7" parent="." unique_id=834721510 instance=ExtResource("2_ycgc5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 24, 4.5)
-
-[node name="Wall8" parent="." unique_id=383988189 instance=ExtResource("2_ycgc5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 24, 19.5)
-
-[node name="Wall9" parent="." unique_id=485310017 instance=ExtResource("2_ycgc5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 24, 4.5)
-
-[node name="Wall10" parent="." unique_id=196362094 instance=ExtResource("2_ycgc5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 24, 19.5)
-
-[node name="Floor7" parent="." unique_id=2081903849 instance=ExtResource("1_afw4m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 24, 7.9999995)
-
-[node name="Floor8" parent="." unique_id=1369976302 instance=ExtResource("1_afw4m")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 24, 16)
-
-[node name="Wall11" parent="." unique_id=52833105 instance=ExtResource("2_ycgc5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 24, 4.5)
-
-[node name="Wall12" parent="." unique_id=760633268 instance=ExtResource("2_ycgc5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24, 24, 19.5)
-
 [node name="Pillars1" type="Node3D" parent="." unique_id=155159881]
 
 [node name="Pillar3" parent="Pillars1" unique_id=7789717 instance=ExtResource("9_fa57r")]
@@ -756,6 +723,24 @@ transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -28,
 
 [node name="Slope2" parent="RaisedSection" unique_id=1958351919 instance=ExtResource("3_ycgc5")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -28, 0, 32)
+
+[node name="Slope3" parent="RaisedSection" unique_id=1036429661 instance=ExtResource("3_ycgc5")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -44, 0, 32)
+
+[node name="Slope4" parent="RaisedSection" unique_id=531568441 instance=ExtResource("3_ycgc5")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -44, 0, 24)
+
+[node name="Slope5" parent="RaisedSection" unique_id=828752180 instance=ExtResource("3_ycgc5")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -44, 0, 16)
+
+[node name="Slope6" parent="RaisedSection" unique_id=297856203 instance=ExtResource("3_ycgc5")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -44, 0, 8)
+
+[node name="Slope7" parent="RaisedSection" unique_id=256932073 instance=ExtResource("3_ycgc5")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -44, 0, 0)
+
+[node name="Slope8" parent="RaisedSection" unique_id=2022086721 instance=ExtResource("3_ycgc5")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -44, 0, -8)
 
 [node name="Block" parent="RaisedSection" unique_id=1247573403 instance=ExtResource("6_ak4a4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16, 0, 32)
@@ -803,3 +788,48 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48, 21, 5)
 
 [node name="Platform3" parent="PlatformsRoom1" unique_id=1043937963 instance=ExtResource("8_i60en")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 22, 31)
+
+[node name="TransitionSection" type="Node3D" parent="." unique_id=2028306026]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 8, 35.5)
+
+[node name="Floor3" parent="TransitionSection" unique_id=524522155 instance=ExtResource("1_afw4m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 16, -27.5)
+
+[node name="Floor4" parent="TransitionSection" unique_id=971336118 instance=ExtResource("1_afw4m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.536743e-07, 16, -19.5)
+
+[node name="Floor5" parent="TransitionSection" unique_id=1735890492 instance=ExtResource("1_afw4m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 16, -27.5)
+
+[node name="Floor6" parent="TransitionSection" unique_id=1079609191 instance=ExtResource("1_afw4m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 16, -19.5)
+
+[node name="Wall7" parent="TransitionSection" unique_id=834721510 instance=ExtResource("2_ycgc5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 16, -31)
+
+[node name="Wall8" parent="TransitionSection" unique_id=383988189 instance=ExtResource("2_ycgc5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 16, -16)
+
+[node name="Wall9" parent="TransitionSection" unique_id=485310017 instance=ExtResource("2_ycgc5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 16, -31)
+
+[node name="Wall10" parent="TransitionSection" unique_id=196362094 instance=ExtResource("2_ycgc5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 16, -16)
+
+[node name="Floor7" parent="TransitionSection" unique_id=2081903849 instance=ExtResource("1_afw4m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 16, -27.5)
+
+[node name="Floor8" parent="TransitionSection" unique_id=1369976302 instance=ExtResource("1_afw4m")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 16, -19.5)
+
+[node name="Wall11" parent="TransitionSection" unique_id=52833105 instance=ExtResource("2_ycgc5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 16, -31)
+
+[node name="Wall12" parent="TransitionSection" unique_id=760633268 instance=ExtResource("2_ycgc5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16, 16, -16)
+
+[node name="Slope" parent="TransitionSection" unique_id=950749548 instance=ExtResource("10_emypf")]
+transform = Transform3D(4.371139e-08, -3.821371e-15, -1, -8.742278e-08, -1, 0, -1, 8.742278e-08, -4.371139e-08, 0, 13, -27.5)
+
+[node name="Slope2" parent="TransitionSection" unique_id=1520554902 instance=ExtResource("10_emypf")]
+transform = Transform3D(4.371139e-08, -3.821371e-15, -1, -8.742278e-08, -1, 0, -1, 8.742278e-08, -4.371139e-08, 0, 13, -19.5)
