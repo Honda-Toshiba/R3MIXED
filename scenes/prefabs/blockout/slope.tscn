@@ -1,23 +1,23 @@
 [gd_scene format=3 uid="uid://vsgxi0ya64y3"]
 
 [sub_resource type="StandardMaterial3D" id="Material"]
-albedo_color = Color(0.56784315, 0.69647059, 0.77176472, 1)
+albedo_color = Color(0, 0.474509804, 0.654901961, 1)
 roughness = 0.9
 
 [sub_resource type="PrismMesh" id="Mesh"]
 resource_local_to_scene = true
 left_to_right = 0.0
-size = Vector3(8, 4, 4)
+size = Vector3(16, 8, 8)
 
 [sub_resource type="ConvexPolygonShape3D" id="Shape"]
 resource_local_to_scene = true
-points = PackedVector3Array(-2, 0, 4, 2, 0, 4, -2, 0, -4, 2, 0, -4, -2, 4, -4, 2, 4, -4)
+points = PackedVector3Array(-4, 0, 8, 4, 0, 8, -4, 0, -8, 4, 0, -8, -4, 8, -8, 4, 8, -8)
 
 [node name="Slope" type="StaticBody3D" unique_id=1253104029]
 collision_mask = 0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=261489731]
-transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0, 2, 0)
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0, 4, 0)
 material_override = SubResource("Material")
 mesh = SubResource("Mesh")
 
@@ -25,7 +25,7 @@ mesh = SubResource("Mesh")
 shape = SubResource("Shape")
 
 [node name="LowEdge" type="Marker3D" parent="." unique_id=1818830406]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8)
 
 [node name="HighEdge" type="Marker3D" parent="." unique_id=1527634682]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, -4)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, -8)
