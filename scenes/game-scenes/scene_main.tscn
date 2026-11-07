@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://dx5tnxa2p7drb" path="res://scenes/prefabs/enemy.tscn" id="3_4hgg4"]
 [ext_resource type="PackedScene" uid="uid://bqi63ebjesgvq" path="res://scenes/prefabs/jump_test.tscn" id="3_n5r24"]
 [ext_resource type="Script" uid="uid://0utlhttphdw8" path="res://scripts/environment/jump_pad.gd" id="4_72r0e"]
+[ext_resource type="PackedScene" uid="uid://bgyxiqrjdb4g6" path="res://assets/models/enemies/walking_enemy/walking_enemy.tscn" id="6_n5r24"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4hgg4"]
 
@@ -52,9 +53,6 @@ layers = 3
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=536692700]
 environment = SubResource("Environment_n5r24")
 
-[node name="Jumptest" parent="." unique_id=268558779 instance=ExtResource("3_n5r24")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.179878, -0.3826189, 18.609911)
-
 [node name="yellow_line" type="MeshInstance3D" parent="." unique_id=1626545173]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 21.612194, 0, 0)
 material_override = SubResource("StandardMaterial3D_scvwv")
@@ -73,31 +71,40 @@ mesh = SubResource("SphereMesh_h2yge")
 transform = Transform3D(1, 0, 0, 0, 0.295, 0, 0, 0, 1, 0, -0.16885138, 0)
 shape = SubResource("SphereShape3D_ueota")
 
-[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=1624762315]
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=1174519894]
 transform = Transform3D(-4.3711385e-08, 0.258819, 0.9659258, 0, 0.96592575, -0.25881904, -0.99999994, -1.1313339e-08, -4.222196e-08, -26.727875, 2.2205915, 0)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="NavigationRegion3D" unique_id=1624762315]
+transform = Transform3D(1, 0, -3.5527137e-15, 0, 1.0000001, 4.776714e-16, 0, 1.4901161e-08, 1.0000001, 0, 0, 0)
 use_collision = true
 size = Vector3(10, 1, 20)
 
-[node name="CSGBox3D3" type="CSGBox3D" parent="." unique_id=2045517962]
-transform = Transform3D(-4.3711385e-08, 0.6427875, 0.7660444, 0, 0.7660443, -0.6427875, -0.99999994, -2.8097134e-08, -3.3484863e-08, -26.727875, 5.609432, -14.505724)
+[node name="CSGBox3D3" type="CSGBox3D" parent="NavigationRegion3D" unique_id=2045517962]
+transform = Transform3D(1, -1.7763568e-15, -3.5527137e-15, 0, 0.9063078, -0.4226183, 0, 0.42261827, 0.9063078, 14.505726, 3.2733693, -0.8770962)
 use_collision = true
 size = Vector3(10, 1, 20)
 
-[node name="CSGBox3D2" type="CSGBox3D" parent="." unique_id=1648058529]
-transform = Transform3D(-4.371138e-08, 0.49999994, 0.8660253, 0, 0.86602527, -0.49999997, -0.99999994, -2.1855696e-08, -3.7855173e-08, -26.727875, 4.423125, 15.309124)
+[node name="CSGBox3D2" type="CSGBox3D" parent="NavigationRegion3D" unique_id=1648058529]
+transform = Transform3D(1, 1.7763568e-15, 0, 8.881784e-16, 0.9659258, -0.2588191, 3.5527137e-15, 0.25881907, 0.9659258, -15.309126, 2.127484, -0.5700569)
 use_collision = true
 size = Vector3(10, 1, 20)
 
-[node name="CSGBox3D4" type="CSGBox3D" parent="." unique_id=262794925]
-transform = Transform3D(0.5660709, 0.40551552, -4.329633, -0.037676126, 7.2395506, 0, 0.24559085, 0.17593361, 9.979521, 9.44618, 31.465654, 0.7062204)
+[node name="CSGBox3D4" type="CSGBox3D" parent="NavigationRegion3D" unique_id=262794925]
+transform = Transform3D(-0.24559091, -0.17593364, -9.979522, 0.1101176, 7.097825, -1.1205918, 0.5565339, -1.4820355, -4.1821055, -0.70622206, 37.6111, 27.37228)
 use_collision = true
 collision_layer = 5
 size = Vector3(1, 9.028259, 1)
 
-[node name="CSGBox3D5" type="CSGBox3D" parent="." unique_id=1619869133]
-transform = Transform3D(0.5660709, 0.40551552, -4.329633, -0.037676126, 7.2395506, 0, 0.24559085, 0.17593361, 9.979521, 18.425968, 31.465654, 0.7062204)
+[node name="CSGBox3D5" type="CSGBox3D" parent="NavigationRegion3D" unique_id=1619869133]
+transform = Transform3D(-0.24559091, -0.17593364, -9.979522, 0.1101176, 7.097825, -1.1205918, 0.5565339, -1.4820355, -4.1821055, -0.7062225, 39.93524, 36.04609)
 use_collision = true
 collision_layer = 5
 size = Vector3(1, 9.028259, 1)
+
+[node name="Jumptest" parent="NavigationRegion3D" unique_id=268558779 instance=ExtResource("3_n5r24")]
+transform = Transform3D(-4.3711395e-08, 0, -1.0000001, 0.25881907, 0.965926, -1.1313341e-08, 0.96592593, -0.25881904, -4.2221963e-08, -18.609915, 6.261464, 33.42614)
+
+[node name="CharacterBody3D" parent="." unique_id=678413787 instance=ExtResource("6_n5r24")]
+transform = Transform3D(1.8386732, 0, 0, 0, 1.8386732, 0, 0, 0, 1.8386732, -7.3423676, 0.43653607, -1.1685038)
 
 [connection signal="body_entered" from="Area3D" to="Area3D" method="_on_body_entered"]
