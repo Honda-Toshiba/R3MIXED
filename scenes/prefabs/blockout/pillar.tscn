@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://dnxotpnrwms5s"]
+
+[sub_resource type="StandardMaterial3D" id="Material"]
+albedo_color = Color(0, 0.474509804, 0.654901961, 1)
+roughness = 0.9
+
+[sub_resource type="BoxMesh" id="Mesh"]
+resource_local_to_scene = true
+size = Vector3(2, 8, 2)
+
+[sub_resource type="BoxShape3D" id="Shape"]
+resource_local_to_scene = true
+size = Vector3(2, 8, 2)
+
+[node name="Pillar" type="StaticBody3D" unique_id=2053464890]
+collision_mask = 0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=2073080248]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
+material_override = SubResource("Material")
+mesh = SubResource("Mesh")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2093641566]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 0)
+shape = SubResource("Shape")

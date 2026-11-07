@@ -5,6 +5,8 @@
 [ext_resource type="PackedScene" uid="uid://dx5tnxa2p7drb" path="res://scenes/prefabs/enemy.tscn" id="3_4hgg4"]
 [ext_resource type="PackedScene" uid="uid://bqi63ebjesgvq" path="res://scenes/prefabs/jump_test.tscn" id="3_n5r24"]
 [ext_resource type="Script" uid="uid://0utlhttphdw8" path="res://scripts/environment/jump_pad.gd" id="4_72r0e"]
+[ext_resource type="PackedScene" path="res://scenes/prefabs/doorway_demo.tscn" id="5_doorway"]
+[ext_resource type="PackedScene" uid="uid://bilww04uerpri" path="res://scenes/prefabs/slope.tscn" id="7_72r0e"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4hgg4"]
 
@@ -31,6 +33,10 @@ radius = 3.0
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ueota"]
 radius = 3.5
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_yuier"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_yuier"]
 
 [node name="Main" type="Node3D" unique_id=644388398]
 
@@ -61,7 +67,7 @@ material_override = SubResource("StandardMaterial3D_scvwv")
 mesh = SubResource("BoxMesh_ueota")
 
 [node name="Area3D" type="Area3D" parent="." unique_id=1636883271 groups=["jump_pad"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.350846, -13.1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.350846, -13.1)
 collision_mask = 2
 script = ExtResource("4_72r0e")
 
@@ -99,5 +105,22 @@ transform = Transform3D(0.5660709, 0.40551552, -4.329633, -0.037676126, 7.239550
 use_collision = true
 collision_layer = 5
 size = Vector3(1, 9.028259, 1)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1222985234]
+transform = Transform3D(12.14987, -4.2711496, -0.3405318, 0.012982507, 17.455616, -2.4797633, 2.2693672, 22.767273, 1.8373451, -14.69, 17.838211, 4.245)
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1701575594]
+shape = SubResource("BoxShape3D_yuier")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D" unique_id=1124893524]
+transform = Transform3D(0.99999976, 0, 0, 3.7252903e-09, 0.9999995, 3.7252903e-09, 0, -4.7683716e-07, 0.9999997, 0, 0, 0)
+mesh = SubResource("BoxMesh_yuier")
+
+[node name="DoorwayDemo" parent="." unique_id=1171462220 instance=ExtResource("5_doorway")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6)
+
+[node name="Slope" parent="." unique_id=2082849649 instance=ExtResource("7_72r0e")]
+transform = Transform3D(1.77, 0, 0, 0, 1.77, 0, 0, 0, 1.77, 0.20481873, 3.4528544, -21.932674)
 
 [connection signal="body_entered" from="Area3D" to="Area3D" method="_on_body_entered"]

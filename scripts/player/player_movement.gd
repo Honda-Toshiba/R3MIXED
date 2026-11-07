@@ -38,6 +38,10 @@ var dash_stop_pending: bool = false
 
 var dash_direction: Vector3 = Vector3.ZERO
 var dash_time_left: float = 0.0
+var _pending_launch_speed: float = 0.0
+
+func launch_upward(speed: float) -> void:
+	_pending_launch_speed = maxf(_pending_launch_speed, speed)
 
 
 var stuck_on_wall : bool = false
@@ -186,6 +190,14 @@ func _physics_process(delta: float) -> void:
 		#velocity.y = 0.0
 		dash_stop_pending = false
 		
+	# Apply pad launches after grounded movement and dash overrides.
+	if _pending_launch_speed > 0.0:
+		velocity.y = _pending_launch_speed
+		_pending_launch_speed = 0.0
+		dash_time_left = 0.0
+		dash_stop_pending = false
+		stuck_on_wall = false
+		wall_set = false
 	velocity.x = _planar_velocity.x
 	velocity.z = _planar_velocity.z
 	# Move using velocity; Godot may modify it in response to collisions.

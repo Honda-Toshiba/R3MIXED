@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://d1nioeg3yx4h7"]
+
+[ext_resource type="PackedScene" path="res://scenes/prefabs/blockout/floor.tscn" id="1"]
+[ext_resource type="PackedScene" path="res://scenes/prefabs/blockout/slope.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://scenes/prefabs/blockout/platform.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://scenes/prefabs/blockout/wall.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://scenes/prefabs/blockout/block.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://scenes/prefabs/blockout/pillar.tscn" id="6"]
+[ext_resource type="PackedScene" uid="uid://c2a033uyre4kh" path="res://scenes/prefabs/player.tscn" id="7"]
+
+[sub_resource type="ProceduralSkyMaterial" id="SkyMaterial"]
+
+[sub_resource type="Sky" id="Sky"]
+sky_material = SubResource("SkyMaterial")
+
+[sub_resource type="Environment" id="Environment"]
+background_mode = 1
+sky = SubResource("Sky")
+ambient_light_source = 3
+tonemap_mode = 2
+
+[node name="BlockoutExample" type="Node3D" unique_id=2121645146]
+
+[node name="Floor" parent="." unique_id=788494413 instance=ExtResource("1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 12)
+
+[node name="Slope" parent="." unique_id=1354846594 instance=ExtResource("2")]
+
+[node name="Platform" parent="." unique_id=557349336 instance=ExtResource("3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -16)
+
+[node name="Wall" parent="." unique_id=588209815 instance=ExtResource("4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, -23.5)
+
+[node name="Block" parent="." unique_id=1132749589 instance=ExtResource("5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12, 0, 12)
+
+[node name="Pillar" parent="." unique_id=1581921726 instance=ExtResource("6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 0, 12)
+
+[node name="Player" parent="." unique_id=1571195681 instance=ExtResource("7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, 14)
+slide_speed = 19.0
+SPEED = 12.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=208180746]
+environment = SubResource("Environment")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1570672317]
+transform = Transform3D(1, 0, 0, 0, 0.11731247, 0.99309504, 0, -0.99309504, 0.11731247, 0, 16.638702, 0)
+layers = 3

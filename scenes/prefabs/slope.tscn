@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://bilww04uerpri"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_gxle8"]
+left_to_right = 0.0
+size = Vector3(5, 4, 3.5)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_lqgvk"]
+points = PackedVector3Array(-2.5, 2, 1.75, 2.5, -2, 1.75, -2.5, 2, -1.75, -2.5, -2, 1.75, 2.5, -2, -1.75, -2.5, -2, -1.75)
+
+[node name="Slope" type="StaticBody3D" unique_id=2082849649]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=2016478270]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2720225, 0)
+mesh = SubResource("PrismMesh_gxle8")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="." unique_id=1276116739]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2720225, 0)
+shape = SubResource("ConvexPolygonShape3D_lqgvk")

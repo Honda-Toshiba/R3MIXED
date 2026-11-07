@@ -2856,7 +2856,7 @@ states/anim_player_arms_idle/node = SubResource("AnimationNodeAnimation_c1k3r")
 states/anim_player_arms_idle/position = Vector2(381, 100)
 transitions = ["Start", "anim_player_arms_idle", SubResource("AnimationNodeStateMachineTransition_xtlg4"), "anim_player_arms_attack_1", "anim_player_arms_attack_2", SubResource("AnimationNodeStateMachineTransition_20t1h"), "anim_player_arms_attack_1", "anim_player_arms_idle", SubResource("AnimationNodeStateMachineTransition_lagtt"), "anim_player_arms_attack_2", "anim_player_arms_idle", SubResource("AnimationNodeStateMachineTransition_gkb8g")]
 
-[node name="Player" type="CharacterBody3D" unique_id=1686109621]
+[node name="Player" type="CharacterBody3D" unique_id=1686109621 groups=["player"]]
 collision_layer = 2
 collision_mask = 17
 script = ExtResource("1_4flbx")
