@@ -111,6 +111,6 @@ transform = Transform3D(-4.3711395e-08, 0, -1.0000001, 0.25881907, 0.965926, -1.
 transform = Transform3D(-2.554931e-07, 0, -5.8450003, 1.5127975, 5.6458373, -6.6126475e-08, 5.645837, -1.5127972, -2.4678735e-07, -1.1683127e-06, 4.7727566, 26.39188)
 
 [node name="Walking Enemy" parent="." unique_id=678413787 instance=ExtResource("6_n5r24")]
-transform = Transform3D(1.4141935, 0, 0, 0, 1.4141935, 0, 0, 0, 1.4141935, -5.2100573, 0.29471222, 0.68554205)
+transform = Transform3D(1.6776676, 0, -2.9333273e-07, 0, 1.6776676, 0, 2.9333273e-07, 0, 1.6776676, -7.430548, 0.29516953, -0.15357062)
 
 [connection signal="body_entered" from="Area3D" to="Area3D" method="_on_body_entered"]
