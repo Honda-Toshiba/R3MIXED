@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://c2a033uyre4kh" path="res://scenes/prefabs/player.tscn" id="5_ak4a4"]
 [ext_resource type="PackedScene" uid="uid://hi4cd60nm3ne" path="res://scenes/prefabs/blockout/block.tscn" id="6_ak4a4"]
 [ext_resource type="PackedScene" uid="uid://h2futniikfdx" path="res://scenes/prefabs/jump_pad.tscn" id="7_x44um"]
+[ext_resource type="PackedScene" uid="uid://cx7cgv5ged3db" path="res://scenes/prefabs/blockout/slope_mini.tscn" id="8_7o3bi"]
 [ext_resource type="PackedScene" uid="uid://bfyruxdwxsujs" path="res://scenes/prefabs/blockout/platform.tscn" id="8_i60en"]
 [ext_resource type="PackedScene" uid="uid://dnxotpnrwms5s" path="res://scenes/prefabs/blockout/pillar.tscn" id="9_fa57r"]
 [ext_resource type="PackedScene" uid="uid://cqni1vjfw2jot" path="res://scenes/prefabs/blockout/slope_small.tscn" id="10_emypf"]
@@ -22,6 +23,9 @@ sky = SubResource("LevelSky")
 ambient_light_source = 3
 tonemap_mode = 2
 
+[sub_resource type="NavigationMesh" id="NavigationMesh_emypf"]
+geometry_parsed_geometry_type = 1
+
 [node name="Node3D" type="Node3D" unique_id=39404859]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1080307234]
@@ -33,6 +37,7 @@ layers = 3
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=1684724640]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.3841858e-07)
+navigation_mesh = SubResource("NavigationMesh_emypf")
 
 [node name="GroundFloor" type="Node3D" parent="NavigationRegion3D" unique_id=2124939263]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.3841858e-07)
@@ -838,6 +843,9 @@ transform = Transform3D(4.371139e-08, -3.821371e-15, -1, -8.742278e-08, -1, 0, -
 
 [node name="Slope2" parent="NavigationRegion3D/TransitionSection" unique_id=1520554902 instance=ExtResource("10_emypf")]
 transform = Transform3D(4.371139e-08, -3.821371e-15, -1, -8.742278e-08, -1, 0, -1, 8.742278e-08, -4.371139e-08, 0, 13, -19.5)
+
+[node name="Slope" parent="NavigationRegion3D" unique_id=60263251 instance=ExtResource("8_7o3bi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11, 0, 5)
 
 [node name="Player" parent="." unique_id=1686109621 instance=ExtResource("5_ak4a4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 11, 12)
