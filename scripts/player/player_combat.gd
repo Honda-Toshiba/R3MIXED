@@ -18,7 +18,18 @@ func _ready() -> void:
 func attack() -> void:
 	if player.get_current_weapon() == null:
 		return
-	for enemy in hitbox.get_overlapping_bodies():
+	var damaged_enemies: Array[Enemy] = []
+
+	for body in hitbox.get_overlapping_bodies():
+		var enemy := find_enemy(body)
+
+		if enemy == null:
+			continue
+
+		if enemy in damaged_enemies:
+			continue
+
+		damaged_enemies.append(enemy)
 		damage_enemy(enemy, player.get_current_weapon().damage)
 
 func damage_enemy(enemy: Enemy, value: int) -> void:
@@ -32,10 +43,27 @@ func allow_attack() -> void:
 	# Cast ray to detect if looking at enemy
 func _physics_process(_delta: float) -> void:
 	var hit := look_raycast()
-	if hit:
-		var enemy = hit.collider as Enemy
-		enemy_card.show_card(enemy)
-		enemy_card_timer.start()
+
+	if hit.is_empty():
+		return
+	var enemy := find_enemy(hit.collider)
+
+	if enemy == null:
+		return
+
+	enemy_card.show_card(enemy)
+	enemy_card_timer.start()
+
+# Return the enemy node the player is looking at
+func find_enemy(node: Node) -> Enemy:
+	while node != null:
+		if node is Enemy:
+			return node as Enemy
+
+		node = node.get_parent()
+
+	return null
+
 
 const ray_length: float = 40.0
 
