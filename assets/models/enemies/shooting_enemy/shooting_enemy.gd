@@ -32,6 +32,8 @@ func _ready() -> void:
 	await get_tree().physics_frame
 
 	set_physics_process(true)
+	play_animation(IDLE_ANIMATION)
+
 
 
 func _physics_process(delta: float) -> void:
@@ -42,7 +44,9 @@ func _physics_process(delta: float) -> void:
 		velocity += get_gravity() * delta
 	else:
 		velocity.y = 0.0
-
+	
+	play_animation(IDLE_ANIMATION)
+	
 	move_and_slide()
 
 func play_animation(animation_name: StringName) -> void:
