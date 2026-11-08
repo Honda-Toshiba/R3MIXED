@@ -62,6 +62,11 @@ var dash_direction: Vector3 = Vector3.ZERO
 var dash_time_left: float = 0.0
 var dash_charges: int = 3
 #----------
+var _pending_launch_speed: float = 0.0
+
+func launch_upward(speed: float) -> void:
+	_pending_launch_speed = maxf(_pending_launch_speed, speed)
+#----------
 var stuck_on_wall : bool = false
 var wall_set : bool = false
 var saved_wall_normal: Vector3 = Vector3.ZERO
@@ -335,5 +340,5 @@ func dash_start():
 	dash_cooldown.start()
 
 func _on_dash_cooldown_timeout() -> void:
-	dash_charges += min(dash_charges + 1, 3)
+	dash_charges = min(dash_charges + 1, 3)
 	dash_recharged.emit()
