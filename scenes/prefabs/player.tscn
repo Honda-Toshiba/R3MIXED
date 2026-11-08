@@ -3095,7 +3095,7 @@ anim_player = NodePath("../anim_player_arms")
 parameters/conditions/chain_attack = false
 
 [node name="dash_cooldown" type="Timer" parent="." unique_id=194684537]
-wait_time = 4.0
+wait_time = 2.0
 one_shot = true
 
 [editable path="Head/PlayerCamera/WeaponCanvas/SubViewportContainer/SubViewport/WeaponCamera/player_arms"]
