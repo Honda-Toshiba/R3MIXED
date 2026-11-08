@@ -44,6 +44,7 @@ layers = 3
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="." unique_id=1684724640]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.3841858e-07)
 navigation_mesh = SubResource("NavigationMesh_emypf")
+metadata/_edit_lock_ = true
 
 [node name="GroundFloor" type="Node3D" parent="NavigationRegion3D" unique_id=2124939263]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.3841858e-07)
@@ -891,7 +892,7 @@ transform = Transform3D(1.6776676, 0, -2.9333273e-07, 0, 1.6776676, 0, 2.9333273
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 9.076786, 8.000902, 1.2341228)
 
 [node name="ShootingEnemy2" parent="Enemies" unique_id=1484733081 instance=ExtResource("13_pehjt")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.42655, 8.000902, 21.937656)
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 8.42655, 8.000902, 21.937656)
 
 [node name="ShootingEnemy3" parent="Enemies" unique_id=887846071 instance=ExtResource("13_pehjt")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -4.5407186, 1.0009018, 24.223951)
