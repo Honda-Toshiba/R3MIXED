@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://prsy24t4t3nl"]
+
+[ext_resource type="Script" uid="uid://by0ccj0yidt22" path="res://scripts/weapons/part.gd" id="1_t6ip2"]
+[ext_resource type="Resource" uid="uid://c1rmbmhvinfys" path="res://data/parts/heads/head_fish.tres" id="2_pfv4b"]
+[ext_resource type="Resource" uid="uid://bt1d7bpm8cpuc" path="res://data/parts/heads/head_gun.tres" id="3_7qydi"]
+[ext_resource type="Resource" uid="uid://djfh2p4em5fk4" path="res://data/parts/heads/head_eye.tres" id="4_lgk0q"]
+[ext_resource type="Script" uid="uid://dgi7vlr12ucu8" path="res://scripts/enemy/enemy_data.gd" id="5_jodbm"]
+[ext_resource type="Resource" uid="uid://qdjn7huqvlc0" path="res://data/parts/tails/tail_torch.tres" id="6_cxy47"]
+[ext_resource type="Resource" uid="uid://db0i3ah03a622" path="res://data/parts/tails/tail_arrow.tres" id="7_mfalh"]
+
+[resource]
+script = ExtResource("5_jodbm")
+id = &"enemytype_walking"
+name = "Zombie Goon"
+max_health = 150
+head_pool = Array[ExtResource("1_t6ip2")]([ExtResource("2_pfv4b"), ExtResource("3_7qydi"), ExtResource("4_lgk0q")])
+tail_pool = Array[ExtResource("1_t6ip2")]([ExtResource("6_cxy47"), ExtResource("7_mfalh")])
+odds_head = Array[int]([70, 0, 25, 5, 0])
+odds_tail = Array[int]([0, 80, 20, 0, 0])
+metadata/_custom_type_script = "uid://dgi7vlr12ucu8"

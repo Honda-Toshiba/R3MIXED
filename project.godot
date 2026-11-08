@@ -30,7 +30,7 @@ PartDb="*uid://is0kbpp2knew"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/godot-neovim/plugin.cfg", "res://addons/godot_ai/plugin.cfg", "res://addons/godot_git/plugin.cfg")
+enabled=PackedStringArray("res://addons/godot_ai/plugin.cfg", "res://addons/godot_git/plugin.cfg")
 
 [input]
 
