@@ -1,6 +1,6 @@
 [gd_scene format=4 uid="uid://bgyxiqrjdb4g6"]
 
-[ext_resource type="Script" uid="uid://cknl1q7l5ov18" path="res://assets/models/enemies/walking_enemy/walking_enemy.gd" id="1_3n6nx"]
+[ext_resource type="Script" uid="uid://cknl1q7l5ov18" path="res://scripts/enemy/walking_enemy.gd" id="1_3n6nx"]
 [ext_resource type="Texture2D" uid="uid://h270uc6lunsa" path="res://assets/models/enemies/walking_enemy/walking-enemy_Zombie_Atlas.png" id="1_5e1jp"]
 [ext_resource type="Resource" uid="uid://prsy24t4t3nl" path="res://data/enemies/enemy_walking.tres" id="2_8r028"]
 

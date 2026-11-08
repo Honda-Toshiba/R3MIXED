@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://bfyruxdwxsujs" path="res://scenes/prefabs/blockout/platform.tscn" id="8_i60en"]
 [ext_resource type="PackedScene" uid="uid://dnxotpnrwms5s" path="res://scenes/prefabs/blockout/pillar.tscn" id="9_fa57r"]
 [ext_resource type="PackedScene" uid="uid://cqni1vjfw2jot" path="res://scenes/prefabs/blockout/slope_small.tscn" id="10_emypf"]
+[ext_resource type="PackedScene" uid="uid://bgyxiqrjdb4g6" path="res://assets/models/enemies/walking_enemy/walking_enemy.tscn" id="12_41yru"]
 
 [sub_resource type="ProceduralSkyMaterial" id="LevelSkyMaterial"]
 
@@ -906,3 +907,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15, 25, 12)
 
 [node name="Enemy9" parent="Enemies" unique_id=299880307 instance=ExtResource("4_snggy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 25, 16)
+
+[node name="Walking Enemy" parent="." unique_id=678413787 instance=ExtResource("12_41yru")]
+transform = Transform3D(1.6776676, 0, -2.9333273e-07, 0, 1.6776676, 0, 2.9333273e-07, 0, 1.6776676, -49.393757, 0.0029189696, 15.461697)
+
+[node name="Walking Enemy2" parent="." unique_id=793763821 instance=ExtResource("12_41yru")]
+transform = Transform3D(1.6776676, 0, -2.9333273e-07, 0, 1.6776676, 0, 2.9333273e-07, 0, 1.6776676, 7.086235, 8.002921, 33.369606)
+
+[node name="Walking Enemy3" parent="." unique_id=1077905832 instance=ExtResource("12_41yru")]
+transform = Transform3D(1.6776676, 0, -2.9333273e-07, 0, 1.6776676, 0, 2.9333273e-07, 0, 1.6776676, 6.557335, 8.002921, -7.400522)
+
+[node name="Walking Enemy4" parent="." unique_id=239567064 instance=ExtResource("12_41yru")]
+transform = Transform3D(1.6776676, 0, -2.9333273e-07, 0, 1.6776676, 0, 2.9333273e-07, 0, 1.6776676, 7.9119034, 8.002921, 11.344315)
