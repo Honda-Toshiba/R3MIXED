@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="R3MIXED"
-run/main_scene="uid://dhshh6y11l6lx"
+run/main_scene="uid://br6ndhmt8us8h"
 config/features=PackedStringArray("4.7")
 config/icon="res://icon.svg"
 
