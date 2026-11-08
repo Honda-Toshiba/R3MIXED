@@ -22,7 +22,9 @@ signal walking()
 @export var Air_Control: float = 0.2
 @export var fall_multiplier: float = 1.8
 @export var air_drag: float = 0.4
-signal in_the_air()
+
+signal in_the_air
+signal stop_in_the_air
 signal in_the_air_high_speed()
 
 # ---- Mouse look ----
@@ -42,9 +44,8 @@ signal wall_bounce()
 @export var dash_duration: float = 0.09
 @onready var dash_cooldown: Timer = $dash_cooldown
 
-signal dash_start()
-
-
+signal dash_recharged
+signal dash_used_up
 #------
 @onready var collider: CollisionShape3D = $CollisionShape3D
 @onready var capsule: CapsuleShape3D = collider.shape as CapsuleShape3D
@@ -59,6 +60,7 @@ signal dash_start()
 var dash_stop_pending: bool = false
 var dash_direction: Vector3 = Vector3.ZERO
 var dash_time_left: float = 0.0
+var dash_charges: int = 3
 #----------
 var stuck_on_wall : bool = false
 var wall_set : bool = false
@@ -101,9 +103,11 @@ func _physics_process(delta: float) -> void:
 	if wall_set:
 		_check_wall_contact()
 	if grounded:
+		stop_in_the_air.emit()
 		_reset_wall_state_on_ground()
 		cayote_time_left = cayote_time
 	else:
+		in_the_air.emit()
 		cayote_time_left = maxf(cayote_time_left - delta, 0.0)
 		_try_grab_wall()
 
@@ -133,16 +137,15 @@ func _physics_process(delta: float) -> void:
 			wants_slide = true
 			jumped = false
 
-	if Input.is_action_just_pressed("dash") and dash_time_left <= 0.0 and not dash_stop_pending and dash_cooldown.is_stopped():
-		dash_direction = (-head.global_transform.basis.z).normalized()
-		dash_time_left = dash_duration
-		dash_start.emit()
-		dash_cooldown.start()
+	if Input.is_action_just_pressed("dash") and dash_time_left <= 0.0 and not dash_stop_pending and dash_cooldown.is_stopped() and dash_charges > 0:
+		dash_start()
 
 	if wants_slide and not is_sliding:
 		_start_slide(direction)
+
 	elif not wants_slide and is_sliding:
 		_end_slide()
+
 	is_sliding = wants_slide
 	crouch_pov(is_sliding)
 
@@ -316,5 +319,13 @@ func _apply_dash(delta):
 	dash_time_left -= step_time
 	dash_stop_pending = dash_time_left <= 0.0
 
+func dash_start():
+	dash_direction = (-head.global_transform.basis.z).normalized()
+	dash_time_left = dash_duration
+	dash_charges -= 1
+	dash_used_up.emit() #updates ui perhaps
+	dash_cooldown.start()
+
 func _on_dash_cooldown_timeout() -> void:
-	pass # Replace with function body.
+	dash_charges += min(dash_charges + 1, 3)
+	dash_recharged.emit()
